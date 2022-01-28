@@ -9,7 +9,7 @@ git clone git@github.com:PedjPedj/fbBot.git
 cd fbBot
 npm i
 ```
-You need to create an .env file outside must be in the root folder. Don't put it inside the /src folder.
+You need to create an .env file. It must be in the root folder. Don't put it inside the /src folder.
 
 Paste this:
 ```txt

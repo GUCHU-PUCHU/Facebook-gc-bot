@@ -1,31 +1,24 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs-extra');
+var log = require('npmlog');
 require('dotenv').config();
 
 const email = process.env.EMAIL;
 const password = process.env.PASSWORD;
 
-if (email == undefined) return console.log("No email!");
-if (password == undefined) return console.log("No Password!");;
+if (email == undefined) return log.error('No Email!');
+if (password == undefined) return log.error('No Password!');
 
 if (!fs.existsSync(`${__dirname}/data/fbCookies.json`)) {
 	fs.ensureFileSync(`${__dirname}/data/fbCookies.json`);
-	console.log("fbCookies.json don't exist so I created one!");
+	log.info('info',"fbCookies.json don't exist so I created one!");
 } else {
-	console.log("fbCookies.json exist! Proceeding...");
+	log.info('info',"fbCookies.json exist! Proceeding...");
 }
 
 (async () => {
-	console.log('Attempting to launch browser...');
+	log.info('info','Attempting to launch browser...');
 	try {
-		// const browser = await puppeteer.launch({
-		// 	headless: false,
-		// 	product: 'firefox',
-		// 	args: [
-		// 		'-wait-for-browser'
-		// 	]
-		// });
-
 		const browser = await puppeteer.launch();
 		const page = await browser.newPage();
 		await page.setDefaultNavigationTimeout(60000);
@@ -33,21 +26,19 @@ if (!fs.existsSync(`${__dirname}/data/fbCookies.json`)) {
 		await page.waitForSelector('#email');
 		try {
 			await page.type('#email', email);
-		} catch (error) {
-			console.log("Email seems to be empty or incorrect!");
-			console.error(error);
+		} catch (err) {
+			log.error('Email seems to be empty or incorrect!', err);
 		}
 		try {
 			await page.type('#pass', password);
-		} catch (error) {
-			console.log("Password seems to be empty or incorrect!");
-			console.error(error);
+		} catch (err) {
+			log.error('Password seems to be empty or incorrect!', err);
 		}
-		console.log("Submitting credentials!...");
+		log.info('info', 'Submitting credentials!...');
 		await page.click('[type="submit"]');
 		await page.waitForNavigation();
 		await page.click('div');
-		console.log("Fetching Cookies...");
+		log.info('info', 'Fetching Cookies...');
 		cookies = await page.cookies();
 		cookies = cookies.map(({
 			name: key,
@@ -57,11 +48,11 @@ if (!fs.existsSync(`${__dirname}/data/fbCookies.json`)) {
 			...rest
 		}));
 		fs.writeFileSync(__dirname + '/data/fbCookies.json', JSON.stringify(cookies));
-		console.log("Exiting...");
+		log.info('info', 'Exiting...');
 		await browser.close();
 
-	} catch (error) {
-		console.error(error);
-		console.log('exiting...');
+	} catch (err) {
+		log.error('Exiting...', err);
+
 	}
 })();
