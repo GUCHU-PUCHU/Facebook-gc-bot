@@ -11,9 +11,9 @@ if (password == undefined) return log.error('No Password!');
 
 if (!fs.existsSync(`${__dirname}/data/fbCookies.json`)) {
 	fs.ensureFileSync(`${__dirname}/data/fbCookies.json`);
-	log.info('info',"fbCookies.json don't exist so I created one!");
+	log.info('cookie',"fbCookies.json don't exist so I created one!");
 } else {
-	log.info('info',"fbCookies.json exist! Proceeding...");
+	log.info('cookie',"fbCookies.json exist! Proceeding...");
 }
 
 (async () => {
@@ -34,11 +34,11 @@ if (!fs.existsSync(`${__dirname}/data/fbCookies.json`)) {
 		} catch (err) {
 			log.error('Password seems to be empty or incorrect!', err);
 		}
-		log.info('info', 'Submitting credentials!...');
+		log.info('cookie', 'Submitting credentials!...');
 		await page.click('[type="submit"]');
 		await page.waitForNavigation();
 		await page.click('div');
-		log.info('info', 'Fetching Cookies...');
+		log.info('cookie', 'Fetching Cookies...');
 		cookies = await page.cookies();
 		cookies = cookies.map(({
 			name: key,
@@ -48,7 +48,7 @@ if (!fs.existsSync(`${__dirname}/data/fbCookies.json`)) {
 			...rest
 		}));
 		fs.writeFileSync(__dirname + '/data/fbCookies.json', JSON.stringify(cookies));
-		log.info('info', 'Exiting...');
+		log.info('cookie', 'Exiting...');
 		await browser.close();
 
 	} catch (err) {
