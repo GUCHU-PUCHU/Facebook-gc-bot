@@ -50,21 +50,14 @@ if (!fs.existsSync(`${__dirname}/data/fbCookies.json`)) {
 		console.log("Fetching Cookies...");
 		cookies = await page.cookies();
 		cookies = cookies.map(({
-			name: keys,
+			name: key,
 			...rest
 		}) => ({
-			keys,
+			key,
 			...rest
 		}));
 		fs.writeFileSync(__dirname + '/data/fbCookies.json', JSON.stringify(cookies));
 		console.log("Exiting...");
-		try {
-			await page.screenshot({
-				path: __dirname + '/data/facebook.png'
-			});
-		} catch (error) {
-			console.error(error);
-		}
 		await browser.close();
 
 	} catch (error) {

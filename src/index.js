@@ -30,7 +30,7 @@ console.log(data.join(', '));
 let fbCookiesStored = false;
 log.info('login', 'Attempting to log in');
 login(credentials, (err, api) => {
-	if (err) console.error(chalk.red(err));
+	if (err) log.error('Warning!', err);
 	api.listenMqtt((err, message) => {
 		if (err) log.error('Listen Api error!', err);
 

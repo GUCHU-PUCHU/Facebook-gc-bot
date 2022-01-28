@@ -1,4 +1,5 @@
 .env
 src/data/*.json
+src/data/*.png
 /node_modules
-
+src/data/*.png
