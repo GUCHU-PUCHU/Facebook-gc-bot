@@ -44,13 +44,17 @@ login(credentials, (err, api) => {
 			// Bot interaction starts here
 			if (message.type === 'message') {
 				if (message.isGroup) return;
-				if (!message.body.startsWith(prefix)) return;
+				if (!message.body.startsWith(prefix)) return; // Checks if the message starts with the given prefix.
 				api.setMessageReaction('\uD83D\uDC4D', message.messageID);
-				const args = message.body.slice(prefix.length).trim().split(/ +/);
+
+				const args = message.body.slice(prefix.length).trim().split(/ +/); // Seperates the prefix from the command.
 				const cmdName = args.shift().toLowerCase();
 				const command = cmdMap.commands.get(cmdName);
 
-				if (!command) return;
+				if (!command) return; // If command doesn't exist.. ignore
+
+				// This bit of code checks if the command needs a parameter in order to execute.
+				// This checks for 'args':boolean in command.
 				if (command.args && !args.length) {
 					let reply = 'You didn\'t provide any arguments!';
 
@@ -65,6 +69,7 @@ login(credentials, (err, api) => {
 				api.markAsRead(message.threadID);
 				api.setMessageReaction('\uD83D\uDC4D', message.messageID);
 
+				// This bit code executes the command.
 				try {
 					command.execute(api, message, args, cmdMap, __dirname);
 				} catch (err) {

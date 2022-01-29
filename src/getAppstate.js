@@ -17,7 +17,7 @@ if (!fs.existsSync(`${__dirname}/data/fbCookies.json`)) {
 }
 
 (async () => {
-	log.info('info','Attempting to launch browser...');
+	log.info('cookie','Attempting to launch browser...');
 	try {
 		const browser = await puppeteer.launch();
 		const page = await browser.newPage();
