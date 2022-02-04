@@ -1,10 +1,7 @@
 const fs = require('fs-extra');
 const login = require('facebook-chat-api');
 var log = require('npmlog');
-const {
-	prefix
-} = require('./config.json')
-
+const config = require('./config.json')
 
 // Load credentials from cookies
 const credentials = {
@@ -43,11 +40,13 @@ login(credentials, (err, api) => {
 
 			// Bot interaction starts here
 			if (message.type === 'message') {
+				log.info('Interaction! \n');
+				console.log(message);
 				if (message.isGroup) return;
-				if (!message.body.startsWith(prefix)) return; // Checks if the message starts with the given prefix.
+				if (!message.body.startsWith(config.prefix)) return; // Checks if the message starts with the given config.prefix.
 				api.setMessageReaction('\uD83D\uDC4D', message.messageID);
 
-				const args = message.body.slice(prefix.length).trim().split(/ +/); // Seperates the prefix from the command.
+				const args = message.body.slice(config.prefix.length).trim().split(/ +/); // Seperates the config.prefix from the command.
 				const cmdName = args.shift().toLowerCase();
 				const command = cmdMap.commands.get(cmdName);
 
@@ -59,7 +58,7 @@ login(credentials, (err, api) => {
 					let reply = 'You didn\'t provide any arguments!';
 
 					if (command.usage) {
-						reply += `\nThe proper ussage would be: \`${prefix}${command.name} ${command.usage}\``;
+						reply += `\nThe proper ussage would be: \`${config.prefix}${command.name} ${command.usage}\``;
 					}
 
 					api.sendMessage(reply, message.threadID);
@@ -71,7 +70,7 @@ login(credentials, (err, api) => {
 
 				// This bit of code executes the command.
 				try {
-					command.execute(api, message, args, cmdMap, __dirname);
+					command.execute(api, message, args, cmdMap, __dirname, config);
 				} catch (err) {
 					log.error('Something is wrong executing the command! \n', err);
 				}

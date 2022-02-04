@@ -13,6 +13,7 @@
     "dotenv": "^14.3.2",
     "facebook-chat-api": "github:PedjPedj/facebook-chat-api#test",
     "fs-extra": "^10.0.0",
+    "moment": "^2.29.1",
     "npmlog": "^6.0.0",
     "puppeteer": "^13.1.2"
   }

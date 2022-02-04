@@ -33,7 +33,6 @@ module.exports = {
 				data.push('============================');
 			});
 			api.sendMessage(data.join('\n'), message.senderID);
-			api.sendMessage(randRepl, message.threadID);
 		});
 	},
 };
