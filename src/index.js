@@ -24,7 +24,7 @@ for (const file of commandFiles) {
 	cmdMap.commands.set(command.name, command);
 	data.push(command.name);
 }
-console.log(data.join(', '));
+log.info('Commands loaded!\n  >>>',data.join(', '));
 
 // Login
 let fbCookiesStored = false;
@@ -69,12 +69,11 @@ login(credentials, (err, api) => {
 				api.markAsRead(message.threadID);
 				api.setMessageReaction('\uD83D\uDC4D', message.messageID);
 
-				// This bit code executes the command.
+				// This bit of code executes the command.
 				try {
 					command.execute(api, message, args, cmdMap, __dirname);
 				} catch (err) {
-					console.error(err);
-					console.log('Something is wrong');
+					log.error('Something is wrong executing the command! \n', err);
 				}
 
 			}
