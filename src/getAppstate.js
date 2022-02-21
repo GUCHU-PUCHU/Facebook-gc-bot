@@ -37,7 +37,11 @@ if (!fs.existsSync(`${__dirname}/data/fbCookies.json`)) {
 		log.info('cookie', 'Submitting credentials!...');
 		await page.click('[type="submit"]');
 		await page.waitForNavigation();
-		await page.click('div');
+		try {
+			await page.click('div');
+		} catch (err) {
+			log.error('Error clicking div!', err);
+		}
 		log.info('cookie', 'Fetching Cookies...');
 		cookies = await page.cookies();
 		cookies = cookies.map(({
