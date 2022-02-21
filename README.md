@@ -3,9 +3,17 @@
 FbBot is a simple group chat for facebook. (Its pretty much a clone of discordbots but for FB XD).
 This bot uses [Unofficial facebook Chat API](https://github.com/Schmavery/facebook-chat-api).
 
+# NOTE
+PLEASE READ THIS. THIS IS IMPORTANT.
+
+You see... This `thing` uses an unofficial Facebook API. This means you need a Burner Facebook account (an account you can easily throw away) or you'll risk your account getting banned.
+
+DON'T USE YOUR REAL FB ACCOUNT. OKAY?. GOOD.
+
 ## Dependencies
 
 [NodeJs](https://nodejs.org/en/download/)
+
 [Git](https://git-scm.com/downloads)
 
 ## Installation
