@@ -42,8 +42,14 @@ login(credentials, (err, api) => {
 			if (message.type === 'message') {
 				console.log(message);
 				if (!message.isGroup) return;
+
+				if (message.body.toLowerCase().includes(`lyan`)) {
+					api.sendMessage(`Hello I'm Lyan. My prefix is ${config.prefix}. Type '${config.prefix}help' to see all commands.`, message.threadID);
+					return;
+				}
+
 				if (!message.body.startsWith(config.prefix)) return; // Checks if the message starts with the given config.prefix.
-				log.info('Interaction!', `Command: ${message.body} \nSender ID: ${message.messageID} \nThread ID: ${message.threadID}`);
+				log.info('Interaction!', `Command	: ${message.body} \nSender ID	: ${message.messageID} \nThread ID	: ${message.threadID}`);
 
 				const args = message.body.slice(config.prefix.length).trim().split(/ +/); // Seperates the config.prefix from the command.
 				const cmdName = args.shift().toLowerCase();
