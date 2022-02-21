@@ -39,8 +39,8 @@ if (!fs.existsSync(`${__dirname}/data/fbCookies.json`)) {
 		await page.waitForNavigation();
 		try {
 			await page.click('div');
-		} catch (error) {
-			await button.evaluate(b => b.click('div'));
+		} catch (err) {
+			log.error('cookie', 'Error clicking div! Ignoring...', err);
 		}
 		log.info('cookie', 'Fetching Cookies...');
 		cookies = await page.cookies();
