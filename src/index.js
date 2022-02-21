@@ -44,7 +44,6 @@ login(credentials, (err, api) => {
 				if (!message.isGroup) return;
 				if (!message.body.startsWith(config.prefix)) return; // Checks if the message starts with the given config.prefix.
 				log.info('Interaction!', `Command: ${message.body} \nSender ID: ${message.messageID} \nThread ID: ${message.threadID}`);
-				api.setMessageReaction('\uD83D\uDC4D', message.messageID);
 
 				const args = message.body.slice(config.prefix.length).trim().split(/ +/); // Seperates the config.prefix from the command.
 				const cmdName = args.shift().toLowerCase();
