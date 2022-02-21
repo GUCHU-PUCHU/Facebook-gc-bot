@@ -1,3 +1,6 @@
 {
-    "prefix" : "!"
+    "prefix" : "!",
+    "isRecording":false,
+    "attedArr": [],
+    "checkArr":[]
 }

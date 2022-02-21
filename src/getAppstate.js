@@ -40,7 +40,7 @@ if (!fs.existsSync(`${__dirname}/data/fbCookies.json`)) {
 		try {
 			await page.click('div');
 		} catch (err) {
-			log.error('cookie', 'Error clicking div! Ignoring...', err);
+			log.error('cookie', 'Error clicking div! Ignoring...');
 		}
 		log.info('cookie', 'Fetching Cookies...');
 		cookies = await page.cookies();
