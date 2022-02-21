@@ -43,8 +43,8 @@ login(credentials, (err, api) => {
 				console.log(message);
 				if (!message.isGroup) return;
 
-				if (message.body.toLowerCase().includes(`lyan`)) {
-					api.sendMessage(`Hello I'm Lyan. My prefix is ${config.prefix}. Type '${config.prefix}help' to see all commands.`, message.threadID);
+				if (message.body.toLowerCase().includes(`bot`)) {
+					api.sendMessage(`Hello I'm bot. My prefix is ${config.prefix}. Type '${config.prefix}help' to see all commands.`, message.threadID);
 					return;
 				}
 
