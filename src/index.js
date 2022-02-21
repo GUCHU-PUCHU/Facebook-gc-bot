@@ -42,7 +42,7 @@ login(credentials, (err, api) => {
 			if (message.type === 'message') {
 				log.info('Interaction! \n');
 				console.log(message);
-				if (message.isGroup) return;
+				if (!message.isGroup) return;
 				if (!message.body.startsWith(config.prefix)) return; // Checks if the message starts with the given config.prefix.
 				api.setMessageReaction('\uD83D\uDC4D', message.messageID);
 
