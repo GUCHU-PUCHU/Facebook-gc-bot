@@ -5,8 +5,8 @@ This bot uses [Unofficial facebook Chat API](https://github.com/Schmavery/facebo
 
 ## Dependencies
 
-[NodeJs] (https://nodejs.org/en/download/)
-[Git] (https://git-scm.com/downloads)
+[NodeJs](https://nodejs.org/en/download/)
+[Git](https://git-scm.com/downloads)
 
 ## Installation
 
