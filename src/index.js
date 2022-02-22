@@ -44,7 +44,7 @@ login(credentials, (err, api) => {
 				if (!message.isGroup) return;
 
 				if (message.body.toLowerCase().includes(config.botname)) {
-					api.sendMessage(`Hello I'm ${config.botname}. My prefix is ${config.prefix}. Type '${config.prefix}help' to see all commands.`, message.threadID);
+					api.sendMessage(config.response[0] + config.botname + " " + config.response [1] + config.response[2] + config.prefix, message.threadID);
 					return;
 				}
 
