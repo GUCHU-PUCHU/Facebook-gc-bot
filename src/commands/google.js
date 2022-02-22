@@ -19,7 +19,6 @@ module.exports = {
             }
         }
         const response = await google.search(query, options);
-        console.log(response);
 
         let data = [];
 
