@@ -1,5 +1,6 @@
 {
     "prefix" : "!",
+    "botname" : "bot",
     "isRecording":false,
     "attedArr": [],
     "checkArr":[]
