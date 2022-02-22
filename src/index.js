@@ -49,13 +49,12 @@ login(credentials, (err, api) => {
 				}
 
 				if (!message.body.startsWith(config.prefix)) return; // Checks if the message starts with the given config.prefix.
-				log.info('Interaction!', `Command	: ${message.body} \nSender ID	: ${message.messageID} \nThread ID	: ${message.threadID}`);
-
 				const args = message.body.slice(config.prefix.length).trim().split(/ +/); // Seperates the config.prefix from the command.
 				const cmdName = args.shift().toLowerCase();
 				const command = cmdMap.commands.get(cmdName);
 
 				if (!command) return; // If command doesn't exist.. ignore
+				log.info('Interaction!', `Command	: ${message.body} \nSender ID	: ${message.messageID} \nThread ID	: ${message.threadID}`);
 
 				// This bit of code checks if the command needs a parameter in order to execute.
 				// This checks for 'args':boolean in command.

@@ -32,6 +32,7 @@ module.exports = {
 				if (cmd.usage) data.push(`Usage:\n ${prefix}${name} ${cmd.usage}`);
 				data.push('============================');
 			});
+			api.sendMessage(`I sent the commands in your DM! If you can't find it check your message request.`, message.threadID);
 			api.sendMessage(data.join('\n'), message.senderID);
 		});
 	},
