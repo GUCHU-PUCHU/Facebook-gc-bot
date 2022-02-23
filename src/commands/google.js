@@ -54,3 +54,5 @@ module.exports = {
         }
     }
 }
+
+// tbh there's a better way to code this but I'm lazy
