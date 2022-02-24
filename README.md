@@ -26,11 +26,14 @@ npm i
 
 You need to create an .env file. It must be in the root folder. Don't put it inside the /src folder.
 
+Get your API key from [Open Weather Map](https://openweathermap.org/api).
+
 Paste this:
 
 ```txt
 EMAIL=user@email.com
 PASSWORD=YourPassword
+WEATHER_API_KEY=YourWeatherApiKey
 ```
 
 Put your email and password.
@@ -46,5 +49,7 @@ Then run the bot.
 ```bash
 node .
 ```
+
+you can change the prefix other settings of the bot in the config.json file.
 
 I'll automate the setup when I get to it. XD

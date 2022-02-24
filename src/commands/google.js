@@ -55,4 +55,4 @@ module.exports = {
     }
 }
 
-// tbh there's a better way to code this but I'm lazy
+// tbh there's a better way to code this but I'm being lazy asf
