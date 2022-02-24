@@ -26,7 +26,6 @@ npm i
 
 You need to create an .env file. It must be in the root folder. Don't put it inside the /src folder.
 
-Get your API key from [Open Weather Map](https://openweathermap.org/api).
 
 Paste this:
 
@@ -37,6 +36,8 @@ WEATHER_API_KEY=YourWeatherApiKey
 ```
 
 Put your email and password.
+
+Get your API key from [Open Weather Map](https://openweathermap.org/api).
 
 Then run getAppstate.js to fetch the cookies.
 

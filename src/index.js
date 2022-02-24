@@ -41,9 +41,10 @@ login(credentials, (err, api) => {
 			// Bot interaction starts here
 			if (message.type === 'message') {
 				if (!message.isGroup) return;
-				if (message.body.includes(config.botName)) {
+
+				if (config.botName.some(w => message.body.includes(w))) {
 					log.info('Interaction', 'Name was mentioned!', config.botName);
-					api.sendMessage(config.response[0] + config.botName + " " + config.response [1] + config.response[2] + config.prefix, message.threadID);
+					api.sendMessage(config.response[0] + config.botName[0] + " " + config.response [1] + config.response[2] + config.prefix, message.threadID);
 				}
 
 				if (!message.body.startsWith(config.prefix)) return; // Checks if the message starts with the given config.prefix.
