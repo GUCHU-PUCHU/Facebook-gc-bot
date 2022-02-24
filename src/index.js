@@ -21,7 +21,7 @@ for (const file of commandFiles) {
 	cmdMap.commands.set(command.name, command);
 	data.push(command.name);
 }
-log.info('Commands loaded!\n  >>>',data.join(', '));
+log.info('Commands loaded!\n  >>>', data.join(', '));
 
 // Login
 let fbCookiesStored = false;
@@ -41,13 +41,12 @@ login(credentials, (err, api) => {
 			// Bot interaction starts here
 			if (message.type === 'message') {
 				if (!message.isGroup) return;
-
 				if (config.botName.some(w => message.body.includes(w))) {
-					log.info('Interaction', 'Name was mentioned!', config.botName);
-					api.sendMessage(config.response[0] + config.botName[0] + " " + config.response [1] + config.response[2] + config.prefix, message.threadID);
+					log.info('Interaction', 'Name was mentioned!');
+					api.sendMessage(config.response[0] + config.botName[0] + " " + config.response[1] + config.response[2] + config.prefix, message.threadID);
 				}
-
 				if (!message.body.startsWith(config.prefix)) return; // Checks if the message starts with the given config.prefix.
+
 				const args = message.body.slice(config.prefix.length).trim().split(/ +/); // Seperates the config.prefix from the command.
 				const cmdName = args.shift().toLowerCase();
 				const command = cmdMap.commands.get(cmdName);
@@ -61,7 +60,7 @@ login(credentials, (err, api) => {
 					let reply = 'You didn\'t provide any arguments!';
 
 					if (command.usage) {
-						reply += `\nThe proper ussage would be: \`${config.prefix}${command.name} ${command.usage}\``;
+						reply += `\nThe proper usage would be: \`${config.prefix}${command.name} ${command.usage}\``;
 					}
 
 					api.sendMessage(reply, message.threadID);
