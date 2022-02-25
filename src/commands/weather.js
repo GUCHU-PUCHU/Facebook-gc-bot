@@ -1,18 +1,23 @@
-const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
+const fetch = (...args) => import('node-fetch').then(({
+    default: fetch
+}) => fetch(...args));
 require('dotenv').config();
 
 module.exports = {
-	name: 'weather',
-	description: 'Displays current weather',
+    name: 'weather',
+    description: 'Displays current weather',
     usage: '[City]',
-	adminOnly: false,
+    adminOnly: false,
     args: true,
-	async execute(api, message, args) {
+    async execute(api, message, args) {
         let data = [];
         const query = args.slice(0).join(' ');
+
         if (process.env.WEATHER_API_KEY === undefined) return api.sendMessage('Weather API key is not set!', message.threadID);
         const response = await fetch(`http://api.openweathermap.org/data/2.5/weather?q=${query}&units=metric&appid=${process.env.WEATHER_API_KEY}`).then(res => res.json());
+
         if (response.cod === '404') return api.sendMessage('City not found!', message.threadID);
+        
         else {
             data.push(`Current weather in ${response.name} is ${response.weather[0].description}`);
             data.push(`Temperature: ${response.main.temp}°C`);
@@ -23,5 +28,5 @@ module.exports = {
             data.push(`Wind: ${response.wind.speed} m/s`);
             api.sendMessage(data.join('\n'), message.threadID);
         }
-	},
+    },
 };

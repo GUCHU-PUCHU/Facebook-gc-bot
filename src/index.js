@@ -40,6 +40,7 @@ login(credentials, (err, api) => {
 
 			// Bot interaction starts here
 			if (message.type === 'message') {
+				console.log(message);
 				if (!message.isGroup) return;
 				if (config.botName.some(w => message.body.includes(w))) {
 					log.info('Interaction', 'Name was mentioned!');

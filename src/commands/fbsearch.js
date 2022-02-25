@@ -3,7 +3,7 @@ const log = require('npmlog');
 module.exports = {
     name: 'fbsearch',
     description: 'Search in Facebook!',
-    usage: '< user | group | page | event | all >',
+    usage: '< user | group | page | event | all > [query]',
     adminOnly: false,
     args: true,
     async execute(api, message, args) {
