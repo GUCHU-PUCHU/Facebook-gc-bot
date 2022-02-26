@@ -5,7 +5,7 @@ module.exports = {
     description: 'Get info about thread',
     adminOnly: true,
     args: false,
-    async execute(api, message) {
+    execute(api, message) {
         api.getThreadInfo(message.threadID, (err, info) => {
             if (err) log.error('Thread Info', err);
 

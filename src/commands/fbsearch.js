@@ -6,7 +6,7 @@ module.exports = {
     usage: '< user | group | page | event | all > [query]',
     adminOnly: false,
     args: true,
-    async execute(api, message, args) {
+    execute(api, message, args) {
         const query = args.slice(1).join(' ');
         const dataP = [];
         const dataC = [];

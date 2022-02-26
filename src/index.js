@@ -1,7 +1,7 @@
 const fs = require('fs-extra');
 const login = require('facebook-chat-api');
 var log = require('npmlog');
-const config = require('./config.json')
+const config = require('./config.json');
 
 // Load credentials from cookies
 const credentials = {
@@ -42,14 +42,11 @@ login(credentials, (err, api) => {
 			if (message.type === 'message') {
 				console.log(message);
 				if (!message.isGroup) return;
-				try {
+
 					if (message.body.toLowerCase().includes(config.botName[1])) {
 						log.info('Interaction', 'Name was mentioned!', config.botName);
 						api.sendMessage(config.response[0] + config.botName[0] + " " + config.response[1] + config.response[2] + config.prefix, message.threadID);
 					}
-				} catch (error) {
-					log.error('Interaction', error);
-				}
 
 				if (!message.body.startsWith(config.prefix)) return; // Checks if the message starts with the given config.prefix.
 
@@ -75,15 +72,15 @@ login(credentials, (err, api) => {
 
 				api.markAsRead(message.threadID);
 				api.setMessageReaction('\uD83D\uDC4D', message.messageID);
-
+				
 				// This bit of code executes the command.
 				try {
 					command.execute(api, message, args, cmdMap, __dirname, config);
-				} catch (err) {
+				}
+				catch (error) {
 					log.error('Something is wrong executing the command! \n', err);
 				}
-
 			}
 		}
-	})
-})
+	});
+});
