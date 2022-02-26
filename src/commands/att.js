@@ -8,7 +8,7 @@ var list = [];
 module.exports = {
     name: 'att',
     description: 'Takes or records attendance',
-    usage: '< start [limit?] | stop | add [entry] >',
+    usage: '< start [limit?] | stop | status | add [entry] >',
     adminOnly: false,
     args: true,
     async execute(api, message, args) {
@@ -49,6 +49,16 @@ module.exports = {
             }
         }
 
+        if (args[0] === 'status') {
+            if (!isRecording) {
+                return api.sendMessage('Recording not active!', message.threadID);
+            } else {
+                if (list.length == 0) return api.sendMessage('No entries recorded yet!', message.threadID);
+                api.sendMessage(`${date}\n` + list.join('\n'), message.threadID);
+                api.sendMessage(`Recorded ${list.length} entries!`, message.threadID);
+            }
+        }
+
         if (args[0] === 'add') {
 
             if (!isRecording) {
@@ -71,6 +81,6 @@ module.exports = {
                     });
                 }
             }
-        }
+        } // Yes, I know this is a mess. I'm sorry. But it works.
     },
 }
