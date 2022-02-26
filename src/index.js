@@ -67,6 +67,7 @@ login(credentials, (err, api) => {
 					}
 
 					api.sendMessage(reply, message.threadID);
+					api.setMessageReaction('\uD83D\uDC4E', message.messageID);
 					return;
 				}
 
