@@ -3,23 +3,37 @@ const fs = require('fs-extra');
 const log = require('npmlog');
 let isRecording = false;
 let date;
+let limit;
 var list = [];
 module.exports = {
     name: 'att',
     description: 'Takes or records attendance',
-    usage: '< start | stop | add [entry] >',
+    usage: '< start [limit] | stop | add [entry] >',
     adminOnly: false,
     args: true,
     async execute(api, message, args) {
         // log.info('test', temp.isRecording);
-        if (args[0] === 'start') {
 
+        if (args[0] === 'start') {
             if (isRecording) {
                 api.sendMessage('Already recording!', message.threadID);
             } else {
                 isRecording = true;
+
+                if (args[1]) {
+                    limit = args[1];
+                    if (isNaN(limit)) {
+                        api.sendMessage('Invalid limit!', message.threadID);
+                        isRecording = false;
+                        return;
+                    }
+                    if (limit == undefined) {
+                        api.sendMessage('No limit set! Recording until you stop', message.threadID);
+                        limit = parseInt(Infinity);
+                    }
+                }
                 date = moment().format('MMMM Do YYYY, h:mm:ss a');
-                api.sendMessage('Recording started!\n' + date, message.threadID);
+                api.sendMessage('Recording started at ' + date, message.threadID);
             }
         }
 
@@ -42,11 +56,12 @@ module.exports = {
             } else {
 
                 if (!args[1]) return api.sendMessage('Entry is empty! Please try again.', message.threadID);
-        
-                if (list.length >= 55) {
+
+                if (list.length == limit) {
                     api.sendMessage('List is full! Stopping...', message.threadID);
                     api.sendMessage(`${date}\n` + list.join('\n'), message.threadID);
                     list = [];
+                    isRecording = false;
                 } else {
                     list.push(`${list.length + 1}. ${args.slice(1).join(' ')}`);
                     api.setMessageReaction(' ', message.messageID, (err) => {

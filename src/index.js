@@ -44,7 +44,7 @@ login(credentials, (err, api) => {
 				if (!message.isGroup) return;
 
 					if (message.body.toLowerCase().includes(config.botName[1])) {
-						log.info('Interaction', 'Name was mentioned!', config.botName);
+						log.info('Interaction', 'Name was mentioned!');
 						api.sendMessage(config.response[0] + config.botName[0] + " " + config.response[1] + config.response[2] + config.prefix, message.threadID);
 					}
 

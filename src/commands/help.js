@@ -58,11 +58,11 @@ module.exports = {
 			});
 			api.sendMessage(`I sent the commands in your DM! If you can't find it check your message request.`, message.threadID);
 
-			const messages = splitMessage(data.join('\n'), 1134);
+			const messages = splitMessage(data.join('\n'), 1268);
 			for (let i = 0; i < messages.length; i++) {
 				api.sendMessage(messages[i], message.senderID);
 			}
-
+			// api.sendMessage(messages[0], message.threadID);
 		});
 	},
 };
