@@ -8,7 +8,7 @@ var list = [];
 module.exports = {
     name: 'att',
     description: 'Takes or records attendance',
-    usage: '< start [limit] | stop | add [entry] >',
+    usage: '< start [limit?] | stop | add [entry] >',
     adminOnly: false,
     args: true,
     async execute(api, message, args) {
