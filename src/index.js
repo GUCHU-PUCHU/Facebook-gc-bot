@@ -32,8 +32,8 @@ login(credentials, (err, api) => {
 	api.listenMqtt((err, message) => {
 		if (err) log.error('Listen Api error!', err);
 
-		// checks if there's a stored cookies in ./data
 		else {
+			// checks if there's a stored cookies in ./data/fbCookies.json
 			if (!fbCookiesStored) {
 				fs.writeFileSync(`${__dirname}/data/fbCookies.json`, JSON.stringify(api.getAppState()));
 				fbCookiesStored = true;
@@ -43,38 +43,47 @@ login(credentials, (err, api) => {
 			if (message.type === 'message') {
 				console.log(message);
 				if (!message.isGroup) return;
+				// checks if the thread ID is the same as the one in the config file if not then ignore.
+				// This is to prevent the bot from responding to other threads.
+				// This can be configured in the config file.
+				if (config.threadID !== message.threadID) return log.error('Warning!', 'Thread ID does not match!');
 
 				if (message.body.toLowerCase().includes('@' + config.botName[1])) {
 					log.info('Interaction', 'Name was mentioned!');
 					utils.eyesReact(api, message.messageID);
-					api.sendMessage(config.response[0] + config.botName[0] + ". " + config.response[1] + config.response[2] + config.prefix, message.threadID);
+					let res = [];
+
+					res.push(`Hello, I'm ${config.botName[0]}. My prefix is: \`${config.prefix}\``);
+					res.push(`You can view my commands by typing \`${config.prefix}help\``);
+
+					if (config.response.length) res.push(config.response.join('\n'));
+					utils.splitMessage(res.join('\n'), 1000).forEach((msg) => {
+						api.sendMessage(msg, message.threadID);
+					});
 				}
 
 				if (!message.body.startsWith(config.prefix)) return; // Checks if the message starts with the given config.prefix.
-
 				const args = message.body.slice(config.prefix.length).trim().split(/ +/); // Seperates the config.prefix from the command.
 				const cmdName = args.shift().toLowerCase();
 				const command = cmdMap.commands.get(cmdName);
 
-				if (!command) return; // If command doesn't exist.. ignore
+				if (!command) return; // If command doesn't exist.. ignore.
 				log.info('Interaction!', `Command	: ${message.body} \nSender ID	: ${message.messageID} \nThread ID	: ${message.threadID}`);
 
-				// This bit of code checks if the command needs a parameter in order to execute.
+				// This bit of code checks if the command needs an arguments in order to execute.
 				// This checks for 'args':boolean in command.
 				if (command.args && !args.length) {
 					let reply = 'You didn\'t provide any arguments!';
-
 					if (command.usage) {
 						reply += `\nThe proper usage would be: \`${config.prefix}${command.name} ${command.usage}\``;
 					}
-
 					api.sendMessage(reply, message.threadID);
 					utils.noticeReact(api, message.messageID);
 					return;
 				}
 
 				api.markAsRead(message.threadID);
-				api.setMessageReaction('👍', message.messageID);
+				// api.setMessageReaction('👍', message.messageID);
 				// This bit of code executes the command.
 				try {
 					command.execute(api, message, args, cmdMap, __dirname, config);

@@ -7,7 +7,7 @@ let details = '';
 var list = [];
 module.exports = {
     name: 'att',
-    description: 'Takes or records attendance',
+    description: 'Records attendance or list of things',
     usage: '< start [limit?] [details?] | stop | status | add [entry] | clear | remove [arr[?]] >',
     adminOnly: false,
     args: true,
@@ -20,24 +20,20 @@ module.exports = {
                     return utils.noticeReact(api, message.messageID);
                 } else {
                     isRecording = true;
-
                     if (isNaN(args[1])) {
                         details = args.slice(1).join(' ');
                     } else {
                         limit = parseInt(args[1]);
                         details = args.slice(2).join(' ');
                     }
-
                     date = moment().format('MMMM Do YYYY, h:mm a');
                     txt.push('Recording started at ' + date);
 
                     if (details) txt.push(details);
-                    // api.sendMessage(txt.join('\n'), message.threadID);
                 }
                 break;
 
             case 'stop':
-
                 if (!isRecording) {
                     api.sendMessage('Already stopped!', message.threadID);
                     return utils.noticeReact(api, message.messageID);
@@ -54,12 +50,10 @@ module.exports = {
                 break;
 
             case 'status':
-
                 if (!isRecording) {
                     api.sendMessage('Not recording!', message.threadID);
                     return utils.noticeReact(api, message.messageID);
                 } else {
-
                     if (list.length === 0) return api.sendMessage('No entries recorded!', message.threadID);
                     txt.push('Recording started at ' + date);
 
@@ -67,12 +61,10 @@ module.exports = {
 
                     if (limit) txt.push('Limit": ' + limit);
                     txt.push(utils.numberBulletGiver(list));
-                    // api.sendMessage(txt.join('\n'), message.threadID);
                 }
                 break;
 
             case 'add':
-
                 if (!isRecording) {
                     api.sendMessage('Not recording!', message.threadID);
                     return utils.noticeReact(api, message.messageID);
@@ -84,18 +76,15 @@ module.exports = {
 
                         if (details) txt.push(details);
                         txt.push(utils.numberBulletGiver(list));
-                        // api.sendMessage(txt.join('\n'), message.threadID);
                     } else {
                         list.push(`${args.slice(1).join(' ')}`);
                         utils.successReact(api, message.messageID);
                         return;
                     }
-
                 }
                 break;
 
             case 'remove':
-
                 if (!isRecording) return api.sendMessage('Not recording!', message.threadID);
 
                 if (list.length === 0) {
@@ -125,7 +114,8 @@ module.exports = {
                 break;
         }
 
-        if (txt) api.sendMessage(txt.join('\n'), message.threadID);
-        // if (list) api.sendMessage(utils.numberBulletGiver(list), message.threadID);
+        if (txt) utils.splitMessage(txt.join('\n'), 1000).forEach(msg => {
+            api.sendMessage(msg, message.senderID);
+        });
     }
 }

@@ -1,5 +1,6 @@
 {
     "prefix" : ".",
     "botName" : ["Bot", "bot"],
-    "response": [ "Hello!, I'm ", "I'm here to help you with stuff!. ", "My prefix is "],
+    "response": [ "response 1", "response 2", "response 3"],
+    "threadID": ""
 }

@@ -52,6 +52,12 @@ module.exports = {
         });
     },
 
+    emptyReact: function (api, msgId) {
+        api.setMessageReaction('', msgId, (err) => {
+            if (err) return log.error(err);
+        });
+    },
+
     numberBulletGiver: function (arr) {
         let txtArr = [];
         for (let i = 0; i < arr.length; i++) {
@@ -72,7 +78,29 @@ module.exports = {
 
     sleep: function (ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
-    }
+    },
 
+    // Function that split a message into chunks of max length
+    splitMessage: function (message, maxLength) {
+        if (message.length <= maxLength) return [message];
+
+        const split = message.split(' ');
+        const result = [];
+        let tempMsg = '';
+
+        for (let i = 0; i < split.length; i++) {
+            if (tempMsg.length + split[i].length < maxLength) {
+                tempMsg += `${split[i]} `;
+            } else {
+                result.push(tempMsg);
+                tempMsg = '';
+                i--;
+            }
+        }
+        result.push(tempMsg);
+
+        return result;
+    }
+    
 
 }
