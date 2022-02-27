@@ -103,6 +103,10 @@ module.exports = {
                 break;
 
             case 'clear':
+                if (list.length === 0) {
+                    utils.noticeReact(api, message.messageID);
+                    return api.sendMessage('list is empty!', message.threadID);
+                }
                 list = [];
                 txt.push('List cleared!');
                 break;
