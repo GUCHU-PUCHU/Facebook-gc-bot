@@ -3,7 +3,7 @@ const log = require('npmlog');
 module.exports = {
     name: 'threadinfo',
     description: 'Get info about thread',
-    adminOnly: true,
+    adminOnly: false,
     args: false,
     execute(api, message) {
         api.getThreadInfo(message.threadID, (err, info) => {

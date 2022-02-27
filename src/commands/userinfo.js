@@ -3,7 +3,7 @@ module.exports = {
 	name: 'userinfo',
 	description: 'get info about a facebook user',
 	usage: '<user id>',
-    adminOnly: true,
+    adminOnly: false,
 	args: true,
 	execute(api, message, args) {
 		let query = args[0];

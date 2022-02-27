@@ -115,7 +115,7 @@ module.exports = {
         }
 
         if (txt) utils.splitMessage(txt.join('\n'), 1000).forEach(msg => {
-            api.sendMessage(msg, message.senderID);
+            api.sendMessage(msg, message.threadID);
         });
     }
 }
