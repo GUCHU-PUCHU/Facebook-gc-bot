@@ -70,7 +70,10 @@ You can customize the config.json file by editing it.
     "threadID": ""
 }
 ```
+
+
 ### Running the bot 
+***
 
 Now, pray to every god that you don't get banned and everything works as intended.
 *If you're an atheist.. then that sucks. R'amen, May his noodly goodness touch you!* JKJKJK
