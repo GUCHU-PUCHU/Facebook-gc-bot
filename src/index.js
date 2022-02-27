@@ -1,6 +1,7 @@
 const fs = require('fs-extra');
 const login = require('facebook-chat-api');
 var log = require('npmlog');
+var utils = require('./utils');
 const config = require('./config.json');
 
 // Load credentials from cookies
@@ -43,10 +44,11 @@ login(credentials, (err, api) => {
 				console.log(message);
 				if (!message.isGroup) return;
 
-					if (message.body.toLowerCase().includes(config.botName[1])) {
-						log.info('Interaction', 'Name was mentioned!');
-						api.sendMessage(config.response[0] + config.botName[0] + " " + config.response[1] + config.response[2] + config.prefix, message.threadID);
-					}
+				if (message.body.toLowerCase().includes('@' + config.botName[1])) {
+					log.info('Interaction', 'Name was mentioned!');
+					utils.eyesReact(api, message.messageID);
+					api.sendMessage(config.response[0] + config.botName[0] + ". " + config.response[1] + config.response[2] + config.prefix, message.threadID);
+				}
 
 				if (!message.body.startsWith(config.prefix)) return; // Checks if the message starts with the given config.prefix.
 
@@ -67,19 +69,18 @@ login(credentials, (err, api) => {
 					}
 
 					api.sendMessage(reply, message.threadID);
-					api.setMessageReaction('\uD83D\uDC4E', message.messageID);
+					utils.noticeReact(api, message.messageID);
 					return;
 				}
 
 				api.markAsRead(message.threadID);
-				api.setMessageReaction('\uD83D\uDC4D', message.messageID);
-				
+				api.setMessageReaction('👍', message.messageID);
 				// This bit of code executes the command.
 				try {
 					command.execute(api, message, args, cmdMap, __dirname, config);
-				}
-				catch (error) {
-					log.error('Something is wrong executing the command! \n', err);
+				} catch (error) {
+					log.error('Something is wrong executing the command! \n', error);
+					utils.noticeReact(api, message.messageID);
 				}
 			}
 		}

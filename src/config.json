@@ -1,8 +1,5 @@
 {
-    "prefix" : "!",
-    "botname" : "bot",
-    "response": [ "Hello!, I'm ", "I'm here to help you with stuff!. ", "My prefix is "],
-    "isRecording":false,
-    "attedArr": [],
-    "checkArr":[]
+    "prefix": ".",
+    "botName": ["Bot", "bot"],
+    "response": ["Hello!, I'm ", "I'm here to help you with stuff!. ", "My prefix is "]
 }

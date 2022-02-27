@@ -1,151 +1,131 @@
 const moment = require('moment');
+var utils = require("../utils");
 let isRecording = false;
 let date;
 let limit;
 let details = '';
 var list = [];
-exports.isRecording = isRecording;
 module.exports = {
     name: 'att',
     description: 'Takes or records attendance',
-    usage: '< start [limit?] [details?]| stop | status | add [entry] | clear | remove >',
+    usage: '< start [limit?] [details?] | stop | status | add [entry] | clear | remove [arr[?]] >',
     adminOnly: false,
     args: true,
     async execute(api, message, args) {
         let txt = [];
-
-        function numberBulletGiver(arr) {
-            let i = 0;
-            for (let item of arr) {
-                i++;
-                txt.push(`${i}. ${item}`);
-            }
-        }
-
-        if (args[0] === 'start') {
-
-            if (isRecording) {
-                return api.sendMessage('Already recording!', message.threadID);
-            } else {
-                isRecording = true;
-
-                if (isNaN(args[1])) {
-                    details = args.slice(1).join(' ');
+        switch (args[0]) {
+            case 'start':
+                if (isRecording) {
+                    api.sendMessage('Already recording!', message.threadID);
+                    return utils.noticeReact(api, message.messageID);
                 } else {
-                    limit = parseInt(args[1]);
-                    details = args.slice(2).join(' ');
+                    isRecording = true;
+
+                    if (isNaN(args[1])) {
+                        details = args.slice(1).join(' ');
+                    } else {
+                        limit = parseInt(args[1]);
+                        details = args.slice(2).join(' ');
+                    }
+
+                    date = moment().format('MMMM Do YYYY, h:mm a');
+                    txt.push('Recording started at ' + date);
+
+                    if (details) txt.push(details);
+                    // api.sendMessage(txt.join('\n'), message.threadID);
                 }
+                break;
 
-                date = moment().format('MMMM Do YYYY, h:mm a');
-                txt.push('Recording started at ' + date);
+            case 'stop':
 
-                if (details) txt.push(details);
-                api.sendMessage(txt.join('\n'), message.threadID);
-                return;
-            }
-        }
-
-        if (args[0] === 'stop') {
-
-            if (!isRecording) {
-                return api.sendMessage('Already stopped!', message.threadID);
-            } else {
-                isRecording = false;
-                txt.push('Recording stopped at ' + date);
-
-                if (details) txt.push(details);
-                txt.push(numberBulletGiver(list));
-                api.sendMessage(txt.join('\n'), message.threadID);
-                list = [];
-                return;
-            }
-        }
-
-        if (args[0] === 'status') {
-
-            if (!isRecording) {
-                return api.sendMessage('Recording not active!', message.threadID);
-            } else {
-
-                if (list.length == 0) return api.sendMessage('No entries recorded yet!', message.threadID);
-                txt.push('Recording started at ' + date);
-
-                if (details) txt.push('Details: ' + details);
-
-                if (limit) txt.push('Limit: ' + limit);
-                txt.push('Entries: ' + list.length);
-                const msg = numberBulletGiver(list);
-                api.sendMessage(msg, message.threadID);
-                api.sendMessage(txt.join('\n'), message.threadID);
-                return;
-            }
-            
-        }
-
-        if (args[0] === 'add') {
-
-            if (!isRecording) {
-                return api.sendMessage('Recording not active!', message.threadID);
-            } else {
-
-                if (!args[1]) return api.sendMessage('Entry is empty! Please try again.', message.threadID);
-
-                if (list.length == limit) {
-                    api.sendMessage(`Custom limit[${limit}] reached! Stopping...`, message.threadID);
-                    api.sendMessage(`${date} \n${details} \n` + list.join('\n'), message.threadID);
-                    list = [];
-                    isRecording = false;
-                    return;
-                } else {
-                    list.push(`${args.slice(1).join(' ')}`);
-                    api.setMessageReaction(' ', message.messageID, (err) => {
-
-                        if (err) return log.error('Attendance', err);
-                        api.setMessageReaction('✅', message.messageID);
-                    });
-                    return;
-                }
-            }
-        }
-
-        if (args[0] === 'clear') {
-                
                 if (!isRecording) {
-                    return api.sendMessage('Recording not active!', message.threadID);
+                    api.sendMessage('Already stopped!', message.threadID);
+                    return utils.noticeReact(api, message.messageID);
                 } else {
-    
-                    if (list.length == 0) return api.sendMessage('No entries recorded yet!', message.threadID);
+                    isRecording = false;
+                    txt.push('Recording stopped at ' + date);
+
+                    if (details) txt.push(details);
+                    txt.push(utils.numberBulletGiver(list));
+                    api.sendMessage(txt.join('\n'), message.threadID);
                     list = [];
-                    api.sendMessage('Entries cleared!', message.threadID);
                     return;
                 }
+                break;
+
+            case 'status':
+
+                if (!isRecording) {
+                    api.sendMessage('Not recording!', message.threadID);
+                    return utils.noticeReact(api, message.messageID);
+                } else {
+
+                    if (list.length === 0) return api.sendMessage('No entries recorded!', message.threadID);
+                    txt.push('Recording started at ' + date);
+
+                    if (details) txt.push('Details: ' + details);
+
+                    if (limit) txt.push('Limit": ' + limit);
+                    txt.push(utils.numberBulletGiver(list));
+                    // api.sendMessage(txt.join('\n'), message.threadID);
+                }
+                break;
+
+            case 'add':
+
+                if (!isRecording) {
+                    api.sendMessage('Not recording!', message.threadID);
+                    return utils.noticeReact(api, message.messageID);
+                } else {
+                    if (list.length == limit) {
+                        isRecording = false;
+                        txt.push(`List is full! with ${limit} entries`);
+                        txt.push('Recording stopped at ' + date);
+
+                        if (details) txt.push(details);
+                        txt.push(utils.numberBulletGiver(list));
+                        // api.sendMessage(txt.join('\n'), message.threadID);
+                    } else {
+                        list.push(`${args.slice(1).join(' ')}`);
+                        utils.successReact(api, message.messageID);
+                        return;
+                    }
+
+                }
+                break;
+
+            case 'remove':
+
+                if (!isRecording) return api.sendMessage('Not recording!', message.threadID);
+
+                if (list.length === 0) {
+                    utils.noticeReact(api, message.messageID);
+                    return api.sendMessage('No entries recorded!', message.threadID);
+                }
+
+                if (!args[1] || isNaN(args[1])) {
+                    utils.noticeReact(api, message.messageID);
+                    return api.sendMessage('Please enter a valid number[int?] from the list', message.threadID);
+                }
+
+                var x = list.splice(args[1] - 1, 1);
+                txt.push(`Removed ${x} from the list`);
+                txt.push(utils.numberBulletGiver(list));
+                break;
+
+            case 'clear':
+                list = [];
+                txt.push('List cleared!');
+                break;
+
+            default:
+                txt.push('Invalid parameters!');
+                txt.push('Usage: ' + this.usage);
+                utils.noticeReact(api, message.messageID);
+                break;
         }
 
-        if (args[0] === 'remove') {
-
-            if (!isRecording) {
-                return api.sendMessage('Recording not active!', message.threadID);
-            } else {
-
-                if (!args[1]) return api.sendMessage('Entry is empty! Please try again.', message.threadID);
-
-                if (list.length == 0) return api.sendMessage('No entries recorded yet!', message.threadID);
-                list.splice(args[1] - 1, 1);
-                api.sendMessage('Entry removed!', message.threadID);
-                const msg = numberBulletGiver(list);
-                api.sendMessage(msg, message.threadID);
-                return;
-            }
-        }
-        
-        else {
-            api.sendMessage('Invalid parameter!', message.threadID);
-            api.setMessageReaction('', message.messageID, (err) => {
-                if (err) return log.error('Attendance', err);
-                api.setMessageReaction('❌', message.messageID);
-            });
-            return;
-        }
-        // Yes, I know this is a mess. I'm sorry. But it works.
-    },
+        if (txt) api.sendMessage(txt.join('\n'), message.threadID);
+        // if (list) api.sendMessage(utils.numberBulletGiver(list), message.threadID);
+    }
 }
