@@ -155,7 +155,7 @@ module.exports = {
                 await page.click('div');
 
             } catch (error) {
-                return log.error('cookies', 'error logging in. Check your credentials.');
+                log.error('cookies', 'Error clicking div... Ignoring...');
             }
 
             cookies = await page.cookies();
@@ -174,6 +174,20 @@ module.exports = {
             return;
         }
 
-    }
+    },
 
+    // Returns the sender's info
+    senderName: function (api, ID) {
+        var result = '';
+        result = api.getUserInfo(ID, (err, user) => {
+            if (err) return log.error(err);
+            for (var prop in user) {
+                if (user.hasOwnProperty(prop)) {
+                    result = user[prop].name;
+                    // result.push(user[prop].name);
+                }
+            }
+            return result;
+        });
+    }
 }
