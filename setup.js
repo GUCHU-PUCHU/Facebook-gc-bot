@@ -50,7 +50,7 @@ const properties = [
     }
 ];
 
-if (process.argv[2] === '--config') {
+if (process.argv[2] === '--config' || process.argv[2] === '-c') {
     prompt.start();
     prompt.get(config, function (err, result) {
         if (err) return console.log(err);
@@ -59,7 +59,7 @@ if (process.argv[2] === '--config') {
     });
 }
 
-if (process.argv[2] === '--login') {
+if (process.argv[2] === '--login' || process.argv[2] === '-l') {
     prompt.start();
     prompt.get(properties, function (err, result) {
         if (err) {
@@ -71,7 +71,7 @@ if (process.argv[2] === '--login') {
     })
 }
 
-else if (process.argv[2] === '--help' || process.argv[2] === '') {
+else if (process.argv[2] === '--help' || process.argv[2] === '-h') {
     console.log('Usage: node setup [ --config | --login | --help]');
     console.log('--config   : Creates a config file for the bot');
     console.log('--login    : Logs in to Facebook');

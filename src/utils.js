@@ -176,7 +176,7 @@ module.exports = {
 
     },
 
-    // Returns the sender's info
+    // Returns the sender's name
     senderName: function (api, ID) {
         var result = '';
         result = api.getUserInfo(ID, (err, user) => {
