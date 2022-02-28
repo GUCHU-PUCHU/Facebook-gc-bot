@@ -1,6 +1,0 @@
-{
-    "prefix" : ".",
-    "botName" : ["Bot", "bot"],
-    "response": [ "response 1", "response 2", "response 3"],
-    "threadID": ""
-}
