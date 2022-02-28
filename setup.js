@@ -178,14 +178,14 @@ if (process.argv[2] === '--login' || process.argv[2] === '-l') {
 
 else if (process.argv[2] === '--help' || process.argv[2] === '-h') {
     console.log('Usage: node setup [ --config [-p, -b, -r, -t, -w, -g] | --login , -l | --help, -h]');
-    console.log('--login, -l    : Logs in to Facebook');
-    console.log('--config       : Creates a config file for the bot');
-    console.log ('              : -p, --prefix   : Sets the prefix for the bot');
-    console.log ('              : -b, --botName  : Sets the bot\'s name');
-    console.log ('              : -r, --response : Sets the response for the bot');
-    console.log ('              : -t, --threadID : Sets the thread ID for the bot');
-    console.log ('              : -w, --weatherAPIKey : Sets the weather API key for the bot');
-    console.log ('              : -g, --gcLock   : Sets the group chat lock for the bot');
-    console.log('--help, -h     : Displays this message');
+    console.log('--login, -l                     : Logs in to Facebook');
+    console.log('--config                        : Creates a config file for the bot');
+    console.log('          -p, --prefix          : Sets the prefix for the bot');
+    console.log('          -b, --botName         : Sets the bot\'s name');
+    console.log('          -r, --response        : Sets the response for the bot');
+    console.log('          -t, --threadID        : Sets the thread ID for the bot');
+    console.log('          -w, --weatherAPIKey   : Sets the weather API key for the bot');
+    console.log('          -g, --gcLock          : Sets the group chat lock for the bot');
+    console.log('--help, -h                      : Displays this message');
     return;
 }
