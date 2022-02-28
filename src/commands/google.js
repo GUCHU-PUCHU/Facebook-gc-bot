@@ -4,6 +4,7 @@ module.exports = {
     name: 'google',
     description: 'Searches Google for a query',
     adminOnly: false,
+    args: true,
     async execute(api, message, args) {
         const query = args.join(' ');
         if (!query) {

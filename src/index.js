@@ -57,7 +57,7 @@ login(credentials, (err, api) => {
 					const x = config.botName.toUpperCase().charAt(0) + config.botName.slice(1);
 
 					res.push(`Hello, I'm ${x}. My prefix is: \`${config.prefix}\``);
-					res.push(`You can view my commands by typing \`${config.prefix}help\``);
+					res.push(`You can view my commands by typing \`${config.prefix}help\` \n`);
 
 					if (config.response) res.push(config.response);
 					utils.splitMessage(res.join('\n'), 1000).forEach((msg) => {
