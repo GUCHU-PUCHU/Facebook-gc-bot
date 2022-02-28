@@ -46,8 +46,11 @@ login(credentials, (err, api) => {
 				// checks if the thread ID is the same as the one in the config file if not then ignore.
 				// This is to prevent the bot from responding to other threads.
 				// This can be configured in the config file.
-				if (config.threadID !== message.threadID) {
-					return log.error('Warning!', 'Received message from another chat! ThreadID does not match!');
+				
+				if (config.gcLock) {
+					if (config.threadID !== message.threadID) {
+						return log.error('Warning!', 'Received message from another chat! ThreadID does not match!');
+					}
 				}
 
 				if (message.body.toLowerCase().includes('@' + config.botName)) {

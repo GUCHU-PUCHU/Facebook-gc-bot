@@ -9,7 +9,7 @@ module.exports = {
     usage: '< prefix | botname | response | threadID | apiKey | gcLock > [value]',
     adminOnly: true,
     args: true,
-    async execute(api, message, args, cmdMap, __dirname,) {
+    async execute(api, message, args, cmdMap, __dirname, ) {
 
         let key = args[0];
         let value = args.slice(1).join(' ');
@@ -45,22 +45,25 @@ module.exports = {
         }
 
         if (key === 'gcLock') {
+            log.info('gcLock', value);
             if (value === 'true') {
-                config.gcLock = true;
+                value =  true;
                 api.setMessageReaction('🔒', message.messageID);
-                return api.sendMessage('Group chat lock enabled', message.threadID);
             }
             if (value === 'false') {
-                config.gcLock = false;
+                value = false;
                 api.setMessageReaction('🔓', message.messageID);
-                api.sendMessage('Group chat Lock disabled.', message.threadID);
-            } else {
+            }
+            if (config.gcLock == value) {
+                utils.noticeReact(api, message.messageID);
+                return api.sendMessage('Nothing changed.', message.threadID);
+            }
+            log.info('gcLock0', value);
+            if (typeof value !== 'boolean') {
                 utils.errorReact(api, message.messageID);
                 return api.sendMessage('Invalid value. must be true or false.', message.threadID);
             }
-
             config.gcLock = value;
-            utils.successReact(api, message.messageID);
         }
 
         fs.writeFileSync(__dirname + '/config.json', JSON.stringify(config, null, 2), (err) => {
