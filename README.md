@@ -44,8 +44,11 @@ node setup --config
 You'll be prompted to enter the configuration for the bot.
 
 > **prefix** is the command prefix. it can be a single character or more. This is the "trigger" for the bot.
+
 > **botName** is the name of the bot. to trigger @botName.
+
 > **response** is the response to the bot when called. (optional)
+
 > **threadID** is the thread ID of the chat. (**IMPORTANT**)
 
 
