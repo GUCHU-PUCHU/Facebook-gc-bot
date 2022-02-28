@@ -47,7 +47,7 @@ You'll be prompted to enter the configuration for the bot.
 
 > **botName** is the name of the bot. to trigger @botName.
 
-> **response** is the response to the bot when called. (optional)
+> **response** is the response of the bot when mentioned @botName. (optional)
 
 > **threadID** is the thread ID of the chat. (**IMPORTANT**) You can get this from the url of the chat group.
 
