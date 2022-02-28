@@ -1,4 +1,5 @@
 const utils = require('../utils');
+const config = require('../config.json');
 
 const fetch = (...args) => import('node-fetch').then(({
     default: fetch
@@ -15,7 +16,7 @@ module.exports = {
         let data = [];
         const query = args.slice(0).join(' ');
 
-        if (process.env.WEATHER_API_KEY === undefined) {
+        if (config.weatherAPIKey === undefined || config.weatherAPIKey === '') {
             utils.noticeReact(api, message.messageID);
             return api.sendMessage('Weather API key is not set!', message.threadID);
         }

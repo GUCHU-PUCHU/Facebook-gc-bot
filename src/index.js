@@ -30,7 +30,7 @@ log.info('login', 'Attempting to log in');
 login(credentials, (err, api) => {
 	if (err) log.error('Warning!', err);
 	api.listenMqtt((err, message) => {
-		if (err) log.error('Listen Api error!', err);
+		if (err) return log.error('Listen Api error!', err);
 
 		else {
 			// checks if there's a stored cookies in ./data/fbCookies.json
@@ -46,17 +46,20 @@ login(credentials, (err, api) => {
 				// checks if the thread ID is the same as the one in the config file if not then ignore.
 				// This is to prevent the bot from responding to other threads.
 				// This can be configured in the config file.
-				if (config.threadID !== message.threadID) return log.error('Warning!', 'Thread ID does not match!');
+				if (config.threadID !== message.threadID) {
+					return log.error('Warning!', 'Received message from another chat! ThreadID does not match!');
+				}
 
-				if (message.body.toLowerCase().includes('@' + config.botName[1])) {
+				if (message.body.toLowerCase().includes('@' + config.botName)) {
 					log.info('Interaction', 'Name was mentioned!');
 					utils.eyesReact(api, message.messageID);
 					let res = [];
+					const x = config.botName.toUpperCase().charAt(0) + config.botName.slice(1);
 
-					res.push(`Hello, I'm ${config.botName[0]}. My prefix is: \`${config.prefix}\``);
+					res.push(`Hello, I'm ${x}. My prefix is: \`${config.prefix}\``);
 					res.push(`You can view my commands by typing \`${config.prefix}help\``);
 
-					if (config.response.length) res.push(config.response.join('\n'));
+					if (config.response) res.push(config.response);
 					utils.splitMessage(res.join('\n'), 1000).forEach((msg) => {
 						api.sendMessage(msg, message.threadID);
 					});

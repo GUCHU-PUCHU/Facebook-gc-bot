@@ -18,6 +18,7 @@
     "moment": "^2.29.1",
     "node-fetch": "^3.2.0",
     "npmlog": "^6.0.0",
+    "prompt": "^1.2.2",
     "puppeteer": "^13.1.2"
   },
   "devDependencies": {

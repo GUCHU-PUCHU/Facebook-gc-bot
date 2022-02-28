@@ -10,6 +10,8 @@ You see... This `thing` uses an **Unofficial** Facebook API. This means you need
 
 JUST DON'T USE YOUR REAL FB ACCOUNT. OKAY?. GOOD.
 
+> I'm a beginner and I'm still learning, so there might be some bugs... and I'm not sure if I'm doing everything right. anyways, have fun with this bot.
+
 
 ### Dependencies 
 ***
@@ -20,56 +22,31 @@ JUST DON'T USE YOUR REAL FB ACCOUNT. OKAY?. GOOD.
 ### Installation 
 ***
 
+> Hope everything here is clear enough and understandable since english is not my first language.
+
+Clone the repo and run `npm install` in the root directory.
+
 ```bash
 git clone git@github.com:PedjPedj/fbBot.git
 cd fbBot
 npm i
 ```
-
-You need to create an .env file. It must be in the root folder. Don't put it inside the /src folder.
-The file must be named `.env`. not any other name! Just `.env`.
-
-
-Paste this:
-
-```txt
-EMAIL=user@email.com
-PASSWORD=YourPassword
-WEATHER_API_KEY=YourWeatherApiKey
-```
-
-Put the Email and Password of your burner account.
-
-Get your API key from [Open Weather Map](https://openweathermap.org/api). (optional)
-
-Then run getAppstate.js to fetch the cookies.
+then run the setup script.
 
 ```bash
-node src/getAppstate.js
+node setup --login
 ```
+You'll be prompted to login to your FB account. Note: You need to use a burner account.
 
-Before you can use the bot, you need to check the config.json file first.
-
-You can customize the config.json file by editing it.
-
-
-> **prefix** is the command prefix.
-
-> **botName** is the name of the bot. Please note that botName[0]'s first letter must be capitalized.
-
-> **response** is what the bot replies with if mentioned. You can leave it blank if you want.
-
-> **threadID** is the thread id of the group chat. This one is highly important. It's here so the bot can send and receive messages only to that group chat. You can get the thread id by opening the group chat in facebook and copying the id from the url. *I don't know how sharding works yet so the bot can only work for a single group chat.*
-
-
-```json
-{
-    "prefix" : ".",
-    "botName" : ["Bot", "bot"],
-    "response": [ "response 1", "response 2", "response 3"],
-    "threadID": ""
-}
+```bash
+node setup --config
 ```
+You'll be prompted to enter the configuration for the bot.
+
+> **prefix** is the command prefix. it can be a single character or more. This is the "trigger" for the bot.
+> **botName** is the name of the bot. to trigger @botName.
+> **response** is the response to the bot when called. (optional)
+> **threadID** is the thread ID of the chat. (**IMPORTANT**)
 
 
 ### Running the bot 
@@ -83,6 +60,3 @@ Then run the bot.
 ```bash
 node .
 ```
-
-I'll automate the setup when I get to it. XD
- *tbh I'm not sure if I'll do it or not and I don't know how yet.*
