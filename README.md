@@ -49,7 +49,9 @@ You'll be prompted to enter the configuration for the bot.
 
 > **response** is the response to the bot when called. (optional)
 
-> **threadID** is the thread ID of the chat. (**IMPORTANT**)
+> **threadID** is the thread ID of the chat. (**IMPORTANT**) You can get this from the url of the chat group.
+
+> **weather API Key** is the API key for the weather API. (optional)
 
 
 ### Running the bot 

@@ -5,13 +5,13 @@ const fs = require('fs');
 const config = [
     {
         name: 'prefix',
-        description: 'Prefix for the bot',
+        description: 'Bot\'s prefix',
         default: '.',
         required: true,
     },
     {
         name: 'botName',
-        description: 'Name of the bot',
+        description: 'Bot\'s name',
         default: 'bot',
         required: true,
     },
@@ -23,14 +23,14 @@ const config = [
     },
     {
         name: 'threadID',
-        description: 'Thread ID of the chat',
+        description: 'Chat\s thread ID',
         pattern: /^\d+$/,
         default: '',
         required: true,
     },
     {
         name: 'weatherAPIKey',
-        description: 'API Key for the weather API (optional)',
+        description: 'Weather API Key (optional)',
         default: '',
     }
 ];
