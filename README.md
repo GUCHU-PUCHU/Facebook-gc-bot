@@ -6,7 +6,7 @@ This bot uses [Unofficial facebook Chat API](https://github.com/Schmavery/facebo
 ## NOTE 
 PLEASE READ THIS. THIS IS IMPORTANT.
 
-You see... This `thing` uses an **Unofficial** Facebook API. This means you need a Burner Facebook account (an account you can easily throw to the bin) or you'll risk your account getting banned.
+You see... This `thing` uses an **Unofficial** Facebook API. This means you need a Burner Facebook account (an account you can easily throw to the bin. Kobe!) or you'll risk your account getting banned.
 
 JUST DON'T USE YOUR REAL FB ACCOUNT. OKAY?. GOOD.
 
@@ -27,7 +27,7 @@ JUST DON'T USE YOUR REAL FB ACCOUNT. OKAY?. GOOD.
 Clone the repo and run `npm install` in the root directory.
 
 ```bash
-git clone git@github.com:PedjPedj/fbBot.git
+git clone https://github.com/PedjPedj/fbBot.git
 cd fbBot
 npm i
 ```
