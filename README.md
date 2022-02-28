@@ -27,7 +27,7 @@ JUST DON'T USE YOUR REAL FB ACCOUNT. OKAY?. GOOD.
 Clone the repo and run `npm install` in the root directory.
 
 ```bash
-git clone https://github.com/PedjPedj/fbBot.git
+git clone https://github.com/PedjPedj/Facebook-gc-bot.git
 cd fbBot
 npm i
 ```
