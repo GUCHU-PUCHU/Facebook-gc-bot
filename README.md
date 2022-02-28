@@ -28,7 +28,7 @@ Clone the repo and run `npm install` in the root directory.
 
 ```bash
 git clone https://github.com/PedjPedj/Facebook-gc-bot.git
-cd fbBot
+cd Facebook-gc-bot
 npm i
 ```
 then run the setup script.
