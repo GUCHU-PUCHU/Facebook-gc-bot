@@ -51,7 +51,7 @@ You'll be prompted to enter the configuration for the bot.
 
 > **threadID** is the thread ID of the chat. (**IMPORTANT**) You can get this from the url of the chat group.
 
-> **weather API Key** is the API key for the weather API. (optional)
+> **weather API Key** is the API key for the weather API. Get your API key from [Open Weather Map](https://openweathermap.org/api). (optional)
 
 
 ### Running the bot 
