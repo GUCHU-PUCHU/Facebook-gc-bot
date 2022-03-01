@@ -176,18 +176,4 @@ module.exports = {
 
     },
 
-    // Returns the sender's name
-    senderName: function (api, ID) {
-        var result = '';
-        result = api.getUserInfo(ID, (err, user) => {
-            if (err) return log.error(err);
-            for (var prop in user) {
-                if (user.hasOwnProperty(prop)) {
-                    result = user[prop].name;
-                    // result.push(user[prop].name);
-                }
-            }
-            return result;
-        });
-    }
 }

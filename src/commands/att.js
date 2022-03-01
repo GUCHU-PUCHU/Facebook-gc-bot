@@ -39,7 +39,7 @@ module.exports = {
                     return utils.noticeReact(api, message.messageID);
                 } else {
                     isRecording = false;
-                    txt.push('Recording stopped at ' + date);
+                    txt.push(date);
 
                     if (details) txt.push(details);
                     txt.push(utils.numberBulletGiver(list));
@@ -72,7 +72,7 @@ module.exports = {
                     if (list.length == limit) {
                         isRecording = false;
                         txt.push(`List is full! with ${limit} entries`);
-                        txt.push('Recording stopped at ' + date);
+                        txt.push(date);
 
                         if (details) txt.push(details);
                         txt.push(utils.numberBulletGiver(list));

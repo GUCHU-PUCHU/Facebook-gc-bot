@@ -89,7 +89,7 @@ login(credentials, (err, api) => {
 				}
 
 				api.markAsRead(message.threadID);
-				// api.setMessageReaction('👍', message.messageID);
+				api.setMessageReaction('👍', message.messageID);
 				// This bit of code executes the command.
 				try {
 					command.execute(api, message, args, cmdMap, __dirname, config);
