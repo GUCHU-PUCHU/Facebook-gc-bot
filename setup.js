@@ -182,7 +182,7 @@ else if (process.argv[2] === '--help' || process.argv[2] === '-h') {
     console.log('--config                        : Creates a config file for the bot');
     console.log('          -p, --prefix          : Sets the prefix for the bot');
     console.log('          -b, --botName         : Sets the bot\'s name');
-    console.log('          -r, --response        : Sets the response for the bot');
+    console.log('          -r, --response        : Sets the response of the bot');
     console.log('          -t, --threadID        : Sets the thread ID for the bot');
     console.log('          -w, --weatherAPIKey   : Sets the weather API key for the bot');
     console.log('          -g, --gcLock          : Sets the group chat lock for the bot');

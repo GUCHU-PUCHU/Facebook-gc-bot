@@ -34,12 +34,12 @@ npm i
 then run the setup script.
 
 ```bash
-node setup --login
+npm run login
 ```
 You'll be prompted to login to your FB account. Note: You need to use a burner account.
 
 ```bash
-node setup --config
+npm run setup
 ```
 You'll be prompted to enter the configuration for the bot.
 
@@ -53,6 +53,7 @@ You'll be prompted to enter the configuration for the bot.
 
 > **weather API Key** is the API key for the weather API. Get your API key from [Open Weather Map](https://openweathermap.org/api). (optional)
 
+You can run `node setup -h` to see the parameters for changing the configuration for the bot.
 
 ### Running the bot 
 ***
