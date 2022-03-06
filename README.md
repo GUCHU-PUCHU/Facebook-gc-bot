@@ -41,15 +41,15 @@ npm run setup
 
 Choose `login` to enter your credentials. Then you'll be asked if you want to setup your configuration files, enter 'y' to initialize the files.
 
-> **prefix** is the command prefix. it can be a single character or more. This is the "trigger" for the bot.
+> **Prefix** is the command prefix. it can be a single character or more. This is the "trigger" for the bot.
 >
-> **botName** is the name of the bot. to trigger @botName.
+> **Bot name** is the name of the bot. to trigger @botName.
 >
 > **response** is the response of the bot when mentioned @botName. (optional)
 >
-> **threadID** is the thread ID of the chat. (**IMPORTANT**) You can get this from the url of the chat group.
+> **Thread ID** is the thread ID of the chat. (**IMPORTANT**) You can get this from the url of the chat group.
 >
-> **weather API Key** is the API key for the weather API. Get your API key from [Open Weather Map](https://openweathermap.org/api). (optional)
+> **Weather API Key** is the API key for the weather API. Get your API key from [Open Weather Map](https://openweathermap.org/api). (optional)
 >
 > **GC Lock** is the group chat lock. If you want to prevent the bot from receiving messages from other group chat, set this to true.
 
