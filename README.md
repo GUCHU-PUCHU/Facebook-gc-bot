@@ -39,7 +39,7 @@ then run the setup script.
 npm run setup
 ```
 
-Choose `login` to enter your credentials. Then you'll be asked if you want to setup your configuration files, enter 'y' if to initialize the files.
+Choose `login` to enter your credentials. Then you'll be asked if you want to setup your configuration files, enter 'y' to initialize the files.
 
 > **prefix** is the command prefix. it can be a single character or more. This is the "trigger" for the bot.
 >
