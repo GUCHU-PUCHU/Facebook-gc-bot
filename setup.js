@@ -1,6 +1,16 @@
 var utils = require('./src/utils');
+var fs = require('fs-extra');
+var log = require('npmlog');
+
+if (fs.ensureFileSync('./src/config.json')) {
+    log.info('config', 'Configuration file found!');
+}
+else {
+    log.info('config', 'Configuration file not found, creating one...');
+    fs.writeFileSync('./src/config.json', JSON.stringify(utils.defaultConfig, null, 2));
+}
+
 var config = require('./src/config.json');
-var fs = require('fs');
 var log = require('npmlog');
 var inquirer = require('inquirer');
 
@@ -84,20 +94,15 @@ inquirer.prompt([{
                             {
                                 type: 'confirm',
                                 name: 'gcLock',
-                                message: 'Do you want to lock the GC? (yes/no):',
-                                default: 'no',
+                                message: 'Do you want to lock the GC?:',
+                                default: false,
                             }
                         ]).then(answers => {
                             config.prefix = answers.prefix;
                             config.threadID = answers.threadID;
                             config.botName = answers.botName;
-                            if (answers.gcLock === 'yes') {
-                                config.gcLock = true;
-                            } else { config.gcLock = false; }
-                            
                             config.gcLock = answers.gcLock;
                             writeConfig(config);
-                            log.info('config', 'Configuration file updated!');
                         });
                     }
                 })

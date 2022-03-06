@@ -3,6 +3,14 @@ const log = require('npmlog');
 const puppeteer = require('puppeteer');
 
 module.exports = {
+    defaultConfig: {
+        prefix: '!',
+        botName: 'bot',
+        response: 'Hello!',
+        threadID: '',
+        weatherAPIKey: '',
+        gcLock: false,
+    },
 
     // Reactions for the bot
     successReact: function (api, msgId) {
