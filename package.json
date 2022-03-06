@@ -5,9 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "login": "node setup --login",
     "start": "node .",
-    "setup": "node setup --config"
+    "setup": "node setup"
   },
   "keywords": [],
   "author": "",
@@ -18,10 +17,10 @@
     "facebook-chat-api": "github:PedjPedj/facebook-chat-api#test",
     "fs-extra": "^10.0.0",
     "googlethis": "^1.2.7",
+    "inquirer": "^8.2.0",
     "moment": "^2.29.1",
     "node-fetch": "^3.2.0",
     "npmlog": "^6.0.0",
-    "prompt": "^1.2.2",
     "puppeteer": "^13.1.2"
   },
   "devDependencies": {

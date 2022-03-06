@@ -1,6 +1,5 @@
 const utils = require('../utils');
 const config = require('../config.json');
-const log = require('npmlog');
 const moment = require('moment');
 
 const fetch = (...args) => import('node-fetch').then(({

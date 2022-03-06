@@ -1,5 +1,6 @@
-.env
+node_modules
+./data/*.json
+./data/images/*.png
 src/data/fbCookies.json
-src/data/*.png
-/node_modules
-src/data/*.png
+package-lock.json
+config.json

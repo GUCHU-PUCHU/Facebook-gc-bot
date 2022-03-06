@@ -1,191 +1,180 @@
-const prompt = require('prompt');
-const utils = require('./src/utils');
-const config = require('./src/config.json');
-const fs = require('fs');
-const log = require('npmlog');
+var utils = require('./src/utils');
+var config = require('./src/config.json');
+var fs = require('fs');
+var log = require('npmlog');
+var inquirer = require('inquirer');
 
-const dConfig = [
-    {
-        name: 'prefix',
-        description: 'Bot\'s prefix',
-        default: '.',
-        required: true,
-    },
-    {
-        name: 'botName',
-        description: 'Bot\'s name',
-        default: 'bot',
-        required: true,
-    },
-    {
-        name: 'response',
-        description: 'Response of the bot when @botName is mentioned',
-        default: '',
-        required: false,
-    },
-    {
-        name: 'threadID',
-        description: 'Chat\s thread ID',
-        pattern: /^\d+$/,
-        required: true,
-    },
-    {
-        name: 'weatherAPIKey',
-        description: 'Weather API Key (optional)',
-        default: '',
-    },
-    {
-        name: 'gcLock',
-        description: 'Are you going to use this bot in multiple group chat? false/true?',
-        type: 'boolean',
-        default: false,
+function checkIfEmpty(value) {
+    if (value.length === 0) {
+        return 'This field is required';
     }
-];
+    return true;
+}
 
-const properties = [
-    {
-        name: 'email',
-        validator: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/,
-        warning: 'Must be a valid e-mail address',
-        required: true
-    },
-    {
-        name: 'password',
-        hidden: true,
-        replace: '*',
-        required: true
+function checkIfEmail(value) {
+    if (!value.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
+        return 'Please enter a valid email address';
     }
-];
-
-if (process.argv[2] === '--config' || process.argv[2] === '-c') {
-    prompt.start();
-
-    switch (process.argv[3]) {
-        case '--prefix':
-        case '-p':
-            prompt.get(['prefix'], (err, result) => {
-                if (err) return log.error(err);
-                config.prefix = result.prefix;
-                fs.writeFile('./src/config.json', JSON.stringify(config, null, 2), (err) => {
-                    if (err) return log.error(err);
-                    log.info('config', 'Prefix updated!');
-                });
-                return;
-            });
-            break;
-        
-        case '--botName':
-        case '-b':
-            prompt.get(['botName'], (err, result) => {
-                if (err) return log.error(err);
-                config.botName = result.botName;
-                fs.writeFile('./src/config.json', JSON.stringify(config, null, 2), (err) => {
-                    if (err) return log.error(err);
-                    log.info('config', 'Bot\'s name updated!');
-                });
-                return;
-            });
-            break;
-        
-        case '--response':
-        case '-r':
-            prompt.get(['response'], (err, result) => {
-                if (err) return log.error(err);
-                config.response = result.response;
-                fs.writeFile('./src/config.json', JSON.stringify(config, null, 2), (err) => {
-                    if (err) return log.error(err);
-                    log.info('config', 'Response updated!');
-                });
-                return;
-            });
-            break;
-    
-        case '--threadID':
-        case '-t':
-            prompt.get(['threadID'], (err, result) => {
-                if (err) return log.error(err);
-                if (result.threadID.length !== 16) return log.error('config', 'Thread ID must be 16 digits long!');
-                if (!result.threadID.match(/^\d+$/)) return log.error('config', 'Thread ID must be a number!');
-                config.threadID = result.threadID;
-                fs.writeFile('./src/config.json', JSON.stringify(config, null, 2), (err) => {
-                    if (err) return log.error(err);
-                    log.info('config', 'Thread ID updated to ' + config.threadID);
-                });
-                return;
-            });
-            break;
-
-        case '--weatherAPIKey':
-        case '-w':
-            prompt.get(['weatherAPIKey'], (err, result) => {
-                if (err) return log.error(err);
-                config.weatherAPIKey = result.weatherAPIKey;
-                fs.writeFile('./src/config.json', JSON.stringify(config, null, 2), (err) => {
-                    if (err) return log.error(err);
-                    log.info('config', 'Weather API Key updated!');
-                });
-                return;
-            });
-            break;
-
-        case '--gcLock':
-        case '-g':
-            prompt.get(['gcLock'], (err, result) => {
-                if (err) return log.error(err);
-                if (result.gcLock === 'true') {
-                    config.gcLock = true;
-                }
-                if (result.gcLock === 'false') {
-                    config.gcLock = false;
-                }
-                else {
-                    config.gcLock = false;
-                    log.info('config', 'unknown value, defaulting to false.');
-                }
-
-                config.gcLock = result.gcLock;
-                fs.writeFile('./src/config.json', JSON.stringify(config, null, 2), (err) => {
-                    if (err) return log.error(err);
-                    log.info('config', 'Group Chat Lock updated!');
-                });
-                return;
-            });
-            break;
-        
-        default: 
-            prompt.get(dConfig, (err, result) => {
-                if (err) return;
-                fs.writeFile('./src/config.json', JSON.stringify(result, null, 2), (err) => {
-                    if (err) return log.error(err);
-                    log.info('config', 'Configuration file updated!');
-                });
-            });
-    } // Lazy is my middle name.
+    return true;
 }
 
-// Login and get cookies
-if (process.argv[2] === '--login' || process.argv[2] === '-l') {
-    prompt.start();
-    prompt.get(properties, function (err, result) {
-        if (err) {
-            log.error(err);
-            return;
-        }
-        utils.fetchCookie(result.email, result.password);
-        return;
-    })
+function checkIfThreadID(value) {
+    if (!value.match(/^\d+$/) || value.length !== 16) {
+        return 'Invalid thread ID';
+    }
+    return true;
 }
 
-else if (process.argv[2] === '--help' || process.argv[2] === '-h') {
-    console.log('Usage: node setup [ --config [-p, -b, -r, -t, -w, -g] | --login , -l | --help, -h]');
-    console.log('--login, -l                     : Logs in to Facebook');
-    console.log('--config                        : Creates a config file for the bot');
-    console.log('          -p, --prefix          : Sets the prefix for the bot');
-    console.log('          -b, --botName         : Sets the bot\'s name');
-    console.log('          -r, --response        : Sets the response of the bot');
-    console.log('          -t, --threadID        : Sets the thread ID for the bot');
-    console.log('          -w, --weatherAPIKey   : Sets the weather API key for the bot');
-    console.log('          -g, --gcLock          : Sets the group chat lock for the bot');
-    console.log('--help, -h                      : Displays this message');
-    return;
+// function that writes the data to the config file
+function writeConfig(config) {
+    fs.writeFile('./src/config.json', JSON.stringify(config, null, 2), (err) => {
+        if (err) return log.error(err);
+        log.info('config', 'Configuration file updated!');
+    });
 }
+
+inquirer.prompt([{
+    type: 'list',
+    name: 'setup',
+    message: 'What do you want to setup?',
+    choices: ['Login', 'Config'],
+}]).then(answers => {
+    if (answers.setup === 'Login') {
+        inquirer.prompt([{
+                type: 'input',
+                name: 'email',
+                message: 'Enter your email address: ',
+                validate: checkIfEmail,
+            },
+            {
+                type: 'password',
+                name: 'password',
+                mask: '*',
+                message: 'Enter your password: ',
+                validate: checkIfEmpty,
+            }
+        ]).then(answers => {
+            utils.fetchCookie(answers.email, answers.password).then(() => {
+                inquirer.prompt([{
+                    type: 'confirm',
+                    name: 'setup',
+                    message: 'Do you want to setup the config file?',
+                    default: false,
+                }]).then(answers => {   
+                    if (answers.setup === true) {
+                        inquirer.prompt([
+                            {
+                                type: 'input',
+                                name: 'prefix',
+                                message: 'Enter the prefix:',
+                                default: '.',
+                            },
+                            {
+                                type: 'input',
+                                name: 'threadID',
+                                message: 'Enter your thread ID:',
+                                validate: checkIfThreadID,
+                            },
+                            {
+                                type: 'input',
+                                name: 'botName',
+                                message: 'Enter your bot name:',
+                                default: 'Bot',
+                            },
+                            {
+                                type: 'confirm',
+                                name: 'gcLock',
+                                message: 'Do you want to lock the GC? (yes/no):',
+                                default: 'no',
+                            }
+                        ]).then(answers => {
+                            config.prefix = answers.prefix;
+                            config.threadID = answers.threadID;
+                            config.botName = answers.botName;
+                            if (answers.gcLock === 'yes') {
+                                config.gcLock = true;
+                            } else { config.gcLock = false; }
+                            
+                            config.gcLock = answers.gcLock;
+                            writeConfig(config);
+                            log.info('config', 'Configuration file updated!');
+                        });
+                    }
+                })
+            });
+        });
+    }
+    if (answers.setup === 'Config') {
+        inquirer.prompt([{
+            type: 'list',
+            name: 'config',
+            message: 'What do you want to configure?',
+            choices: ['Prefix', 'Bot name', 'Response', 'Thread ID', 'Weather API Key', 'GC Lock'],
+        }]).then(answers => {
+            if (answers.config === 'Prefix') {
+                inquirer.prompt([{
+                    type: 'input',
+                    name: 'prefix',
+                    message: 'Enter the prefix:',
+                    validate: checkIfEmpty,
+                }]).then(answers => {
+                    config.prefix = answers.prefix;
+                    writeConfig(config);
+                });
+            }
+            if (answers.config === 'Bot name') {
+                inquirer.prompt([{
+                    type: 'input',
+                    name: 'botName',
+                    message: 'Enter the bot\'s name:',
+                    validate: checkIfEmpty,
+                }]).then(answers => {
+                    config.botName = answers.botName;
+                    writeConfig(config);
+                });
+            }
+            if (answers.config === 'response') {
+                inquirer.prompt([{
+                    type: 'input',
+                    name: 'response',
+                    message: 'Enter the response:',
+                }]).then(answers => {
+                    config.response = answers.response;
+                    writeConfig(config);
+                });
+            }
+            if (answers.config === 'Thread ID') {
+                inquirer.prompt([{
+                    type: 'input',
+                    name: 'threadID',
+                    message: 'Enter the thread ID:',
+                    validate: checkIfThreadID,
+                }]).then(answers => {
+                    config.threadID = answers.threadID;
+                    writeConfig(config);
+                });
+            }
+            if (answers.config === 'Weather API Key') {
+                inquirer.prompt([{
+                    type: 'input',
+                    name: 'weatherAPIKey',
+                    message: 'Enter the weather API key:',
+                }]).then(answers => {
+                    config.weatherAPIKey = answers.weatherAPIKey;
+                    writeConfig(config);
+                });
+            }
+            if (answers.config === 'GC Lock') {
+                inquirer.prompt([{
+                    type: 'confirm',
+                    name: 'gcLock',
+                    message: 'Do you want to lock the GC?:',
+                    default: false,
+                }]).then(answers => {
+                    config.gcLock = answers.gcLock;
+                    writeConfig(config);
+                });
+            }
+        });
+    }
+})
