@@ -1,29 +1,29 @@
 {
-  "name": "fbbot",
-  "version": "1.0.0",
-  "description": "",
-  "main": "src/index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node .",
-    "setup": "node setup"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "aki-api": "^6.0.8",
-    "dotenv": "^14.3.2",
-    "facebook-chat-api": "github:PedjPedj/facebook-chat-api#test",
-    "fs-extra": "^10.0.0",
-    "googlethis": "^1.2.7",
-    "inquirer": "^8.2.0",
-    "moment": "^2.29.1",
-    "node-fetch": "^3.2.0",
-    "npmlog": "^6.0.0",
-    "puppeteer": "^13.1.2"
-  },
-  "devDependencies": {
-    "jshint": "^2.13.4"
-  }
+	"name": "fbbot",
+	"version": "1.0.0",
+	"description": "",
+	"main": "src/index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "node .",
+		"setup": "node setup"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"aki-api": "^6.0.8",
+		"dotenv": "^14.3.2",
+		"facebook-chat-api": "github:PedjPedj/facebook-chat-api#test",
+		"fs-extra": "^10.0.0",
+		"googlethis": "^1.2.7",
+		"inquirer": "^8.2.0",
+		"moment": "^2.29.1",
+		"node-fetch": "^3.2.0",
+		"npmlog": "^6.0.0",
+		"puppeteer": "^13.1.2"
+	},
+	"devDependencies": {
+		"jshint": "^2.13.4"
+	}
 }

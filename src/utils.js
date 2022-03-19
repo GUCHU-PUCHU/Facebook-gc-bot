@@ -1,6 +1,7 @@
 const fs = require('fs-extra');
 const log = require('npmlog');
 const puppeteer = require('puppeteer');
+const moment = require('moment');
 
 module.exports = {
     defaultConfig: {
@@ -123,6 +124,14 @@ module.exports = {
         return result;
     },
 
+    writeConfig: function(arg) {
+        config = arg;
+        fs.writeFile('./src/config.json', JSON.stringify(config, null, 4), (err) => {
+            if (err) return log.error(err);
+            log.info('config', 'Configuration file updated!');
+        });
+    },
+
     fetchCookie: async function (email, password) {
         if (email === undefined || password === undefined) {
             return log.error('Please provide an email and password');
@@ -174,14 +183,12 @@ module.exports = {
                     key,
                     ...rest
             }));
-            fs.writeFileSync(__dirname + '/data/fbCookies.json', JSON.stringify(cookies));
+            fs.writeFileSync(__dirname + '/data/fbCookies.json', JSON.stringify(cookies, null, 4));
             log.info('cookies', 'Cookies saved!');
             await browser.close();
         } catch (err) {
             log.error('cookies', 'Error:', err);
             return;
         }
-
-    },
-
+    },    
 }

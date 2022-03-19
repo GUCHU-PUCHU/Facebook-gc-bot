@@ -2,12 +2,12 @@ var utils = require('./src/utils');
 var fs = require('fs-extra');
 var log = require('npmlog');
 
-if (fs.ensureFileSync('./src/config.json')) {
+if (!fs.ensureFileSync('./src/config.json')) {
     log.info('config', 'Configuration file found!');
 }
 else {
     log.info('config', 'Configuration file not found, creating one...');
-    fs.writeFileSync('./src/config.json', JSON.stringify(utils.defaultConfig, null, 2));
+    fs.writeFileSync('./src/config.json', JSON.stringify(utils.defaultConfig, null, 4));
 }
 
 var config = require('./src/config.json');
@@ -33,14 +33,6 @@ function checkIfThreadID(value) {
         return 'Invalid thread ID';
     }
     return true;
-}
-
-// function that writes the data to the config file
-function writeConfig(config) {
-    fs.writeFile('./src/config.json', JSON.stringify(config, null, 2), (err) => {
-        if (err) return log.error(err);
-        log.info('config', 'Configuration file updated!');
-    });
 }
 
 inquirer.prompt([{
@@ -71,7 +63,7 @@ inquirer.prompt([{
                     message: 'Do you want to setup the config file?',
                     default: false,
                 }]).then(answers => {   
-                    if (answers.setup === true) {
+                    if (answers.setup == true) {
                         inquirer.prompt([
                             {
                                 type: 'input',
@@ -98,13 +90,14 @@ inquirer.prompt([{
                                 default: false,
                             }
                         ]).then(answers => {
-                            config.prefix = answers.prefix;
-                            config.threadID = answers.threadID;
-                            config.botName = answers.botName;
-                            config.gcLock = answers.gcLock;
-                            writeConfig(config);
+                            arg.prefix = answers.prefix;
+                            arg.threadID = answers.threadID;
+                            arg.botName = answers.botName;
+                            arg.gcLock = answers.gcLock;
+                            utils.writeConfig(arg);
                         });
                     }
+                    else return;
                 })
             });
         });
@@ -182,4 +175,5 @@ inquirer.prompt([{
             }
         });
     }
-})
+}) // obviously, this is not the best way to do this, but it works for now
+// TODO: make this better

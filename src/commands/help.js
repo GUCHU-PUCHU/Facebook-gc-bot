@@ -43,11 +43,14 @@ module.exports = {
 				utils.successReact(api, message.messageID);
 				data.push('Here are some commands:\n');
 
-				jsFiles.forEach((file) => {
-					const cmd = require(`./${file}`);
-					data.push(`Name: ${cmd.name}`);
-					data.push(`Description:\n  ${cmd.description}`);
-					if (cmd.usage) data.push(`Usage:\n ${prefix}${name} ${cmd.usage}`);
+				cmdMap.commands.forEach((command) => {
+					if (command.adminOnly && !message.senderID === api.getCurrentUserID()) return;
+					if (command.hidden) return;
+					data.push(`Name: ${command.name}`);
+					data.push(`Description: ${command.description}`);
+					if (command.adminOnly) data.push(`Admin Only: ${command.adminOnly}`);
+					if (command.hasOwnProperty('args')) data.push(`Arguments: ${command.args}`);
+					if (command.hasOwnProperty('usage')) data.push(`Usage: ${prefix}${command.name} ${command.usage}`);
 					data.push('=================');
 				});
 			}
@@ -55,6 +58,7 @@ module.exports = {
 			api.sendMessage(`I sent the commands in your DM! If you can't find it check your message request.`, message.threadID);
 			utils.splitMessage(data.join('\n'), 1000).forEach(msg => {
 				api.sendMessage(msg, message.senderID);
+				utils.sleep(2000);
 			});
 		});
 	},

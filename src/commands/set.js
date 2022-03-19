@@ -66,6 +66,16 @@ module.exports = {
             config.gcLock = value;
         }
 
+        if (key === 'status') {
+            let data = [];
+            data.push('Current Bot Configuration:');
+            for (let key in config) {
+                if (config[key] === "") data.push(`${key}:\n    >> none`);
+                else data.push(`\`${key}\`:\n    >> ${config[key]}`);
+            }
+            api.sendMessage(data.join('\n'), message.threadID);
+        }
+            
         fs.writeFileSync(__dirname + '/config.json', JSON.stringify(config, null, 2), (err) => {
             if (err) {
                 api.sendMessage(`Error: can't set ${key} to ${value}`, message.threadID);

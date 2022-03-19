@@ -27,14 +27,14 @@ module.exports = {
 
 		if (!list.length) {
 			utils.sadReact(api, message.messageID);
-			api.sendMessage(`No results from ${term}!`, message.threadID);
+			api.sendMessage(`No results for: ${term.join(' ')}!`, message.threadID);
 			return;
 		}
 
 		const [answer] = list;
 		const data = [];
 
-		data.push(`Results for "${term}"`);
+		data.push(`Results for "${term.join(' ')}"`);
 		data.push(`Definition: \n${utils.trim(answer.definition, 1024)}\n`);
 		data.push(`Examples: \n${utils.trim(answer.example, 1024)}`);
 
