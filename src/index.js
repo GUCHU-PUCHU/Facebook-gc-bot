@@ -1,9 +1,8 @@
-const fs = require('fs-extra');
-const login = require('facebook-chat-api');
+var fs = require('fs-extra');
+var login = require('facebook-chat-api');
 var log = require('npmlog');
 var utils = require('./utils');
-
-const config = require('./config.json');
+var config = require('./config.json');
 // const tData = require('./data/threadData.json');
 
 
@@ -82,8 +81,9 @@ login(credentials, (err, api) => {
 				log.info('Interaction!', `Command	: ${message.body} \nSender ID	: ${message.messageID} \nThread ID	: ${message.threadID}`);
 
 				// if (command.adminOnly) {
-				// 	log.info('Interaction!', 'Command is admin only!');
-				// 	return;
+				// 	if (!config.admins.includes(message.senderID)) {
+				// 		return log.error('Warning!', 'Command is admin only!');
+				// 	}
 				// }
 
 				if (command.args && !args.length) {

@@ -1,4 +1,4 @@
-const moment = require('moment');
+var moment = require('moment');
 var utils = require("../utils");
 let isRecording = false;
 let date;

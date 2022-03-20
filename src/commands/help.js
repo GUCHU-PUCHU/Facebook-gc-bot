@@ -1,4 +1,4 @@
-const fs = require('fs-extra');
+var fs = require('fs-extra');
 var utils = require('../utils');
 
 module.exports = {
@@ -44,7 +44,7 @@ module.exports = {
 				data.push('Here are some commands:\n');
 
 				cmdMap.commands.forEach((command) => {
-					if (command.adminOnly && !message.senderID === api.getCurrentUserID()) return;
+					// if (command.adminOnly && !message.senderID === api.getCurrentUserID()) return;
 					if (command.hidden) return;
 					data.push(`Name: ${command.name}`);
 					data.push(`Description: ${command.description}`);

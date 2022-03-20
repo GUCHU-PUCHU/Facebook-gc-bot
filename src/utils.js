@@ -1,7 +1,7 @@
-const fs = require('fs-extra');
-const log = require('npmlog');
-const puppeteer = require('puppeteer');
-const moment = require('moment');
+var fs = require('fs-extra');
+var log = require('npmlog');
+var puppeteer = require('puppeteer');
+var moment = require('moment');
 
 module.exports = {
     defaultConfig: {

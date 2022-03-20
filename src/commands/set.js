@@ -1,7 +1,7 @@
-const config = require('../config.json');
-const utils = require('../utils');
-const fs = require('fs');
-const log = require('npmlog');
+var config = require('../config.json');
+var utils = require('../utils');
+var fs = require('fs');
+var log = require('npmlog');
 
 module.exports = {
     name: 'set',

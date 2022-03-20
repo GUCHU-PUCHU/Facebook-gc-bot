@@ -1,4 +1,4 @@
-const google = require('googlethis');
+var google = require('googlethis');
 
 module.exports = {
     name: 'google',

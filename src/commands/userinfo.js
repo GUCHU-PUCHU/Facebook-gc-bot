@@ -1,4 +1,4 @@
-const log = require('npmlog');
+var log = require('npmlog');
 module.exports = {
 	name: 'userinfo',
 	description: 'get info about a facebook user',
