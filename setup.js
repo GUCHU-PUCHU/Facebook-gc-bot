@@ -7,9 +7,9 @@ if (fse.ensureFileSync('./src/config.json')) {
 	fse.writeJSONSync('./src/config.json', utils.defaultConfig, { spaces: 4 });
 }
 
-if (fse.ensureFileSync('./src/data/threadCache.json')) {
+if (fse.ensureFileSync('./src/data/cache.json')) {
 	log.info('config', 'Cache not file found! Creating one...');
-	fse.writeJSONSync('./src/data/threadCache.json', {'threads': []}, {spaces: 4});
+	fse.writeJSONSync('./src/data/cache.json', {'threads': []}, {spaces: 4});
 }
 
 var config = require('./src/config.json');

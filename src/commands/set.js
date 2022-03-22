@@ -8,7 +8,9 @@ module.exports = {
 	description: 'Set bot\'s config',
 	usage: '< prefix | botname | response | threadID | apiKey | gcLock > [value]',
 	adminOnly: true,
-	args: true,
+	args: false,
+    hidden: false,
+    cooldown: true,
 	async execute(api, message, args, cmdMap, __dirname, ) {
 
 		let key = args[0];

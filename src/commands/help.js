@@ -6,6 +6,9 @@ module.exports = {
 	description: 'display commands!',
 	usage: '[command name?]',
 	adminOnly: false,
+	args: false,
+    hidden: false,
+    cooldown: true,
 	async execute(api, message, args, cmdMap, __dirname) {
 		fs.readdir(__dirname + `/commands`, (err, files) => {
 			if (err) console.error(err);

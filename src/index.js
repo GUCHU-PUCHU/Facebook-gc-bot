@@ -3,19 +3,14 @@ var login = require('facebook-chat-api');
 var log = require('npmlog');
 var utils = require('./utils');
 var config = require('./config.json');
-// const tData = require('./data/threadData.json');
-
-
 const credentials = {
 	appState: JSON.parse(fs.readFileSync(__dirname + `/data/fbCookies.json`, 'utf8')),
 };
-
 const cmdMap = new Map();
 cmdMap.commands = new Map();
-
 const data = [];
-log.info('Loading Commands... ');
 
+log.info('Loading Commands... ');
 const commandFiles = fs.readdirSync(__dirname + `/commands`).filter((file) => file.endsWith('.js'));
 
 for (const file of commandFiles) {
@@ -25,8 +20,9 @@ for (const file of commandFiles) {
 }
 log.info('Commands loaded!\n  >>>', data.join(', '));
 
-// Login
 let fbCookiesStored = false;
+const talkedRecently = new Set();
+
 log.info('login', 'Attempting to log in');
 login(credentials, (err, api) => {
 	if (err) log.error('Warning!', err);
@@ -81,13 +77,22 @@ login(credentials, (err, api) => {
 	
 					if (!command) return; // If command doesn't exist.. ignore.
 					log.info('Interaction!', `Command	: ${message.body} \nSender ID	: ${message.messageID} \nThread ID	: ${message.threadID}`);
-	
-					// if (command.adminOnly) {
-					// 	if (!config.admins.includes(message.senderID)) {
-					// 		return log.error('Warning!', 'Command is admin only!');
-					// 	}
-					// }
-	
+
+					// cooldown
+					if (command.cooldown) {
+						log.info('Cooldown', `${command.name} is on cooldown!`);
+						if (talkedRecently.has(message.senderID)) {
+							log.info('Interaction!', 'Cooldown is active!');
+							log.info('Interaction!', `Sender ID	: ${message.senderID}`);
+							return;
+						}
+						talkedRecently.add(message.senderID);
+						console.log(talkedRecently);
+						setTimeout(() => {
+							talkedRecently.delete(message.senderID);
+						}, 5000);
+					}
+
 					if (command.args && !args.length) {
 						let reply = 'You didn\'t provide any arguments!';
 						if (command.usage) {

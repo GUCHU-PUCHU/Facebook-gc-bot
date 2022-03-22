@@ -12,7 +12,9 @@ module.exports = {
 	description: 'Displays current weather',
 	usage: '[City]',
 	adminOnly: false,
-	args: true,
+	args: false,
+    hidden: false,
+    cooldown: true,
 	async execute (api, message, args) {
 		let data = [];
 		const query = args.slice(0).join(' ');

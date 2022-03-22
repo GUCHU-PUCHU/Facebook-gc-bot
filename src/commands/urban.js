@@ -6,9 +6,11 @@ var utils = require('../utils');
 module.exports = {
 	name: 'urban',
 	description: 'Search urban dictionary!',
-	args: true,
+	usage: '[search term]',
 	adminOnly: false,
-	usage: '[search query]',
+	args: false,
+    hidden: false,
+    cooldown: true,
 	async execute(api, message, args) {
 		if (!args.length) {
 			utils.noticeReact(api, message.messageID);

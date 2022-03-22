@@ -8,6 +8,8 @@ module.exports = {
 	usage: '< start [limit?] [details?] | stop | status | add [entry] | clear | remove [arr[?]] >',
 	adminOnly: false,
 	args: true,
+    hidden: false,
+    cooldown: false,
 	async execute(api, message, args) {
         var txt = [];
         if (!cache[message.threadID]) {
