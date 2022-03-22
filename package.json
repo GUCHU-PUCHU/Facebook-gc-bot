@@ -9,9 +9,9 @@
 		"setup": "node setup",
 		"dev" : "nodemon -e js"
 	},
-	"keywords": [],
+	"keywords": ["facebook", "bot", "messenger", "chatbot", "fb", "fb-bot"],
 	"author": "",
-	"license": "ISC",
+	"license": "MIT",
 	"dependencies": {
 		"aki-api": "^6.0.8",
 		"dotenv": "^14.3.2",

@@ -1,6 +1,7 @@
-# fbBot
 
-FbBot is a simple group chat bot for facebook. (Its pretty much a clone of discordbots but for FB XD).
+# Facebook-gc-bot
+
+Facebook-gc-bot is a simple group chat bot for facebook. (Its pretty much a clone of discordbots but for FB XD).
 This bot uses [Unofficial facebook Chat API](https://github.com/Schmavery/facebook-chat-api).
 
 ## NOTE
@@ -11,7 +12,7 @@ You see... This `thing` uses an **Unofficial** Facebook API. This means you need
 
 JUST DON'T USE YOUR REAL FB ACCOUNT. OKAY?. GOOD.
 
-> I'm a beginner and I'm still learning, so there might be some bugs... and I'm not sure if I'm doing everything right. anyways, have fun with this bot.
+> I'm a beginner and I'm still learning, so there might be some bugs... and I'm not sure if I'm doing everything right. anyways, have fun with this bot. you're looking at the code right now, my apologies.. It might look messy but it works.
 
 ### Dependencies
 
