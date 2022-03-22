@@ -89,6 +89,14 @@ module.exports = {
 		});
 	},
 
+	cooldown: function (api, msgId, cooldown) {
+		if (cooldown === 0) {
+			this.waitReact(api, msgId);
+			return true;
+		}
+		return false;
+	},
+
 	numberBulletGiver: function (arr) {
 		let txtArr = [];
 		for (let i = 0; i < arr.length; i++) {

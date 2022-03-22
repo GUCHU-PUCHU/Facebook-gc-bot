@@ -28,16 +28,6 @@ login(credentials, (err, api) => {
 	if (err) log.error('Warning!', err);
 
 	else {
-		// api.setOptions({
-		// 	logLevel: 'silent',
-		// 	selfListen: false,
-		// 	listenEvents: true,
-		// 	forceLogin: true,
-		// 	userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
-		// 	autoMarkDelivery: true,
-		// 	autoMarkRead: false	
-		// });
-
 		log.info('mqtt', 'Listening for MQTT messages...'); 
 		api.listenMqtt((err, message) => {
 			if (err) return log.error('Listen Api error!', err);
@@ -80,14 +70,10 @@ login(credentials, (err, api) => {
 
 					// cooldown
 					if (command.cooldown) {
-						log.info('Cooldown', `${command.name} is on cooldown!`);
 						if (talkedRecently.has(message.senderID)) {
-							log.info('Interaction!', 'Cooldown is active!');
-							log.info('Interaction!', `Sender ID	: ${message.senderID}`);
 							return;
 						}
 						talkedRecently.add(message.senderID);
-						console.log(talkedRecently);
 						setTimeout(() => {
 							talkedRecently.delete(message.senderID);
 						}, 5000);
