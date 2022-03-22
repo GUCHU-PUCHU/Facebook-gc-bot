@@ -74,9 +74,9 @@ module.exports = {
             case 'add':
                 // check if list is full
                 if (cache[message.threadID].limit > 0 && cache[message.threadID].list.length >= cache[message.threadID].limit) {
-                    txt.push('List is full!');
+                    api.sendMessage('List is full!', message.threadID);
                     txt.push(cache[message.threadID].date);
-                    if (cache[message.threadID].details) txt.push('Details: ' + cache[message.threadID].details);
+                    if (cache[message.threadID].details) txt.push(cache[message.threadID].details);
                     txt.push(utils.numberBulletGiver(cache[message.threadID].list));
                     api.sendMessage(txt.join('\n'), message.threadID);
                     return utils.successReact(api, cache[message.threadID].messageId);
