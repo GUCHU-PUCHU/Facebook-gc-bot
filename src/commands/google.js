@@ -1,4 +1,5 @@
 var google = require('googlethis');
+var utils = require('../utils');
 
 module.exports = {
     name: 'google',
@@ -22,6 +23,7 @@ module.exports = {
         const response = await google.search(query, options);
 
         let data = [];
+		console.log(response);
 
         if (response.dictionary) {
             data.push("Dictionary");
@@ -33,7 +35,7 @@ module.exports = {
             return api.sendMessage(data.join('\n'), message.threadID);
         }
 
-        if (response.knowledge_panel.title !== 'N/A') {
+        if (response.knowledge_panel.title !== 'N/A' && response.knowledge_panel.description !== 'N/A') {
             data.push("Knowledge Panel");
             data.push(`Title: ${response.knowledge_panel.title}`);
             data.push(`Description: ${response.knowledge_panel.description}`);
@@ -48,10 +50,26 @@ module.exports = {
         }
 
         else {
-            data.push(`Title: ${response.results[0].title}`);
-            data.push(`Link: ${response.results[0].url}`);
-            data.push(`Description: ${response.results[0].description}`);
-            api.sendMessage(data.join('\n'), message.threadID);
+			data.push(`Results for "${query}"`);
+			for (let i = 0; i < response.results.length; i++) {
+				data.push(`${i + 1}. ${response.results[i].title}`);
+				data.push(`Description: \n	${response.results[i].description}\n`);
+				data.push(`Link: ${response.results[i].url}`);
+				data.push(`\n`);
+			}
+
+			// check number of characters
+			if (data.join('\n').length > 500) {
+				api.sendMessage('To avoid a massive block of message annoying everyone the results was sent to your DMs.', message.threadID);
+				utils.splitMessage(data.join('\n'), 2000).forEach(msg => {
+					api.sendMessage(msg, message.senderID);
+					utils.sleep(2000);
+				});
+			}
+			else {
+				api.sendMessage(data.join('\n'), message.threadID);
+			}
+           
         }
     }
 }

@@ -31,80 +31,83 @@ log.info('login', 'Attempting to log in');
 login(credentials, (err, api) => {
 	if (err) log.error('Warning!', err);
 
-	// api.getThreadList(100, null, ["INBOX"], (err, list) => {
-	// 	if (err) return log.error('Warning!', err);
-	// 	tData.INBOX = list;
-	// 	fs.writeFileSync(__dirname + `/data/threadData.json`, JSON.stringify(tData, null, 4));
-	// });
+	else {
+		// api.setOptions({
+		// 	logLevel: 'silent',
+		// 	selfListen: false,
+		// 	listenEvents: true,
+		// 	forceLogin: true,
+		// 	userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36',
+		// 	autoMarkDelivery: true,
+		// 	autoMarkRead: false	
+		// });
 
-	api.listenMqtt((err, message) => {
-		if (err) return log.error('Listen Api error!', err);
-
-		if (!fbCookiesStored) {
-			fs.writeFileSync(__dirname + `/data/fbCookies.json`, JSON.stringify(api.getAppState(), null, 4));
-			fbCookiesStored = true;
-		}
-
-		else {
-			// Bot interaction starts here
-			if (message.type === 'message') {
-				console.log(message);
-				if (!message.isGroup) return;
-
-				if (config.gcLock) {
-					if (config.threadID !== message.threadID) {
-						return log.error('Warning!', 'Received message from another chat! ThreadID does not match!');
+		log.info('mqtt', 'Listening for MQTT messages...'); 
+		api.listenMqtt((err, message) => {
+			if (err) return log.error('Listen Api error!', err);
+	
+			if (!fbCookiesStored) {
+				fs.writeFileSync(__dirname + `/data/fbCookies.json`, JSON.stringify(api.getAppState(), null, 4));
+				fbCookiesStored = true;
+			}
+	
+			else {
+				// Bot interaction starts here
+				if (message.type === 'message') {
+					console.log(message);
+					if (!message.isGroup) return;
+	
+					if (config.gcLock) {
+						if (config.threadID !== message.threadID) {
+							return log.error('Warning!', 'Received message from another chat! ThreadID does not match!');
+						}
 					}
-				}
-
-				if (message.body.toLowerCase().includes('@' + config.botName)) {
-					log.info('Interaction', 'Name was mentioned!');
-					utils.eyesReact(api, message.messageID);
-					let res = [];
-					// const x = config.botName.toUpperCase().charAt(0) + config.botName.slice(1);
-
-					// res.push(`Hello, I'm ${x}. My prefix is: \`${config.prefix}\``);
-					// res.push(`You can view my commands by typing \`${config.prefix}help\` \n`);
-
-					if (config.response) res.push(config.response);
-					utils.splitMessage(res.join('\n'), 1000).forEach((msg) => {
-						api.sendMessage(msg, message.threadID);
-					});
-				}
-
-				if (!message.body.startsWith(config.prefix)) return; // Checks if the message starts with the given config.prefix.
-				const args = message.body.slice(config.prefix.length).trim().split(/ +/); // Seperates the config.prefix from the command.
-				const cmdName = args.shift().toLowerCase();
-				const command = cmdMap.commands.get(cmdName);
-
-				if (!command) return; // If command doesn't exist.. ignore.
-				log.info('Interaction!', `Command	: ${message.body} \nSender ID	: ${message.messageID} \nThread ID	: ${message.threadID}`);
-
-				// if (command.adminOnly) {
-				// 	if (!config.admins.includes(message.senderID)) {
-				// 		return log.error('Warning!', 'Command is admin only!');
-				// 	}
-				// }
-
-				if (command.args && !args.length) {
-					let reply = 'You didn\'t provide any arguments!';
-					if (command.usage) {
-						reply += `\nThe proper usage would be: \`${config.prefix}${command.name} ${command.usage}\``;
+	
+					if (message.body.toLowerCase().includes('@' + config.botName)) {
+						log.info('Interaction', 'Name was mentioned!');
+						utils.eyesReact(api, message.messageID);
+						let res = [];
+	
+						if (config.response) res.push(config.response);
+						utils.splitMessage(res.join('\n'), 1000).forEach((msg) => {
+							api.sendMessage(msg, message.threadID);
+						});
 					}
-					api.sendMessage(reply, message.threadID);
-					utils.noticeReact(api, message.messageID);
-					return;
-				}
-
-				api.markAsRead(message.threadID);
-				api.setMessageReaction('👍', message.messageID);
-				try {
-					command.execute(api, message, args, cmdMap, __dirname, config);
-				} catch (error) {
-					log.error('Something is wrong executing the command! \n', error);
-					utils.noticeReact(api, message.messageID);
+	
+					if (!message.body.startsWith(config.prefix)) return; // Checks if the message starts with the given config.prefix.
+					const args = message.body.slice(config.prefix.length).trim().split(/ +/); // Seperates the config.prefix from the command.
+					const cmdName = args.shift().toLowerCase();
+					const command = cmdMap.commands.get(cmdName);
+	
+					if (!command) return; // If command doesn't exist.. ignore.
+					log.info('Interaction!', `Command	: ${message.body} \nSender ID	: ${message.messageID} \nThread ID	: ${message.threadID}`);
+	
+					// if (command.adminOnly) {
+					// 	if (!config.admins.includes(message.senderID)) {
+					// 		return log.error('Warning!', 'Command is admin only!');
+					// 	}
+					// }
+	
+					if (command.args && !args.length) {
+						let reply = 'You didn\'t provide any arguments!';
+						if (command.usage) {
+							reply += `\nThe proper usage would be: \`${config.prefix}${command.name} ${command.usage}\``;
+						}
+						api.sendMessage(reply, message.threadID);
+						utils.noticeReact(api, message.messageID);
+						return;
+					}
+	
+					api.markAsRead(message.threadID);
+					api.setMessageReaction('👍', message.messageID);
+					try {
+						command.execute(api, message, args, cmdMap, __dirname, config);
+					} catch (error) {
+						log.error('Something is wrong executing the command! \n', error);
+						utils.noticeReact(api, message.messageID);
+					}
 				}
 			}
-		}
-	});
+		});
+	}
 });

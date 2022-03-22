@@ -11,7 +11,7 @@ module.exports = {
 		weatherAPIKey: '',
 		gcLock: false,
 	},
-
+	
 	// Reactions for the bot
 	successReact: function (api, msgId) {
 		api.setMessageReaction('', msgId, (err) => {
@@ -79,6 +79,13 @@ module.exports = {
 		api.setMessageReaction('', msgId, (err) => {
 			if (err) return log.error(err);
 			api.setMessageReaction('⏳', msgId);
+		});
+	},
+
+	listedReact: function (api, msgId) {
+		api.setMessageReaction('', msgId, (err) => {
+			if (err) return log.error(err);
+			api.setMessageReaction('📋', msgId);
 		});
 	},
 

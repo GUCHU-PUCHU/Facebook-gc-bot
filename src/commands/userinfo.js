@@ -3,12 +3,12 @@ module.exports = {
 	name: 'userinfo',
 	description: 'get info about a facebook user',
 	usage: '<user id>',
-    adminOnly: false,
+	adminOnly: false,
 	args: true,
 	execute(api, message, args) {
 		let query = args[0];
 		let data = [];
-        api.getUserInfo(query, (err, user) => {
+		api.getUserInfo(query, (err, user) => {
 			if (err) return log.error('User Info', err);
 			log.info('User Info', user);
 			for (var x in user) {

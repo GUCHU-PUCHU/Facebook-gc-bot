@@ -1,125 +1,137 @@
-var moment = require('moment');
-var utils = require("../utils");
-let isRecording = false;
-let date;
-let limit;
-let details = '';
-var list = [];
+var moment = require('moment')
+var utils = require('../utils')
+var cache = [];
+
 module.exports = {
-    name: 'att',
-    description: 'Records attendance or list of things',
-    usage: '< start [limit?] [details?] | stop | status | add [entry] | clear | remove [arr[?]] >',
-    adminOnly: false,
-    args: true,
-    async execute(api, message, args) {
-        let txt = [];
+	name: 'att',
+	description: 'Records attendance or list of things',
+	usage: '< start [limit?] [details?] | stop | status | add [entry] | clear | remove [arr[?]] >',
+	adminOnly: false,
+	args: true,
+	async execute(api, message, args) {
+        var txt = [];
+        if (!cache[message.threadID]) {
+            cache[message.threadID] = {
+                isRecording: false,
+                messageId: '',
+                date: '',
+                limit: 0,
+                details: '',
+                list: []
+            }
+            console.log('New cache created for thread ' + message.threadID);
+        }
+
         switch (args[0]) {
             case 'start':
-                if (isRecording) {
+                if (cache[message.threadID].isRecording) {
                     api.sendMessage('Already recording!', message.threadID);
                     return utils.noticeReact(api, message.messageID);
                 } else {
-                    isRecording = true;
+                    cache[message.threadID].isRecording = true;
+                    cache[message.threadID].messageId = message.messageID;
+                    utils.waitReact(api, message.messageID);
                     if (isNaN(args[1])) {
-                        details = args.slice(1).join(' ');
+                        cache[message.threadID].details = args.slice(1).join(' ');
                     } else {
-                        limit = parseInt(args[1]);
-                        details = args.slice(2).join(' ');
+                        cache[message.threadID].limit = parseInt(args[1]);
+                        cache[message.threadID].details = args.slice(2).join(' ');
                     }
-                    date = moment().format('MMMM Do YYYY, h:mm a');
-                    txt.push('Recording started at ' + date);
-
-                    if (details) txt.push(details);
+                    cache[message.threadID].date = moment().format('MMMM Do YYYY, h:mm a');
+                    txt.push('Recording started at ' + cache[message.threadID].date);
                 }
                 break;
 
             case 'stop':
-                if (!isRecording) {
+                if (!cache[message.threadID].isRecording) {
                     api.sendMessage('Already stopped!', message.threadID);
                     return utils.noticeReact(api, message.messageID);
                 } else {
-                    isRecording = false;
-                    txt.push(date);
-
-                    if (details) txt.push(details);
-                    txt.push(utils.numberBulletGiver(list));
+                    cache[message.threadID].isRecording = false;
+                    utils.successReact(api, cache[message.threadID].messageId);
+                    txt.push(cache[message.threadID].date);
+                    
+                    if (cache[message.threadID].details) txt.push('Details: ' + cache[message.threadID].details);
+                    txt.push(utils.numberBulletGiver(cache[message.threadID].list));
                     api.sendMessage(txt.join('\n'), message.threadID);
-                    list = [];
-                    return;
+                    cache[message.threadID].list = [];
                 }
                 break;
 
             case 'status':
-                if (!isRecording) {
+                if (!cache[message.threadID].isRecording) {
                     api.sendMessage('Not recording!', message.threadID);
                     return utils.noticeReact(api, message.messageID);
                 } else {
-                    if (list.length === 0) return api.sendMessage('No entries recorded!', message.threadID);
-                    txt.push('Recording started at ' + date);
-
-                    if (details) txt.push('Details: ' + details);
-
-                    if (limit) txt.push('Limit": ' + limit);
-                    txt.push(utils.numberBulletGiver(list));
+                    if (cache[message.threadID].list.length === 0) return api.sendMessage('No entries recorded!', message.threadID);
+                    txt.push(cache[message.threadID].date);
+                    if (cache[message.threadID].details) txt.push('Details: ' + cache[message.threadID].details);
+                    txt.push(utils.numberBulletGiver(cache[message.threadID].list));
+                    api.sendMessage(txt.join('\n'), message.threadID);
+                }
+                break;
+            
+            case 'add':
+                // check if list is full
+                if (cache[message.threadID].limit > 0 && cache[message.threadID].list.length >= cache[message.threadID].limit) {
+                    txt.push('List is full!');
+                    txt.push(cache[message.threadID].date);
+                    if (cache[message.threadID].details) txt.push('Details: ' + cache[message.threadID].details);
+                    txt.push(utils.numberBulletGiver(cache[message.threadID].list));
+                    api.sendMessage(txt.join('\n'), message.threadID);
+                    return utils.successReact(api, cache[message.threadID].messageId);
+                }
+                
+                if (!cache[message.threadID].isRecording) {
+                    api.sendMessage('Not recording!', message.threadID);
+                    return utils.noticeReact(api, message.messageID);
+                } else {
+                    cache[message.threadID].list.push(args.slice(1).join(' '));
+                    utils.listedReact(api, message.messageID);
                 }
                 break;
 
-            case 'add':
-                if (!isRecording) {
+            case 'clear':
+                if (!cache[message.threadID].isRecording) {
                     api.sendMessage('Not recording!', message.threadID);
                     return utils.noticeReact(api, message.messageID);
                 } else {
-                    if (list.length == limit) {
-                        isRecording = false;
-                        txt.push(`List is full! with ${limit} entries`);
-                        txt.push(date);
-
-                        if (details) txt.push(details);
-                        txt.push(utils.numberBulletGiver(list));
-                    } else {
-                        list.push(`${args.slice(1).join(' ')}`);
-                        utils.successReact(api, message.messageID);
-                        return;
-                    }
+                    cache[message.threadID].list = [];
+                    api.sendMessage('Cleared all entries!', message.threadID);
                 }
                 break;
 
             case 'remove':
-                if (!isRecording) return api.sendMessage('Not recording!', message.threadID);
+                if (!cache[message.threadID].isRecording) {
+                    api.sendMessage('Not recording!', message.threadID);
+                    return utils.noticeReact(api, message.messageID);
+                } else {
+                    if (args[1] === 'all') {
+                        cache[message.threadID].list = [];
+                        api.sendMessage('Cleared all entries!', message.threadID);
+                    } else {
+                        var arr = args.slice(1);
+                        var removed = [];
+                        // remove an entry from the list based on the number given in the args
+                        for (var i = 0; i < arr.length; i++) {
+                            var index = parseInt(arr[i]) - 1;
+                            if (index < cache[message.threadID].list.length) {
+                                removed.push(cache[message.threadID].list[index]);
+                                cache[message.threadID].list.splice(index, 1);
+                            }
+                        }
+                        if (!removed.length) return utils.noticeReact(api, message.messageID);
+                        api.sendMessage('Removed ' + removed.join(', ') + ' from the list!', message.threadID);
 
-                if (list.length === 0) {
-                    utils.noticeReact(api, message.messageID);
-                    return api.sendMessage('No entries recorded!', message.threadID);
+                    }
                 }
-
-                if (!args[1] || isNaN(args[1])) {
-                    utils.noticeReact(api, message.messageID);
-                    return api.sendMessage('Please enter a valid number[int?] from the list', message.threadID);
-                }
-
-                var x = list.splice(args[1] - 1, 1);
-                txt.push(`Removed ${x} from the list`);
-                txt.push(utils.numberBulletGiver(list));
                 break;
-
-            case 'clear':
-                if (list.length === 0) {
-                    utils.noticeReact(api, message.messageID);
-                    return api.sendMessage('list is empty!', message.threadID);
-                }
-                list = [];
-                txt.push('List cleared!');
-                break;
-
+        
             default:
-                txt.push('Invalid parameters!');
-                txt.push('Usage: ' + this.usage);
+                api.sendMessage('Invalid command!', message.threadID);
                 utils.noticeReact(api, message.messageID);
                 break;
         }
-
-        if (txt) utils.splitMessage(txt.join('\n'), 1000).forEach(msg => {
-            api.sendMessage(msg, message.threadID);
-        });
-    }
+        
+	},
 }

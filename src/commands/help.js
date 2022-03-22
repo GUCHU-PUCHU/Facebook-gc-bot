@@ -20,7 +20,6 @@ module.exports = {
 				return;
 			}
 
-			let name = '';
 			const data = [];
 
 			if (args.length > 0) {

@@ -1,13 +1,15 @@
 var utils = require('./src/utils');
-var fs = require('fs-extra');
+var fse = require('fs-extra');
 var log = require('npmlog');
 
-if (!fs.ensureFileSync('./src/config.json')) {
-	log.info('config', 'Configuration file found!');
+if (fse.ensureFileSync('./src/config.json')) {
+	log.info('config', 'Configuration not file found! creating one...');
+	fse.writeJSONSync('./src/config.json', utils.defaultConfig, { spaces: 4 });
 }
-else {
-	log.info('config', 'Configuration file not found, creating one...');
-	fs.writeFileSync('./src/config.json', JSON.stringify(utils.defaultConfig, null, 4));
+
+if (fse.ensureFileSync('./src/data/threadCache.json')) {
+	log.info('config', 'Cache not file found! Creating one...');
+	fse.writeJSONSync('./src/data/threadCache.json', {'threads': []}, {spaces: 4});
 }
 
 var config = require('./src/config.json');
@@ -21,7 +23,7 @@ function checkIfEmpty(value) {
 }
 
 function checkIfEmail(value) {
-	if (!value.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
+	if (!value.match(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/)) {
 		return 'Please enter a valid email address';
 	}
 	return true;
