@@ -40,7 +40,3 @@ module.exports = {
 		});
 	},
 };
-
-// Ah fuck it, I'm going to do this in the next version.
-// My acumulated knowledge of javascript is not enough to make pretty and efficient code.
-// send me an angel pls.

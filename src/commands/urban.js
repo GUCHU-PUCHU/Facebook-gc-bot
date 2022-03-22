@@ -34,13 +34,11 @@ module.exports = {
 		}
 
 		const [answer] = list;
-		const data = [];
 
-		data.push(`Results for "${term.join(' ')}"`);
-		data.push(`Definition: \n${utils.trim(answer.definition, 1024)}\n`);
-		data.push(`Examples: \n${utils.trim(answer.example, 1024)}`);
-
-		utils.successReact(api, message.messageID);
-		api.sendMessage(data.join('\n '), message.threadID);
+		api.sendMessage(
+			`Result for: ${term.join(' ')}\n\n` +
+			`Definition: ${answer.definition}\n\n` +
+			`Example: ${answer.example}`,
+			message.threadID);
 	},
 };

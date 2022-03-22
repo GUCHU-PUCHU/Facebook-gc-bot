@@ -16,7 +16,6 @@ module.exports = {
     hidden: false,
     cooldown: true,
 	async execute(api, message, args) {
-		var data = []
 		var i;
 		log.info('test', 'args', args)
 		
@@ -35,7 +34,11 @@ module.exports = {
 		switch (args[0]) {
 			case 'list':
 			case 'l':
-				api.sendMessage('This bot uses the imgflip API.\n You can view the list in this link: https://imgflip.com/popular_meme_ids', message.threadID);
+				api.sendMessage(
+					'This bot uses the imgflip API.\n' +
+					'You can view the list in this link:\n' +
+					'https://imgflip.com/popular_meme_ids',
+				message.threadID);
 				break;
 
 			case 'search':
@@ -71,21 +74,25 @@ module.exports = {
 				var text = args.slice(1).join(' ').split(';');
 				if (isNaN(args[0])) {
 					utils.noticeReact(api, message.messageID);
-					data.push(`Please enter a valid meme id.`);
-					data.push(`For a list of memes, use the command \`${config.prefix}meme list\``);
-					data.push(`For a search, use the command \`${config.prefix}meme search [id]\``);
-					data.push(`For generating a meme \`${config.prefix}meme [id] [text1]; [text2];...\``);
-					data.push(`Please note that the text must be seperated by a semi-colon.`);
-					return api.sendMessage(data.join('\n'), message.threadID);	
 
+					return api.sendMessage(
+						`Please enter a valid meme id.\n` +
+						`For the list of memes, use the command \`${config.prefix}meme list\`\n` +
+						`For searching memes, use the command \`${config.prefix}meme search [id]\`\n` +
+						`For generating a meme \`${config.prefix}meme [id] [text1]; [text2];...\`\n` +
+						`Please note that the every text must be seperated by a semi-colon.\n` +
+						`Except the last text.`, 
+						message.threadID);
 				}
 
 				for (i = 0; i < response.data.memes.length; i++) {
 					if (response.data.memes[i].id == args[0]) {
 						if (response.data.memes[i].box_count < text.length) {
 							utils.noticeReact(api, message.messageID);
-							data.push(`Your aguments "${text.join(', ')}" is too long.\nMeme has only ${response.data.memes[i].box_count} boxes.`);
-							return api.sendMessage(data.join('\n'), message.threadID);
+							api.sendMessage(
+								`Your aguments "${text.join(', ')}" is too long.\n` +
+								`Meme has only ${response.data.memes[i].box_count} boxes.`,
+							message.threadID);
 						}
 					}
 				}				

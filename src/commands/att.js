@@ -41,6 +41,10 @@ module.exports = {
                     }
                     cache[message.threadID].date = moment().format('MMMM Do YYYY, h:mm a');
                     txt.push('Recording started at ' + cache[message.threadID].date);
+                    if (cache[message.threadID].details) txt.push('Details: ' + cache[message.threadID].details);
+                    if (cache[message.threadID].limit) txt.push('Limit: ' + cache[message.threadID].limit);
+                    api.sendMessage(txt.join('\n'), message.threadID);
+                    
                 }
                 break;
 

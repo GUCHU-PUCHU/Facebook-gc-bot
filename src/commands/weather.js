@@ -16,7 +16,6 @@ module.exports = {
     hidden: false,
     cooldown: true,
 	async execute (api, message, args) {
-		let data = [];
 		const query = args.slice(0).join(' ');
 
 		if (config.weatherAPIKey === undefined || config.weatherAPIKey === '') {
@@ -31,17 +30,19 @@ module.exports = {
 		}
 
 		utils.successReact(api, message.messageID);
-		data.push(`Current weather in ${response.name} is ${response.weather[0].description}`);
-		data.push(`* Temperature: ${response.main.temp}°C`);
-		data.push(`* Feels like: ${response.main.feels_like}°C`);
-		data.push(`* Temp Min: ${response.main.temp_min}°C`);
-		data.push(`* Temp Max: ${response.main.temp_max}°C`);
-		data.push(`* Humidity: ${response.main.humidity}%`);
-		data.push(`* Wind: \n   > Speed: ${response.wind.speed} m/s \n   > Degree: ${response.wind.deg}°`);
-		data.push(`* Sunrise: ${moment.unix(response.sys.sunrise).format('h:mm a')}`);
-		data.push(`* Sunset: ${moment.unix(response.sys.sunset).format('h:mm a')}`);
-		data.push(`* Coordinates: \n   > Lat: ${response.coord.lat} \n   > Lon: ${response.coord.lon}`);
-		data.push(`* Time of data calculation: ${moment.unix(response.dt).format('h:mm a')}`);
-		api.sendMessage(data.join('\n'), message.threadID);
+
+		api.sendMessage(
+			`Current weather in ${response.name} is ${response.weather[0].description}\n` +
+			`* Temperature: ${response.main.temp}°C\n` +
+			`* Feels like: ${response.main.feels_like}°C\n` +
+			`* Temp Min: ${response.main.temp_min}°C\n` +
+			`* Temp Max: ${response.main.temp_max}°C\n` +
+			`* Humidity: ${response.main.humidity}%\n` +
+			`* Wind: \n   > Speed: ${response.wind.speed} m/s \n   > Degree: ${response.wind.deg}°\n` +
+			`* Sunrise: ${moment.unix(response.sys.sunrise).format('h:mm a')}\n` +
+			`* Sunset: ${moment.unix(response.sys.sunset).format('h:mm a')}\n` +
+			`* Coordinates: \n   > Lat: ${response.coord.lat} \n   > Lon: ${response.coord.lon}\n` +
+			`* Time of data calculation: ${moment.unix(response.dt).format('h:mm a')}`,
+		message.threadID);
 	},
 };

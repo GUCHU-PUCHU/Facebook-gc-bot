@@ -53,6 +53,7 @@ module.exports = {
 					if (command.adminOnly) data.push(`Admin Only: ${command.adminOnly}`);
 					if (command.hasOwnProperty('args')) data.push(`Arguments: ${command.args}`);
 					if (command.hasOwnProperty('usage')) data.push(`Usage: ${prefix}${command.name} ${command.usage}`);
+					if (command.hasOwnProperty('cooldown')) data.push(`Cooldown: ${command.cooldown}`);
 					data.push('=================');
 				});
 			}
