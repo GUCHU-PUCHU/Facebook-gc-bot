@@ -1,8 +1,7 @@
 <p align="center">
-    <img alt="ViewCount" src="https://views.whatilearened.today/views/github/MShawon/github-clone-count-badge.svg">
-    <a href="https://github.com/MShawon/github-clone-count-badge"><img alt="GitHub Clones" src="https://img.shields.io/badge/dynamic/json?color=success&label=Clone&query=count&url=https://github.com/PedjPedj/Facebook-gc-bot/blob/main/clone.json?raw=True&logo=github"></a>
+    <img alt="ViewCount" src="https://views.whatilearened.today/views/github/PedjPedj/Facebook-gc-bot-badge.svg">
+    <a href="https://github.com/PedjPedj/Facebook-gc-bot"><img alt="GitHub Clones" src="https://img.shields.io/badge/dynamic/json?color=success&label=Clone&query=count&url=https://github.com/PedjPedj/Facebook-gc-bot/blob/main/clone.json?raw=True&logo=github"></a>
 </p>
-
 
 
 # Facebook-gc-bot
