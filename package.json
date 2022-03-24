@@ -7,18 +7,22 @@
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"start": "node .",
 		"setup": "node setup",
-		"dev" : "nodemon -e js"
+		"dev": "nodemon -e js"
 	},
-	"keywords": ["facebook", "bot", "messenger", "chatbot", "fb", "fb-bot"],
+	"keywords": [
+		"facebook",
+		"bot",
+		"messenger",
+		"chatbot",
+		"fb",
+		"fb-bot"
+	],
 	"author": "",
 	"license": "Apache-2.0",
 	"dependencies": {
-		"aki-api": "^6.0.8",
-		"dotenv": "^14.3.2",
 		"facebook-chat-api": "github:PedjPedj/facebook-chat-api#test",
 		"fs-extra": "^10.0.0",
 		"googlethis": "^1.2.7",
-		"imgflip": "^3.0.0",
 		"inquirer": "^8.2.0",
 		"moment": "^2.29.1",
 		"node-fetch": "^3.2.0",

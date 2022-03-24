@@ -70,8 +70,11 @@ module.exports = {
 			let data = [];
 			data.push('Current Bot Configuration:');
 			for (let key in config) {
-				if (config[key] === '') data.push(`${key}:\n    >> none`);
-				else data.push(`\`${key}\`:\n    >> ${config[key]}`);
+				if (key === 'Imgflip') continue;
+
+				if (config.hasOwnProperty(key)) {
+					data.push(key + ': ' + config[key]);
+				}
 			}
 			api.sendMessage(data.join('\n'), message.threadID);
 		}
