@@ -125,7 +125,6 @@ module.exports = {
 					} else {
 						var arr = args.slice(1);
 						var removed = [];
-						// remove an entry from the list based on the number given in the args
 						for (var i = 0; i < arr.length; i++) {
 							var index = parseInt(arr[i]) - 1;
 							if (index < cache[message.threadID].list.length) {

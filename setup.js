@@ -9,7 +9,7 @@ if (fse.ensureFileSync('./src/config.json')) {
 
 if (fse.ensureFileSync('./src/data/cache.json')) {
 	log.info('config', 'Cache not file found! Creating one...');
-	fse.writeJSONSync('./src/data/cache.json', { threads: [] }, { spaces: 4 });
+	fse.writeJSONSync('./src/data/cache.json', {}, { spaces: 4 });
 }
 
 var config = require('./src/config.json');
@@ -64,63 +64,56 @@ inquirer
 					},
 				])
 				.then((answers) => {
-					utils
-						.fetchCookie(answers.email, answers.password)
-						.then(() => {
-							inquirer
-								.prompt([
-									{
-										type: 'confirm',
-										name: 'setup',
-										message:
-											'Do you want to setup the config file?',
-										default: false,
-									},
-								])
-								.then((answers) => {
-									if (answers.setup == true) {
-										inquirer
-											.prompt([
-												{
-													type: 'input',
-													name: 'prefix',
-													message:
-														'Enter the prefix:',
-													default: '.',
-												},
-												{
-													type: 'input',
-													name: 'threadID',
-													message:
-														'Enter your thread ID:',
-													validate: checkIfThreadID,
-												},
-												{
-													type: 'input',
-													name: 'botName',
-													message:
-														'Enter your bot name:',
-													default: 'Bot',
-												},
-												{
-													type: 'confirm',
-													name: 'gcLock',
-													message:
-														'Do you want to lock the GC?:',
-													default: false,
-												},
-											])
-											.then((answers) => {
-												let arg;
-												arg.prefix = answers.prefix;
-												arg.threadID = answers.threadID;
-												arg.botName = answers.botName;
-												arg.gcLock = answers.gcLock;
-												utils.writeConfig(arg);
-											});
-									} else return;
-								});
-						});
+					utils.fetchCookie(answers.email, answers.password).then(() => {
+						inquirer
+							.prompt([
+								{
+									type: 'confirm',
+									name: 'setup',
+									message: 'Do you want to setup the config file?',
+									default: false,
+								},
+							])
+							.then((answers) => {
+								if (answers.setup == true) {
+									inquirer
+										.prompt([
+											{
+												type: 'input',
+												name: 'prefix',
+												message: 'Enter the prefix:',
+												default: '.',
+											},
+											{
+												type: 'input',
+												name: 'threadID',
+												message: 'Enter your thread ID:',
+												validate: checkIfThreadID,
+											},
+											{
+												type: 'input',
+												name: 'botName',
+												message: 'Enter your bot name:',
+												default: 'Bot',
+											},
+											{
+												type: 'confirm',
+												name: 'gcLock',
+												message: 'Do you want to lock the GC?:',
+												default: false,
+											},
+										])
+										.then((answers) => {
+											let arg;
+											arg.prefix = answers.prefix;
+											arg.threadID = answers.threadID;
+											arg.botName = answers.botName;
+											arg.gcLock = answers.gcLock;
+											utils.writeConfig(arg);
+										});
+								} else return;
+							});
+					});
 				});
 		}
 		if (answers.setup === 'Config') {
