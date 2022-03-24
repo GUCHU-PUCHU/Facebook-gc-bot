@@ -5,9 +5,7 @@ module.exports = {
 	description: 'Search in Facebook!',
 	usage: '< user | group | page | event > [query]',
 	adminOnly: false,
-	args: false,
-    hidden: false,
-    cooldown: true,
+	args: true,
 	execute(api, message, args) {
 		const query = args.slice(1).join(' ');
 		const dataP = [];

@@ -2,6 +2,7 @@ var log = require('npmlog')
 var fse = require('fs-extra')
 var utils = require('../utils')
 var config = require('../config.json');
+let busy = false;
 
 const fetch = (...args) =>
 	import('node-fetch').then(({ default: fetch }) => fetch(...args))
@@ -71,6 +72,8 @@ module.exports = {
 				break;
 					
 			default:
+				if(busy) return api.sendMessage('Meme generator is busy.', message.threadID);
+				busy = true;
 				var text = args.slice(1).join(' ').split(';');
 				if (isNaN(args[0])) {
 					utils.noticeReact(api, message.messageID);
@@ -107,7 +110,7 @@ module.exports = {
 				for (i = 0; i < text.length; i++) {
 					params.append(`boxes[${i}][text]`, text[i]);
 				}
-
+				
 				var meme = await fetch(`https://api.imgflip.com/caption_image`, {
 					method: 'POST',
 					body: params,
@@ -131,11 +134,13 @@ module.exports = {
 					});
 
 				await utils.sleep(2000);
+				busy = false;
 				utils.successReact(api, message.messageID);
 				return api.sendMessage({
 					body: ` `,
 					attachment: fse.createReadStream(`./src/data/image.jpg`)
 				}, message.threadID);
+				
 		}
 		utils.successReact(api, message.messageID);
 	},
