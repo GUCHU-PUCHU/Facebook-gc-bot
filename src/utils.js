@@ -11,7 +11,7 @@ module.exports = {
 		weatherAPIKey: '',
 		gcLock: false,
 	},
-	
+
 	// Reactions for the bot
 	successReact: function (api, msgId) {
 		api.setMessageReaction('', msgId, (err) => {
@@ -100,7 +100,7 @@ module.exports = {
 	numberBulletGiver: function (arr) {
 		let txtArr = [];
 		for (let i = 0; i < arr.length; i++) {
-			txtArr.push((i + 1) + '. ' + arr[i]);
+			txtArr.push(i + 1 + '. ' + arr[i]);
 		}
 		return txtArr.join('\n');
 	},
@@ -116,11 +116,11 @@ module.exports = {
 	},
 
 	sleep: function (ms) {
-		return new Promise(resolve => setTimeout(resolve, ms));
+		return new Promise((resolve) => setTimeout(resolve, ms));
 	},
 
 	trim: function (str, max) {
-		return (str.length > max) ? str.substr(0, max - 3) + '...' : str;
+		return str.length > max ? str.substr(0, max - 3) + '...' : str;
 	},
 
 	// Function that split a message into chunks of max length
@@ -145,12 +145,16 @@ module.exports = {
 		return result;
 	},
 
-	writeConfig: function(arg) {
+	writeConfig: function (arg) {
 		let config = arg;
-		fs.writeFile('./src/config.json', JSON.stringify(config, null, 4), (err) => {
-			if (err) return log.error(err);
-			log.info('config', 'Configuration file updated!');
-		});
+		fs.writeFile(
+			'./src/config.json',
+			JSON.stringify(config, null, 4),
+			(err) => {
+				if (err) return log.error(err);
+				log.info('config', 'Configuration file updated!');
+			}
+		);
 	},
 
 	fetchCookie: async function (email, password) {
@@ -191,25 +195,24 @@ module.exports = {
 			await page.waitForNavigation();
 			try {
 				await page.click('div');
-
 			} catch (error) {
 				log.error('cookies', 'Error clicking div... Ignoring...');
 			}
 
 			let cookies = await page.cookies();
-			cookies = cookies.map(({
-					name: key,
-					...rest
-			}) => ({
-					key,
-					...rest
+			cookies = cookies.map(({ name: key, ...rest }) => ({
+				key,
+				...rest,
 			}));
-			fs.writeFileSync(__dirname + '/data/fbCookies.json', JSON.stringify(cookies, null, 4));
+			fs.writeFileSync(
+				__dirname + '/data/fbCookies.json',
+				JSON.stringify(cookies, null, 4)
+			);
 			log.info('cookies', 'Cookies saved!');
 			await browser.close();
 		} catch (err) {
 			log.error('cookies', 'Error:', err);
 			return;
 		}
-	},    
-}
+	},
+};

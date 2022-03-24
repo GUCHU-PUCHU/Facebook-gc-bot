@@ -4,9 +4,9 @@ module.exports = {
 	usage: 'test',
 	adminOnly: false,
 	args: false,
-    hidden: true,
-    cooldown: true,
+	hidden: true,
+	cooldown: true,
 	async execute(api, message) {
-        api.sendMessage('test', message.threadID);
+		api.sendMessage('test', message.threadID);
 	},
-}
+};

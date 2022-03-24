@@ -5,8 +5,8 @@ module.exports = {
 	usage: '<user id>',
 	adminOnly: false,
 	args: false,
-    hidden: false,
-    cooldown: true,
+	hidden: false,
+	cooldown: true,
 	execute(api, message, args) {
 		let query = args[0];
 		let data = [];
@@ -18,10 +18,9 @@ module.exports = {
 					data.push(`Name: ${user[x].name}`);
 					data.push(`Vanity: ${user[x].vanity}`);
 					data.push(`Profile Link: ${user[x].profileUrl}`);
-					api.sendMessage(data.join("\n"), message.threadID);
+					api.sendMessage(data.join('\n'), message.threadID);
 				}
 			}
-
 		});
 	},
 };

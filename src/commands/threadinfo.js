@@ -5,8 +5,8 @@ module.exports = {
 	description: 'Get info about thread',
 	adminOnly: false,
 	args: false,
-    hidden: false,
-    cooldown: true,
+	hidden: false,
+	cooldown: true,
 	execute(api, message) {
 		api.getThreadInfo(message.threadID, (err, info) => {
 			if (err) log.error('Thread Info', err);
@@ -28,7 +28,10 @@ module.exports = {
 							if (err) return log.error('Thread Info', err);
 							for (var x in user) {
 								if (user.hasOwnProperty(x)) {
-									api.sendMessage(`Admin: ${user[x].name}`, message.threadID);
+									api.sendMessage(
+										`Admin: ${user[x].name}`,
+										message.threadID
+									);
 								}
 							}
 						});

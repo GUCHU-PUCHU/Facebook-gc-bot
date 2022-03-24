@@ -5,14 +5,13 @@ var log = require('npmlog');
 
 module.exports = {
 	name: 'set',
-	description: 'Set bot\'s config',
+	description: "Set bot's config",
 	usage: '< prefix | botname | response | threadID | apiKey | gcLock > [value]',
 	adminOnly: true,
 	args: false,
-    hidden: false,
-    cooldown: true,
-	async execute(api, message, args, cmdMap, __dirname, ) {
-
+	hidden: false,
+	cooldown: true,
+	async execute(api, message, args, cmdMap, __dirname) {
 		let key = args[0];
 		let value = args.slice(1).join(' ');
 		utils.lookReact(api, message.threadID);
@@ -49,7 +48,7 @@ module.exports = {
 		if (key === 'gcLock') {
 			log.info('gcLock', value);
 			if (value === 'true') {
-				value =  true;
+				value = true;
 				api.setMessageReaction('🔒', message.messageID);
 			}
 			if (value === 'false') {
@@ -63,7 +62,10 @@ module.exports = {
 			log.info('gcLock0', value);
 			if (typeof value !== 'boolean') {
 				utils.errorReact(api, message.messageID);
-				return api.sendMessage('Invalid value. must be true or false.', message.threadID);
+				return api.sendMessage(
+					'Invalid value. must be true or false.',
+					message.threadID
+				);
 			}
 			config.gcLock = value;
 		}
@@ -72,19 +74,26 @@ module.exports = {
 			let data = [];
 			data.push('Current Bot Configuration:');
 			for (let key in config) {
-				if (config[key] === "") data.push(`${key}:\n    >> none`);
+				if (config[key] === '') data.push(`${key}:\n    >> none`);
 				else data.push(`\`${key}\`:\n    >> ${config[key]}`);
 			}
 			api.sendMessage(data.join('\n'), message.threadID);
 		}
-			
-		fs.writeFileSync(__dirname + '/config.json', JSON.stringify(config, null, 2), (err) => {
-			if (err) {
-				api.sendMessage(`Error: can't set ${key} to ${value}`, message.threadID);
-				utils.noticeReact(api, message);
-				return log.error(err);
+
+		fs.writeFileSync(
+			__dirname + '/config.json',
+			JSON.stringify(config, null, 2),
+			(err) => {
+				if (err) {
+					api.sendMessage(
+						`Error: can't set ${key} to ${value}`,
+						message.threadID
+					);
+					utils.noticeReact(api, message);
+					return log.error(err);
+				}
+				utils.successReact(api, message.messageID);
 			}
-			utils.successReact(api, message.messageID);
-		});
-	}
-}
+		);
+	},
+};
