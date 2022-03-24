@@ -10,6 +10,10 @@ module.exports = {
 		threadID: '',
 		weatherAPIKey: '',
 		gcLock: false,
+		Imgflip: {
+			user: '',
+			pass: '',
+		},
 	},
 
 	// Reactions for the bot
@@ -147,14 +151,10 @@ module.exports = {
 
 	writeConfig: function (arg) {
 		let config = arg;
-		fs.writeFile(
-			'./src/config.json',
-			JSON.stringify(config, null, 4),
-			(err) => {
-				if (err) return log.error(err);
-				log.info('config', 'Configuration file updated!');
-			}
-		);
+		fs.writeFile('./src/config.json', JSON.stringify(config, null, 4), (err) => {
+			if (err) return log.error(err);
+			log.info('config', 'Configuration file updated!');
+		});
 	},
 
 	fetchCookie: async function (email, password) {
@@ -204,10 +204,7 @@ module.exports = {
 				key,
 				...rest,
 			}));
-			fs.writeFileSync(
-				__dirname + '/data/fbCookies.json',
-				JSON.stringify(cookies, null, 4)
-			);
+			fs.writeFileSync(__dirname + '/data/fbCookies.json', JSON.stringify(cookies, null, 4));
 			log.info('cookies', 'Cookies saved!');
 			await browser.close();
 		} catch (err) {

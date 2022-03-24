@@ -2,7 +2,7 @@ var log = require('npmlog');
 module.exports = {
 	name: 'userinfo',
 	description: 'get info about a facebook user',
-	usage: '<user id>',
+	usage: '[user id]',
 	adminOnly: false,
 	args: false,
 	hidden: false,

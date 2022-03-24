@@ -34,21 +34,13 @@ module.exports = {
 					cache[message.threadID].messageId = message.messageID;
 					utils.waitReact(api, message.messageID);
 					if (isNaN(args[1])) {
-						cache[message.threadID].details = args
-							.slice(1)
-							.join(' ');
+						cache[message.threadID].details = args.slice(1).join(' ');
 					} else {
 						cache[message.threadID].limit = parseInt(args[1]);
-						cache[message.threadID].details = args
-							.slice(2)
-							.join(' ');
+						cache[message.threadID].details = args.slice(2).join(' ');
 					}
-					cache[message.threadID].date = moment().format(
-						'MMMM Do YYYY, h:mm a'
-					);
-					txt.push(
-						'Recording started at ' + cache[message.threadID].date
-					);
+					cache[message.threadID].date = moment().format('MMMM Do YYYY, h:mm a');
+					txt.push('Recording started at ' + cache[message.threadID].date);
 					if (cache[message.threadID].details)
 						txt.push('Details: ' + cache[message.threadID].details);
 					if (cache[message.threadID].limit)
@@ -68,9 +60,7 @@ module.exports = {
 
 					if (cache[message.threadID].details)
 						txt.push('Details: ' + cache[message.threadID].details);
-					txt.push(
-						utils.numberBulletGiver(cache[message.threadID].list)
-					);
+					txt.push(utils.numberBulletGiver(cache[message.threadID].list));
 					api.sendMessage(txt.join('\n'), message.threadID);
 					cache[message.threadID].list = [];
 				}
@@ -82,16 +72,11 @@ module.exports = {
 					return utils.noticeReact(api, message.messageID);
 				} else {
 					if (cache[message.threadID].list.length === 0)
-						return api.sendMessage(
-							'No entries recorded!',
-							message.threadID
-						);
+						return api.sendMessage('No entries recorded!', message.threadID);
 					txt.push(cache[message.threadID].date);
 					if (cache[message.threadID].details)
 						txt.push('Details: ' + cache[message.threadID].details);
-					txt.push(
-						utils.numberBulletGiver(cache[message.threadID].list)
-					);
+					txt.push(utils.numberBulletGiver(cache[message.threadID].list));
 					api.sendMessage(txt.join('\n'), message.threadID);
 				}
 				break;
@@ -100,21 +85,14 @@ module.exports = {
 				// check if list is full
 				if (
 					cache[message.threadID].limit > 0 &&
-					cache[message.threadID].list.length >=
-						cache[message.threadID].limit
+					cache[message.threadID].list.length >= cache[message.threadID].limit
 				) {
 					api.sendMessage('List is full!', message.threadID);
 					txt.push(cache[message.threadID].date);
-					if (cache[message.threadID].details)
-						txt.push(cache[message.threadID].details);
-					txt.push(
-						utils.numberBulletGiver(cache[message.threadID].list)
-					);
+					if (cache[message.threadID].details) txt.push(cache[message.threadID].details);
+					txt.push(utils.numberBulletGiver(cache[message.threadID].list));
 					api.sendMessage(txt.join('\n'), message.threadID);
-					return utils.successReact(
-						api,
-						cache[message.threadID].messageId
-					);
+					return utils.successReact(api, cache[message.threadID].messageId);
 				}
 
 				if (!cache[message.threadID].isRecording) {
@@ -143,10 +121,7 @@ module.exports = {
 				} else {
 					if (args[1] === 'all') {
 						cache[message.threadID].list = [];
-						api.sendMessage(
-							'Cleared all entries!',
-							message.threadID
-						);
+						api.sendMessage('Cleared all entries!', message.threadID);
 					} else {
 						var arr = args.slice(1);
 						var removed = [];
@@ -154,14 +129,11 @@ module.exports = {
 						for (var i = 0; i < arr.length; i++) {
 							var index = parseInt(arr[i]) - 1;
 							if (index < cache[message.threadID].list.length) {
-								removed.push(
-									cache[message.threadID].list[index]
-								);
+								removed.push(cache[message.threadID].list[index]);
 								cache[message.threadID].list.splice(index, 1);
 							}
 						}
-						if (!removed.length)
-							return utils.noticeReact(api, message.messageID);
+						if (!removed.length) return utils.noticeReact(api, message.messageID);
 						api.sendMessage(
 							'Removed ' + removed.join(', ') + ' from the list!',
 							message.threadID

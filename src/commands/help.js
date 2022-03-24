@@ -1,5 +1,6 @@
-var fs = require('fs-extra');
 var utils = require('../utils');
+
+const { prefix } = require('../config');
 
 module.exports = {
 	name: 'help',
@@ -9,74 +10,51 @@ module.exports = {
 	args: false,
 	hidden: false,
 	cooldown: true,
-	async execute(api, message, args, cmdMap, __dirname) {
-		fs.readdir(__dirname + `/commands`, (err, files) => {
-			if (err) console.error(err);
+	async execute(api, message, args, cmdMap) {
+		let x = [];
 
-			const jsFiles = files.filter((file) => file.endsWith('.js'));
-			const { prefix } = require(__dirname + `/config.json`);
-
-			if (jsFiles.length <= 0) {
-				console.log('no commands found!');
-				return;
+		if (args.length > 0) {
+			const cmd = cmdMap.commands.get(args[0].toLowerCase());
+			console.log(cmd);
+			if (!cmd) {
+				utils.noticeReact(api, message.messageID);
+				return api.sendMessage(
+					'No command found.\n' +
+						'Use `' +
+						prefix +
+						'help [command name]` to view more info.',
+					message.threadID
+				);
 			}
+			utils.successReact(api, message.messageID);
+			x.push(cmd.name);
+			if (cmd.description) x.push('\t:' + cmd.description);
+			if (cmd.usage) x.push('Usage:\n\t' + prefix + cmd.name + ' ' + cmd.usage);
+			if (cmd.adminOnly) x.push('Admin Only: true');
+			if (cmd.args) x.push('Args: true');
+			if (cmd.hidden) x.push('Hidden: true');
+			if (cmd.cooldown) x.push('Cooldown: true');
+			return api.sendMessage(x.join('\n'), message.threadID);
+		}
 
-			const data = [];
-
-			if (args.length > 0) {
-				const command = cmdMap.commands.get(args[0].toLowerCase());
-				if (!command) {
-					utils.noticeReact(api, message.messageID);
-					api.sendMessage(
-						`Command \`${args[0]}\` not found!`,
-						message.threadID
-					);
-					return;
-				}
-
-				utils.successReact(api, message.messageID);
-				data.push(`Name: ${command.name}`);
-				data.push(`Description: ${command.description}`);
-				if (command.adminOnly)
-					data.push(`Admin Only: ${command.adminOnly}`);
-				if (command.hasOwnProperty('args'))
-					data.push(`Arguments: ${command.args}`);
-				if (command.hasOwnProperty('usage'))
-					data.push(
-						`Usage: ${prefix}${command.name} ${command.usage}`
-					);
-				return api.sendMessage(data.join('\n'), message.threadID);
-			} else {
-				utils.successReact(api, message.messageID);
-				data.push('Here are some commands:\n');
-
-				cmdMap.commands.forEach((command) => {
-					// if (command.adminOnly && !message.senderID === api.getCurrentUserID()) return;
-					if (command.hidden) return;
-					data.push(`Name: ${command.name}`);
-					data.push(`Description: ${command.description}`);
-					if (command.adminOnly)
-						data.push(`Admin Only: ${command.adminOnly}`);
-					if (command.hasOwnProperty('args'))
-						data.push(`Arguments: ${command.args}`);
-					if (command.hasOwnProperty('usage'))
-						data.push(
-							`Usage: ${prefix}${command.name} ${command.usage}`
-						);
-					if (command.hasOwnProperty('cooldown'))
-						data.push(`Cooldown: ${command.cooldown}`);
-					data.push('=================');
-				});
+		utils.successReact(api, message.messageID);
+		x.push('Commands:');
+		let i = 0;
+		for (const [key, value] of cmdMap.commands) {
+			x.push('*' + key + '*');
+			x.push('\t: ' + value.description);
+			if (value.usage) x.push('Usage:\n\t' + prefix + key + ' ' + value.usage);
+			if (value.adminOnly) x.push('Admin Only: true');
+			if (value.args) x.push('Args: true');
+			if (value.hidden) x.push('Hidden: true');
+			if (value.cooldown) x.push('Cooldown: true');
+			x.push('+==+==+');
+			i++;
+			if (i % 10 === 0) {
+				await api.sendMessage(x.join('\n'), message.threadID);
+				x = [];
 			}
-
-			api.sendMessage(
-				`I sent the commands in your DM! If you can't find it check your message request.`,
-				message.threadID
-			);
-			utils.splitMessage(data.join('\n'), 1000).forEach((msg) => {
-				api.sendMessage(msg, message.senderID);
-				utils.sleep(2000);
-			});
-		});
+		}
+		if (x.length > 0) await api.sendMessage(x.join('\n'), message.threadID);
 	},
 };

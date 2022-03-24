@@ -28,10 +28,7 @@ module.exports = {
 							if (err) return log.error('Thread Info', err);
 							for (var x in user) {
 								if (user.hasOwnProperty(x)) {
-									api.sendMessage(
-										`Admin: ${user[x].name}`,
-										message.threadID
-									);
+									api.sendMessage(`Admin: ${user[x].name}`, message.threadID);
 								}
 							}
 						});

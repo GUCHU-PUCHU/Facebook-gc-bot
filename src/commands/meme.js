@@ -4,8 +4,7 @@ var utils = require('../utils');
 var config = require('../config.json');
 let busy = false;
 
-const fetch = (...args) =>
-	import('node-fetch').then(({ default: fetch }) => fetch(...args));
+const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 require('dotenv').config();
 
 module.exports = {
@@ -20,9 +19,7 @@ module.exports = {
 		var i;
 		log.info('test', 'args', args);
 
-		const response = await fetch(`https://api.imgflip.com/get_memes`).then(
-			(res) => res.json()
-		);
+		const response = await fetch(`https://api.imgflip.com/get_memes`).then((res) => res.json());
 
 		function sendMeme(meme) {
 			let x = [];
@@ -50,9 +47,7 @@ module.exports = {
 				if (isNaN(query)) {
 					for (i = 0; i < response.data.memes.length; i++) {
 						if (
-							response.data.memes[i].name
-								.toLowerCase()
-								.includes(query.toLowerCase())
+							response.data.memes[i].name.toLowerCase().includes(query.toLowerCase())
 						) {
 							let meme = response.data.memes[i];
 							sendMeme(meme);
@@ -78,11 +73,7 @@ module.exports = {
 				break;
 
 			default:
-				if (busy)
-					return api.sendMessage(
-						'Meme generator is busy.',
-						message.threadID
-					);
+				if (busy) return api.sendMessage('Meme generator is busy.', message.threadID);
 				busy = true;
 				var text = args.slice(1).join(' ').split(';');
 				if (isNaN(args[0])) {
@@ -104,9 +95,7 @@ module.exports = {
 						if (response.data.memes[i].box_count < text.length) {
 							utils.noticeReact(api, message.messageID);
 							api.sendMessage(
-								`Your aguments "${text.join(
-									', '
-								)}" is too long.\n` +
+								`Your aguments "${text.join(', ')}" is too long.\n` +
 									`Meme has only ${response.data.memes[i].box_count} boxes.`,
 								message.threadID
 							);
@@ -125,16 +114,13 @@ module.exports = {
 					params.append(`boxes[${i}][text]`, text[i]);
 				}
 
-				var meme = await fetch(
-					`https://api.imgflip.com/caption_image`,
-					{
-						method: 'POST',
-						body: params,
-						headers: {
-							'Content-Type': 'application/x-www-form-urlencoded',
-						},
-					}
-				).then((res) => res.json());
+				var meme = await fetch(`https://api.imgflip.com/caption_image`, {
+					method: 'POST',
+					body: params,
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded',
+					},
+				}).then((res) => res.json());
 
 				if (!meme.success) {
 					utils.noticeReact(api, message.messageID);
@@ -146,18 +132,11 @@ module.exports = {
 				}
 				utils.waitReact(api, message.messageID);
 				fetch(meme.data.url)
-					.then((res) =>
-						res.body.pipe(
-							fse.createWriteStream(`./src/data/image.jpg`)
-						)
-					)
+					.then((res) => res.body.pipe(fse.createWriteStream(`./src/data/image.jpg`)))
 					.catch((err) => {
 						console.log(err);
 						utils.noticeReact(api, message.messageID);
-						api.sendMessage(
-							`Something went wrong.\n${err}`,
-							message.threadID
-						);
+						api.sendMessage(`Something went wrong.\n${err}`, message.threadID);
 					});
 
 				await utils.sleep(2000);
@@ -166,8 +145,7 @@ module.exports = {
 				return api.sendMessage(
 					{
 						body: ` `,
-						attachment:
-							fse.createReadStream(`./src/data/image.jpg`),
+						attachment: fse.createReadStream(`./src/data/image.jpg`),
 					},
 					message.threadID
 				);

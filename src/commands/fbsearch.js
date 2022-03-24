@@ -29,10 +29,7 @@ module.exports = {
 								dataP.push(
 									`Profile URL:  https://www.facebook.com${data[i].profileUrl}`
 								);
-							else
-								dataP.push(
-									`Profile URL:  ${data[i].profileUrl}`
-								);
+							else dataP.push(`Profile URL:  ${data[i].profileUrl}`);
 							dataP.push('====');
 						}
 					}
@@ -57,9 +54,7 @@ module.exports = {
 					break;
 			}
 			api.sendMessage(
-				`${dataC.length} result of ${args[0]} found! \n\n${dataP.join(
-					'\n'
-				)}`,
+				`${dataC.length} result of ${args[0]} found! \n\n${dataP.join('\n')}`,
 				message.threadID
 			);
 		});

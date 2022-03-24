@@ -4,18 +4,14 @@ var log = require('npmlog');
 var utils = require('./utils');
 var config = require('./config.json');
 const credentials = {
-	appState: JSON.parse(
-		fs.readFileSync(__dirname + `/data/fbCookies.json`, 'utf8')
-	),
+	appState: JSON.parse(fs.readFileSync(__dirname + `/data/fbCookies.json`, 'utf8')),
 };
 const cmdMap = new Map();
 cmdMap.commands = new Map();
 const data = [];
 
 log.info('Loading Commands... ');
-const commandFiles = fs
-	.readdirSync(__dirname + `/commands`)
-	.filter((file) => file.endsWith('.js'));
+const commandFiles = fs.readdirSync(__dirname + `/commands`).filter((file) => file.endsWith('.js'));
 
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
@@ -65,10 +61,7 @@ login(credentials, (err, api) => {
 			}
 
 			if (!message.body.startsWith(config.prefix)) return;
-			const args = message.body
-				.slice(config.prefix.length)
-				.trim()
-				.split(/ +/);
+			const args = message.body.slice(config.prefix.length).trim().split(/ +/);
 			const cmdName = args.shift().toLowerCase();
 			const command = cmdMap.commands.get(cmdName);
 
@@ -102,12 +95,9 @@ login(credentials, (err, api) => {
 			api.markAsRead(message.threadID);
 			api.setMessageReaction('👍', message.messageID);
 			try {
-				command.execute(api, message, args, cmdMap, __dirname, config);
+				command.execute(api, message, args, cmdMap, __dirname);
 			} catch (error) {
-				log.error(
-					'Something is wrong executing the command! \n',
-					error
-				);
+				log.error('Something is wrong executing the command! \n', error);
 				utils.noticeReact(api, message.messageID);
 			}
 		}

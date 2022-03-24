@@ -11,24 +11,30 @@ module.exports = {
 	args: false,
 	hidden: false,
 	cooldown: true,
-	async execute(api, message, args, cmdMap, __dirname) {
+	async execute(api, message, args) {
 		let key = args[0];
 		let value = args.slice(1).join(' ');
 		utils.lookReact(api, message.threadID);
 
-		if (key === 'prefix') {
-			config.prefix = value;
-			utils.successReact(api, message.messageID);
-		}
-
-		if (key === 'botName') {
-			config.botName = value;
-			utils.successReact(api, message.messageID);
-		}
-
-		if (key === 'response') {
-			config.response = value;
-			utils.successReact(api, message.messageID);
+		if (
+			(key === 'prefix' || key === 'botname' || key === 'response' || key === 'apiKey') &&
+			value.length > 0
+		) {
+			config[key] = value;
+			fs.writeFile('../config.json', JSON.stringify(config), (err) => {
+				if (err) {
+					log.error('Set', err);
+					return api.sendMessage(
+						'Something went wrong. Please try again.',
+						message.threadID
+					);
+				}
+				utils.successReact(api, message.messageID);
+				return api.sendMessage(
+					'Successfully set ' + key + ' to ' + value,
+					message.threadID
+				);
+			});
 		}
 
 		if (key === 'threadID') {
@@ -40,13 +46,7 @@ module.exports = {
 			utils.successReact(api, message.messageID);
 		}
 
-		if (key === 'apiKey') {
-			config.weatherAPIKey = value;
-			utils.successReact(api, message.messageID);
-		}
-
 		if (key === 'gcLock') {
-			log.info('gcLock', value);
 			if (value === 'true') {
 				value = true;
 				api.setMessageReaction('🔒', message.messageID);
@@ -59,13 +59,9 @@ module.exports = {
 				utils.noticeReact(api, message.messageID);
 				return api.sendMessage('Nothing changed.', message.threadID);
 			}
-			log.info('gcLock0', value);
 			if (typeof value !== 'boolean') {
 				utils.errorReact(api, message.messageID);
-				return api.sendMessage(
-					'Invalid value. must be true or false.',
-					message.threadID
-				);
+				return api.sendMessage('Invalid value. must be true or false.', message.threadID);
 			}
 			config.gcLock = value;
 		}
@@ -80,20 +76,13 @@ module.exports = {
 			api.sendMessage(data.join('\n'), message.threadID);
 		}
 
-		fs.writeFileSync(
-			__dirname + '/config.json',
-			JSON.stringify(config, null, 2),
-			(err) => {
-				if (err) {
-					api.sendMessage(
-						`Error: can't set ${key} to ${value}`,
-						message.threadID
-					);
-					utils.noticeReact(api, message);
-					return log.error(err);
-				}
-				utils.successReact(api, message.messageID);
+		fs.writeFileSync('../config.json', JSON.stringify(config, null, 2), (err) => {
+			if (err) {
+				api.sendMessage(`Error: can't set ${key} to ${value}`, message.threadID);
+				utils.noticeReact(api, message);
+				return log.error(err);
 			}
-		);
+			utils.successReact(api, message.messageID);
+		});
 	},
 };

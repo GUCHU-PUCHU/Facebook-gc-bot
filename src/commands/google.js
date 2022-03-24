@@ -4,6 +4,7 @@ var utils = require('../utils');
 module.exports = {
 	name: 'google',
 	description: 'Searches Google for a query',
+	usage: '[query]',
 	adminOnly: false,
 	args: false,
 	hidden: false,
@@ -32,12 +33,8 @@ module.exports = {
 			data.push(`Word: ${response.dictionary.word}`);
 			data.push(`Phoenetic: ${response.dictionary.phonetic}`);
 			data.push(`Audio: ${response.dictionary.audio}`);
-			data.push(
-				`\nDefinition: \n${response.dictionary.definitions.join('\n')}`
-			);
-			data.push(
-				`\nExample: \n${response.dictionary.examples.join('\n')}`
-			);
+			data.push(`\nDefinition: \n${response.dictionary.definitions.join('\n')}`);
+			data.push(`\nExample: \n${response.dictionary.examples.join('\n')}`);
 			return api.sendMessage(data.join('\n'), message.threadID);
 		}
 
@@ -49,10 +46,8 @@ module.exports = {
 			data.push(`Title: ${response.knowledge_panel.title}`);
 			data.push(`Description: ${response.knowledge_panel.description}`);
 			data.push(`Link: ${response.knowledge_panel.url}`);
-			if (response.knowledge_panel.born)
-				data.push(`Born: ${response.knowledge_panel.born}`);
-			if (response.knowledge_panel.died)
-				data.push(`Died: ${response.knowledge_panel.died}`);
+			if (response.knowledge_panel.born) data.push(`Born: ${response.knowledge_panel.born}`);
+			if (response.knowledge_panel.died) data.push(`Died: ${response.knowledge_panel.died}`);
 			if (response.knowledge_panel.spouse)
 				data.push(`Spouse: ${response.knowledge_panel.spouse}`);
 			if (response.knowledge_panel.children)
@@ -65,9 +60,7 @@ module.exports = {
 			data.push(`Results for "${query}"`);
 			for (let i = 0; i < response.results.length; i++) {
 				data.push(`${i + 1}. ${response.results[i].title}`);
-				data.push(
-					`Description: \n	${response.results[i].description}\n`
-				);
+				data.push(`Description: \n	${response.results[i].description}\n`);
 				data.push(`Link: ${response.results[i].url}`);
 				data.push(`\n`);
 			}

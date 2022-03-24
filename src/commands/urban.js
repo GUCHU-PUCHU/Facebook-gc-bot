@@ -1,5 +1,4 @@
-const fetch = (...args) =>
-	import('node-fetch').then(({ default: fetch }) => fetch(...args));
+const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 var utils = require('../utils');
 
 module.exports = {
@@ -25,16 +24,13 @@ module.exports = {
 			term,
 		});
 
-		const { list } = await fetch(
-			`https://api.urbandictionary.com/v0/define?${query}`
-		).then((response) => response.json());
+		const { list } = await fetch(`https://api.urbandictionary.com/v0/define?${query}`).then(
+			(response) => response.json()
+		);
 
 		if (!list.length) {
 			utils.sadReact(api, message.messageID);
-			api.sendMessage(
-				`No results for: ${term.join(' ')}!`,
-				message.threadID
-			);
+			api.sendMessage(`No results for: ${term.join(' ')}!`, message.threadID);
 			return;
 		}
 
