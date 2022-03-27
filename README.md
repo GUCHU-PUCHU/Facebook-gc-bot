@@ -47,7 +47,9 @@ npm start
 Then you'll be asked what you want to setup.
 choose login, then input yout email and password.
 
-if you want to cofigure the bot just run npm start again.
+if you want to configure the bot just run `npm start` again.
+_honestly not sure how to loop the thing so i'll just leave it as is foe now._
+_I'm a beginner._
 
 ### Running the bot
 
