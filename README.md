@@ -46,8 +46,8 @@ npm start
 
 Then you'll be asked what you want to setup.
 choose login, then input yout email and password.
-Then you'll be asked if you want to continue setting up the bot.
-choose `change config` then put the needed infos.
+
+if you want to cofigure the bot just run npm start again.
 
 ### Running the bot
 
