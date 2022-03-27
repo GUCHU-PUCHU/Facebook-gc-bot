@@ -6,7 +6,22 @@ module.exports = {
     adminOnly: true,
     GcOnly: true,
     usage: '[ prefix | botname | response | apikey | cooldown ] <value>',
-    description: 'This command is used to set a setting for the bot.',
+    description: 'Set the value of a config option.\n' +
+        'Usage: `!set [option] [value]`\n\n' +
+        'Available options:\n' +
+        'prefix: The prefix for the bot.\n' +
+        '\tExample: `!set prefix !`\n' +
+        'botname: The name of the bot.\n' +
+        '\tExample: `!set botname MyBot`\n' +
+        'response: The response for the bot.\n' +
+        '\tExample: `!set response Hello World`\n' +
+        'apikey: The api key for the weather api.\n' +
+        '\tExample: `!set apikey 1234567890`\n' +
+        'cooldown: The cooldown multiplier. (x * 1000 ms)\n' +
+        '\tExample: `!set cooldown 2`\n' +
+        'gc_lock: Whether or not the bot should lock the group chat.\n' +
+        '\tExample: `!set gc_lock true`\n' +
+        '\tExample: `!set gc_lock false`',
     info: "Set bot's settings.",
     cooldown: true,
     execute: function (api, message, args, config, utils) {

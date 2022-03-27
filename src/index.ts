@@ -21,7 +21,7 @@ inquirer
 			type: 'list',
 			name: 'action',
 			message: 'What do you want to do?',
-			choices: ['Start', 'Setup login', 'Change config', 'exit'],
+			choices: ['Start', 'Setup FB account', 'Setup Imgflip account', 'Change config', 'exit'],
 		},
 	])
 	.then((answers: { action: any }) => {
@@ -31,13 +31,17 @@ inquirer
 				console.log('Hit [Ctrl+C] to exit at any time.');
 				utils.start();
 				break;
-			case 'Setup login':
+			case 'Setup FB account':
 				utils.login();
+				break;
+			case 'Setup Imgflip account':
+				utils.imgLogin();
 				break;
 			case 'Change config':
 				console.log('Hit [Enter] to keep the current value.');
 				utils.changeConfig();
 				break;
+
 			case 'exit':
 				console.log('Bye!');
 				process.exit();

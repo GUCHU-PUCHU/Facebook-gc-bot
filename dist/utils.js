@@ -24,6 +24,10 @@ module.exports = {
         w_api_key: '',
         gc_lock: false,
         cooldown: '5',
+        imgflip: {
+            username: 'imgflip_hubot',
+            password: 'imgflip_hubot',
+        },
     },
     config_file: path.join('./dist/data', 'config.json'),
     log_file: path.join('./dist/data', 'log.json'),
@@ -102,6 +106,34 @@ module.exports = {
             var email = answers.email;
             var password = answers.password;
             this.fetchCookies(email, password);
+            require('./index');
+        });
+    },
+    imgLogin: function () {
+        inquirer
+            .prompt([
+            {
+                type: 'input',
+                name: 'username',
+                message: 'What is your username?',
+                validate: this.checkIfEmpty,
+            },
+            {
+                type: 'password',
+                name: 'password',
+                message: 'What is your password?',
+                mask: '*',
+                validate: this.checkIfEmpty,
+            },
+        ])
+            .then((answers) => {
+            const config = fse.readJsonSync(this.config_file);
+            config.imgflip.username = answers.username;
+            config.imgflip.password = answers.password;
+            this.writeToConfig(config, () => {
+                console.log('done');
+                require('./index');
+            });
         });
     },
     changeConfig: function () {

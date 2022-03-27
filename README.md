@@ -16,7 +16,7 @@ You see... This `thing` uses an **Unofficial** Facebook API. This means you need
 
 JUST DON'T USE YOUR REAL FB ACCOUNT. OKAY?. GOOD.
 
-> I'm a beginner and I'm still learning, so there might be some bugs... and I'm not sure if I'm doing everything right. anyways, have fun with this bot. you're looking at the code right now, my apologies.. It might look messy but it works.
+> I'm a beginner and I'm still learning, so there might be some bugs... and I'm not sure if I'm doing everything right. anyways, have fun with this bot. If you're looking at the code right now, my apologies.. It might look messy but it works.
 
 ### Dependencies
 
@@ -47,7 +47,7 @@ npm start
 Then you'll be asked what you want to setup.
 choose login, then input yout email and password.
 Then you'll be asked if you want to continue setting up the bot.
-reply `y` if you want to continue.
+choose `change config` then put the needed infos.
 
 ### Running the bot
 

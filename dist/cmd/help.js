@@ -6,7 +6,10 @@ module.exports = {
     adminOnly: false,
     GcOnly: true,
     usage: '[command]',
-    description: 'Do you need help? figuring out how to use a command? this is the command for you.',
+    description: 'Do you need help? figuring out how to use a command? this is the command for you.\n' +
+        'Usage: \n' +
+        '\t `help` - Shows this message. \n' +
+        '\t `help <command>` - Shows help for the given command. \n',
     info: 'To display help.',
     cooldown: true,
     execute: function (api, message, args, config, utils, cmdMap) {
@@ -37,6 +40,6 @@ module.exports = {
         if (cmdMap.name.get(cmd).usage) {
             reply += '\nUsage: ' + config.prefix + cmd + ' ' + cmdMap.name.get(cmd).usage;
         }
-        api.sendMessage(reply, message.threadID);
+        api.sendMessage(reply, message.senderID);
     },
 };
