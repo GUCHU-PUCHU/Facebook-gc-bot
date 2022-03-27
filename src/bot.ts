@@ -63,7 +63,7 @@ login(credentials, (err: any, api: any) => {
 			}
 		}
 		// check if commands is GcOnly
-		if (cmdMap.name.get(cmd).GcOnly) return;
+		if (cmdMap.name.get(cmd).GcOnly && !message.isGroup) return;
 		// check if cooldown is on
 		if (cmdMap.name.get(cmd).cooldown) {
 			if (!talkedRecently[message.threadID]) {

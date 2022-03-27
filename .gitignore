@@ -1,11 +1,4 @@
 node_modules
-./data/*.json
-./data/images/*.png
-src/data/fbCookies.json
 package-lock.json
-config.json
-src/data/threadData.json
-src/data/schedule.json
-src/commands/sched.js
-src/commands/test.js
-src/commands/test.js
+*/cmd/tst.*
+*/data/
