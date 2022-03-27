@@ -48,7 +48,7 @@ Then you'll be asked what you want to setup.
 choose login, then input yout email and password.
 
 if you want to configure the bot just run `npm start` again.
-_honestly not sure how to loop the thing so i'll just leave it as is foe now._
+_honestly not sure how to loop the thing so i'll just leave it as is for now._
 _I'm a beginner._
 
 ### Running the bot
