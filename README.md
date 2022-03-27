@@ -28,7 +28,7 @@ JUST DON'T USE YOUR REAL FB ACCOUNT. OKAY?. GOOD.
 
 ---
 
-> Hope everything here is clear enough and understandable since english is not my first language.
+> I Hope everything here is clear enough and understandable since english is not my first language.
 
 Clone the repo and run `npm install` in the root directory.
 
@@ -45,11 +45,15 @@ npm start
 ```
 
 Then you'll be asked what you want to setup.
-choose login, then input yout email and password.
+choose login, then input your email and password.
 
-if you want to configure the bot just run `npm start` again.
-_honestly not sure how to loop the thing so i'll just leave it as is for now._
-_I'm a beginner._
+To setup the bot's settings, run `npm start` again.
+Then choose `change config`.
+
+You'll be asked what to change, Hit [Enter] to keep the current values.
+
+_honestly not sure how to loop the setup thing so i'll just leave it as is for now._
+_I'm still learning... if you have suggestions or any ideas that can help, please do tell._
 
 ### Running the bot
 
@@ -65,3 +69,15 @@ npm start
 ```
 
 then choose start.
+
+### Issues
+
+---
+
+If you have any issues, please don't hesitate to [open an issue](https://github.com/PedjPedj/Facebook-gc-bot/issues). I'll try my best to help you.
+
+### Suggestions
+
+---
+
+If you have any suggestions, please don't hesistate to [open a pull request](https://github.com/PedjPedj/Facebook-gc-bot/pulls). I would love to hear from you and learn.
