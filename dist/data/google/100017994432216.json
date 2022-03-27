@@ -1,0 +1,101 @@
+{
+    "results": [
+        {
+            "title": "GIT Push and Pull Tutorial - DataCamp",
+            "description": "Jul 23, 2019 — The git push command is used to transfer or push the commit, which is made on a local branch in your computer to a remote repository like GitHub ...",
+            "url": "https://www.datacamp.com/community/tutorials/git-push-pull",
+            "favicons": {
+                "high_res": "https://api.faviconkit.com/www.datacamp.com/192",
+                "low_res": "https://www.google.com/s2/favicons?sz=64&domain_url=www.datacamp.com"
+            }
+        },
+        {
+            "title": "Git Push | Atlassian Git Tutorial",
+            "description": "The git push command is used to upload local repository content to a remote repository. Pushing is how you transfer commits from your local repository to a ...",
+            "url": "https://www.atlassian.com/git/tutorials/syncing/git-push",
+            "favicons": {
+                "high_res": "https://api.faviconkit.com/www.atlassian.com/192",
+                "low_res": "https://www.google.com/s2/favicons?sz=64&domain_url=www.atlassian.com"
+            }
+        },
+        {
+            "title": "Pushing commits to a remote repository - GitHub Docs",
+            "description": "About git push — The git push command takes two arguments: A remote name, for example, origin; A branch name, for example, main. For example:",
+            "url": "https://docs.github.com/en/get-started/using-git/pushing-commits-to-a-remote-repository",
+            "favicons": {
+                "high_res": "https://api.faviconkit.com/docs.github.com/192",
+                "low_res": "https://www.google.com/s2/favicons?sz=64&domain_url=docs.github.com"
+            }
+        },
+        {
+            "title": "[GitHub] How to Push to GitHub | Learn Version Control with Git",
+            "description": "Using Git in a Desktop GUI · right-click the \"Remotes\" section header in the sidebar and select \"Add Remote Repository\" · in the dialog, you can enter a name ( ...",
+            "url": "https://www.git-tower.com/learn/git/faq/push-to-github",
+            "favicons": {
+                "high_res": "https://api.faviconkit.com/www.git-tower.com/192",
+                "low_res": "https://www.google.com/s2/favicons?sz=64&domain_url=www.git-tower.com"
+            }
+        },
+        {
+            "title": "git-push Documentation",
+            "description": "You can make interesting things happen to a repository every time you push into it, by setting up hooks there. See documentation for git-receive-pack[1].",
+            "url": "https://git-scm.com/docs/git-push",
+            "favicons": {
+                "high_res": "https://api.faviconkit.com/git-scm.com/192",
+                "low_res": "https://www.google.com/s2/favicons?sz=64&domain_url=git-scm.com"
+            }
+        },
+        {
+            "title": "Git Push Command Explained With Demo [Updated] - Simplilearn",
+            "description": "Feb 17, 2022 — The Git push command is used to push the local repository content to a remote repository. After a local repository has been modified, a push is ...",
+            "url": "https://www.simplilearn.com/tutorials/git-tutorial/git-push-command",
+            "favicons": {
+                "high_res": "https://api.faviconkit.com/www.simplilearn.com/192",
+                "low_res": "https://www.google.com/s2/favicons?sz=64&domain_url=www.simplilearn.com"
+            }
+        },
+        {
+            "title": "How to Push an Existing Project to GitHub | DigitalOcean",
+            "description": "Sep 21, 2020 — Step 2: Initialize Git in the project folder · Initialize the Git Repo · Add the files to Git index · Commit Added Files · Add new remote origin (in ...",
+            "url": "https://www.digitalocean.com/community/tutorials/how-to-push-an-existing-project-to-github",
+            "favicons": {
+                "high_res": "https://api.faviconkit.com/www.digitalocean.com/192",
+                "low_res": "https://www.google.com/s2/favicons?sz=64&domain_url=www.digitalocean.com"
+            }
+        },
+        {
+            "title": "Push commits to an additional Git repository - AWS CodeCommit",
+            "description": "Describes how to push changes to two different remote repositories with a single ... Run the git remote set-url --add --push origin git-repository-name ...",
+            "url": "https://docs.aws.amazon.com/codecommit/latest/userguide/how-to-mirror-repo-pushes.html",
+            "favicons": {
+                "high_res": "https://api.faviconkit.com/docs.aws.amazon.com/192",
+                "low_res": "https://www.google.com/s2/favicons?sz=64&domain_url=docs.aws.amazon.com"
+            }
+        },
+        {
+            "title": "The Git Push Command Explained - freeCodeCamp",
+            "description": "Jan 3, 2020 — The git push command allows you to send (or push) the commits from your local branch in your local Git repository to the remote repository.",
+            "url": "https://www.freecodecamp.org/news/the-git-push-command-explained/amp/",
+            "favicons": {
+                "high_res": "https://api.faviconkit.com/www.freecodecamp.org/192",
+                "low_res": "https://www.google.com/s2/favicons?sz=64&domain_url=www.freecodecamp.org"
+            }
+        }
+    ],
+    "knowledge_panel": {
+        "title": "N/A",
+        "description": "N/A",
+        "url": "N/A"
+    },
+    "featured_snippet": {
+        "title": "N/A",
+        "description": "N/A",
+        "url": "N/A"
+    },
+    "top_stories": [],
+    "people_also_ask": [
+        "How do I push a git file to GitHub?",
+        "How do I manually push to GitHub?"
+    ],
+    "people_also_search_for": []
+}

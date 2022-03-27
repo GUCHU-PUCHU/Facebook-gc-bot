@@ -3,7 +3,6 @@
     <a href="https://github.com/PedjPedj/Facebook-gc-bot"><img alt="GitHub Clones" src="https://img.shields.io/badge/dynamic/json?color=success&label=Clone&query=count&url=https://github.com/PedjPedj/Facebook-gc-bot/blob/main/clone.json?raw=True&logo=github"></a>
 </p>
 
-
 # Facebook-gc-bot
 
 Facebook-gc-bot is a simple group chat bot for facebook. (Its pretty much a clone of discordbots but for FB XD).
@@ -21,13 +20,13 @@ JUST DON'T USE YOUR REAL FB ACCOUNT. OKAY?. GOOD.
 
 ### Dependencies
 
-***
+---
 
 [NodeJs](https://nodejs.org/en/download/) and [Git](https://git-scm.com/downloads)
 
 ### Installation
 
-***
+---
 
 > Hope everything here is clear enough and understandable since english is not my first language.
 
@@ -39,35 +38,28 @@ cd Facebook-gc-bot
 npm i
 ```
 
-then run the setup script.
+Then you need to set up the bot. just run npm start
 
-```bash
-npm run setup
+```
+npm start
 ```
 
-Choose `login` to enter your credentials. Then you'll be asked if you want to setup your configuration files, enter 'y' to initialize the files.
-
-> **Prefix** is the command prefix. it can be a single character or more. This is the "trigger" for the bot.
->
-> **Bot name** is the name of the bot. to trigger @botName.
->
-> **response** is the response of the bot when mentioned @botName. (optional)
->
-> **Thread ID** is the thread ID of the chat. (**IMPORTANT**) You can get this from the url of the chat group.
->
-> **Weather API Key** is the API key for the weather API. Get your API key from [Open Weather Map](https://openweathermap.org/api). (optional)
->
-> **GC Lock** is the group chat lock. If you want to prevent the bot from receiving messages from other group chat, set this to true.
+Then you'll be asked what you want to setup.
+choose login, then input yout email and password.
+Then you'll be asked if you want to continue setting up the bot.
+reply `y` if you want to continue.
 
 ### Running the bot
 
-***
+---
 
 Now, pray to every god that you don't get banned and everything works as intended.
-*If you're an atheist.. then that sucks. R'amen, May his noodly goodness touch you!* JKJKJK
+_If you're an atheist.. then that sucks. R'amen, May his noodly goodness touch you!_ JKJKJK
 
 Then run the bot.
 
 ```bash
 npm start
 ```
+
+then choose start.

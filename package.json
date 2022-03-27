@@ -1,41 +1,28 @@
 {
-	"name": "fbbot",
+	"name": "fb-gc-bot",
 	"version": "1.0.0",
 	"description": "",
-	"main": "src/index.js",
+	"main": "./dist/index.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"start": "node .",
-		"setup": "node setup",
-		"dev": "nodemon -e js"
+		"test": "jest",
+		"start": "node ./dist/index.js",
+		"dev": "nodemon ./dist/bot.js -e js",
+		"build": "tsc"
 	},
-	"keywords": [
-		"facebook",
-		"bot",
-		"messenger",
-		"chatbot",
-		"fb",
-		"fb-bot"
-	],
 	"author": "",
-	"license": "Apache-2.0",
+	"license": "ISC",
 	"dependencies": {
-		"dotenv": "^16.0.0",
 		"facebook-chat-api": "github:PedjPedj/facebook-chat-api#test",
-		"fs-extra": "^10.0.0",
+		"fs-extra": "^10.0.1",
 		"googlethis": "^1.2.7",
-		"inquirer": "^8.2.0",
+		"inquirer": "^8.2.2",
 		"moment": "^2.29.1",
-		"node-fetch": "^3.2.0",
-		"npmlog": "^6.0.0",
-		"puppeteer": "^13.1.2"
+		"node-fetch": "^2.6.7",
+		"puppeteer": "^13.5.1"
 	},
 	"devDependencies": {
-		"eslint": "^8.11.0",
-		"eslint-config-airbnb-base": "^15.0.0",
-		"eslint-config-prettier": "^8.5.0",
-		"eslint-plugin-import": "^2.25.4",
-		"jshint": "^2.13.4",
-		"prettier": "2.6.0"
+		"@types/inquirer": "^8.2.0",
+		"@types/node": "^17.0.23",
+		"nodemon": "^2.0.15"
 	}
 }
