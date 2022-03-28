@@ -18,15 +18,15 @@ JUST DON'T USE YOUR REAL FB ACCOUNT. OKAY?. GOOD.
 
 > I'm a beginner and I'm still learning, so there might be some bugs... and I'm not sure if I'm doing everything right. anyways, have fun with this bot. If you're looking at the code right now, my apologies.. It might look messy but it works.
 
-### Dependencies
-
 ---
+
+### Dependencies
 
 [NodeJs](https://nodejs.org/en/download/) and [Git](https://git-scm.com/downloads)
 
-### Installation
-
 ---
+
+### Installation
 
 > I Hope everything here is clear enough and understandable since english is not my first language.
 
@@ -55,9 +55,9 @@ You'll be asked what to change, Hit [Enter] to keep the current values.
 _honestly not sure how to loop the setup thing so i'll just leave it as is for now._
 _I'm still learning... if you have suggestions or any ideas that can help, please do tell._
 
-### Running the bot
-
 ---
+
+### Running the bot
 
 Now, pray to every god that you don't get banned and everything works as intended.
 _If you're an atheist.. then that sucks. R'amen, May his noodly goodness touch you!_ JKJKJK
@@ -70,14 +70,14 @@ npm start
 
 then choose start.
 
-### Issues
-
 ---
+
+### Issues
 
 If you have any issues, please don't hesitate to [open an issue](https://github.com/PedjPedj/Facebook-gc-bot/issues). I'll try my best to help you.
 
-### Suggestions
-
 ---
+
+### Suggestions
 
 If you have any suggestions, please don't hesistate to [open a pull request](https://github.com/PedjPedj/Facebook-gc-bot/pulls). I would love to hear from you and learn.
