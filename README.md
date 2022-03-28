@@ -1,4 +1,4 @@
-<img alt="Facebook-gc-bot-banner" src="https://i.imgur.com/U0FiWzA.png">
+<img alt="Facebook-gc-bot-banner" src="https://i.imgur.com/l25Mekd.png">
 
 <h1 align="center">Facebook Group Chat Bot</h1>
 
