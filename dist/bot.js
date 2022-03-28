@@ -46,54 +46,54 @@ login(credentials, (err, api) => {
             console.log(message);
             if (config.gc_lock) {
                 if (config.thread_id !== message.threadID)
+                    return console.log('Ignoring message from ' + message.threadID);
+            }
+            if (!message.body.startsWith(config.prefix))
+                return;
+            const args = message.body.slice(config.prefix.length).trim().split(/ +/g);
+            let cmd = args.shift().toLowerCase();
+            // check if command exists
+            if (!cmdMap.name.has(cmd)) {
+                if (cmdMap.alias.has(cmd)) {
+                    cmd = cmdMap.alias.get(cmd).name;
+                }
+                else {
                     return;
+                }
             }
-        }
-        if (!message.body.startsWith(config.prefix))
-            return;
-        const args = message.body.slice(config.prefix.length).trim().split(/ +/g);
-        let cmd = args.shift().toLowerCase();
-        // check if command exists
-        if (!cmdMap.name.has(cmd)) {
-            if (cmdMap.alias.has(cmd)) {
-                cmd = cmdMap.alias.get(cmd).name;
+            // check if commands is GcOnly
+            if (cmdMap.name.get(cmd).GcOnly && !message.isGroup)
+                return;
+            // check if cooldown is on
+            if (cmdMap.name.get(cmd).cooldown) {
+                if (!talkedRecently[message.threadID]) {
+                    talkedRecently[message.threadID] = new Set();
+                }
+                if (talkedRecently[message.threadID].has(message.senderID)) {
+                    return;
+                }
+                talkedRecently[message.threadID].add(message.senderID);
+                setTimeout(() => {
+                    talkedRecently[message.threadID].delete(message.senderID);
+                }, config.cooldown * 1000);
             }
-            else {
+            // check if command needs args
+            if (cmdMap.name.get(cmd).args && args.length === 0) {
+                let reply = 'You need to provide arguments for this command.';
+                if (cmdMap.name.get(cmd).usage) {
+                    reply += '\nUsage: ' + config.prefix + cmd + ' ' + cmdMap.name.get(cmd).usage;
+                }
+                api.sendMessage(reply, message.threadID);
                 return;
             }
-        }
-        // check if commands is GcOnly
-        if (cmdMap.name.get(cmd).GcOnly && !message.isGroup)
-            return;
-        // check if cooldown is on
-        if (cmdMap.name.get(cmd).cooldown) {
-            if (!talkedRecently[message.threadID]) {
-                talkedRecently[message.threadID] = new Set();
+            api.setMessageReaction('👍', message.messageID);
+            // execute command
+            try {
+                cmdMap.name.get(cmd).execute(api, message, args, config, utils, cmdMap);
             }
-            if (talkedRecently[message.threadID].has(message.senderID)) {
-                return;
+            catch (error) {
+                console.error(error);
             }
-            talkedRecently[message.threadID].add(message.senderID);
-            setTimeout(() => {
-                talkedRecently[message.threadID].delete(message.senderID);
-            }, config.cooldown * 1000);
-        }
-        // check if command needs args
-        if (cmdMap.name.get(cmd).args && args.length === 0) {
-            let reply = 'You need to provide arguments for this command.';
-            if (cmdMap.name.get(cmd).usage) {
-                reply += '\nUsage: ' + config.prefix + cmd + ' ' + cmdMap.name.get(cmd).usage;
-            }
-            api.sendMessage(reply, message.threadID);
-            return;
-        }
-        api.setMessageReaction('👍', message.messageID);
-        // execute command
-        try {
-            cmdMap.name.get(cmd).execute(api, message, args, config, utils, cmdMap);
-        }
-        catch (error) {
-            console.error(error);
         }
     });
 });

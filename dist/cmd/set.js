@@ -1,4 +1,5 @@
 "use strict";
+var fse = require('fs-extra');
 module.exports = {
     name: 'set',
     alias: ['set', 'config', 'cfg'],
@@ -71,10 +72,38 @@ module.exports = {
             }
             key = 'gc_lock';
         }
+        if (key === 'stats') {
+            // send the stats in config file
+            let msg = 'Config Stats:\n' +
+                '\tPrefix: ' +
+                config.prefix +
+                '\n' +
+                '\tBot Name: ' +
+                config.bot_name +
+                '\n' +
+                '\tResponse: ' +
+                config.response +
+                '\n' +
+                '\tAPI Key: ' +
+                config.w_api_key +
+                '\n' +
+                '\tCooldown: ' +
+                config.cooldown +
+                '\n' +
+                '\tGroup Chat Lock: ' +
+                config.gc_lock +
+                '\n' +
+                '\tThread ID: ' +
+                config.thread_id;
+            api.sendMessage(msg, message.threadID);
+            return;
+        }
+        if (!value)
+            return;
         config[key] = value;
         utils.writeToConfig(config, () => {
             utils.successReact(api, message.messageID);
-            api.sendMessage(`Setting ${key} to ${value}`, message.threadID);
+            api.sendMessage(`Setting \`${key}\` to ${value}`, message.threadID);
         });
     },
 };

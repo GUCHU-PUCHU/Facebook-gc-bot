@@ -3,7 +3,7 @@ module.exports = {
 	alias: ['help', 'h'],
 	args: false,
 	adminOnly: false,
-	GcOnly: true,
+	GcOnly: false,
 	usage: '[command]',
 	description:
 		'Do you need help? figuring out how to use a command? this is the command for you.\n' +

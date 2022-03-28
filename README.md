@@ -1,14 +1,27 @@
+<img alt="Facebook-gc-bot-banner" src="https://i.imgur.com/U0FiWzA.png">
+
+<h1 align="center">Facebook Group Chat Bot</h1>
+
 <p align="center">
     <img alt="ViewCount" src="https://views.whatilearened.today/views/github/PedjPedj/Facebook-gc-bot-badge.svg">
     <a href="https://github.com/PedjPedj/Facebook-gc-bot"><img alt="GitHub Clones" src="https://img.shields.io/badge/dynamic/json?color=success&label=Clone&query=count&url=https://github.com/PedjPedj/Facebook-gc-bot/blob/main/clone.json?raw=True&logo=github"></a>
+    <a href="https://github.com/PedjPedj/Facebook-gc-bot/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/PedjPedj/Facebook-gc-bot"></a> 
 </p>
 
-# Facebook-gc-bot
+<p align="center">
+    <a href="https://github.com/prettier/prettier"><img alt="Code style: Prettier" src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat"></a>
+    <a href="https://github.com/PedjPedj/Facebook-gc-bot/blob/main/LICENSE"><img alt="GitHub license" src="https://img.shields.io/github/license/PedjPedj/Facebook-gc-bot"></a>
+    <img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/pedjpedj/Facebook-gc-bot">
+    <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/pedjpedj/Facebook-gc-bot">
+    
+</p>
 
 Facebook-gc-bot is a simple group chat bot for facebook. (Its pretty much a clone of discordbots but for FB XD).
 This bot uses [Unofficial facebook Chat API](https://github.com/Schmavery/facebook-chat-api).
 
-## NOTE
+</br>
+
+# NOTE
 
 PLEASE READ THIS. THIS IS IMPORTANT.
 
@@ -45,12 +58,12 @@ npm start
 ```
 
 Then you'll be asked what you want to setup.
-choose login, then input your email and password.
+choose `Setup FB account`, then input your email and password.
 
 To setup the bot's settings, run `npm start` again.
 Then choose `change config`.
 
-You'll be asked what to change, Hit [Enter] to keep the current values.
+You'll be asked what to change, Hit `[Enter]` to keep the current values.
 
 _honestly not sure how to loop the setup thing so i'll just leave it as is for now._
 _I'm still learning... if you have suggestions or any ideas that can help, please do tell._
