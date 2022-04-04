@@ -6,9 +6,6 @@ var path = require('path');
 if (!fse.existsSync(utils.config_file)) {
     fse.outputJsonSync(utils.config_file, utils.default_config, { spaces: 4 });
 }
-// if (!fse.existsSync(utils.app_State)) {
-// 	fse.outputJsonSync(utils.app_State, {}, { spaces: 4 });
-// }
 var config = fse.readJsonSync(utils.config_file);
 inquirer
     .prompt([

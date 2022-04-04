@@ -50,7 +50,6 @@ module.exports = {
             case 'search':
             case 's':
                 if (isNaN(args[1])) {
-                    // search by name
                     let meme = response.data.memes.find((meme) => meme.name.toLowerCase().includes(args[1].toLowerCase()));
                     sendMeme(meme);
                 }
@@ -62,7 +61,6 @@ module.exports = {
                 var text = args.slice(1).join(' ').split(';');
                 let mID;
                 if (isNaN(args[0])) {
-                    // search by name
                     let meme = response.data.memes.find((meme) => meme.name.toLowerCase().includes(args[0].toLowerCase()));
                     if (!meme) {
                         api.sendMessage('No meme found.', message.threadID);

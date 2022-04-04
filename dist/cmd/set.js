@@ -73,7 +73,6 @@ module.exports = {
             key = 'gc_lock';
         }
         if (key === 'stats') {
-            // send the stats in config file
             let msg = 'Config Stats:\n' +
                 '\tPrefix: ' +
                 config.prefix +

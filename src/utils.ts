@@ -22,23 +22,6 @@ module.exports = {
 	log_file: path.join('./dist/data', 'log.json'),
 	app_State: path.join('./dist/data', 'appState.json'),
 
-	// start: function () {
-	// 	console.log('A moment please...');
-	// 	let config = fse.readJsonSync(this.config_file);
-	// 	if (!config.thread_id) {
-	// 		console.log("You didn't configure your bot yet? Let's do that now!");
-	// 		this.changeConfig();
-	// 		return require('./index');
-	// 	}
-
-	// 	if (!fse.existsSync(this.app_State)) {
-	// 		console.log("You didn't configure your cookies yet? Let's do that now!");
-	// 		this.askFbCreds();
-	// 		return require('./index');
-	// 	}
-	// 	require('./bot');
-	// },
-
 	sleep: async function (ms: any) {
 		return new Promise((resolve) => setTimeout(resolve, ms));
 	},

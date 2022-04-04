@@ -4,7 +4,6 @@ var path = require('path');
 var inquirer = require('inquirer');
 var puppeteer = require('puppeteer');
 module.exports = {
-    // Paths and config
     default_config: {
         prefix: '!',
         bot_name: '',
@@ -21,21 +20,6 @@ module.exports = {
     config_file: path.join('./dist/data', 'config.json'),
     log_file: path.join('./dist/data', 'log.json'),
     app_State: path.join('./dist/data', 'appState.json'),
-    // start: function () {
-    // 	console.log('A moment please...');
-    // 	let config = fse.readJsonSync(this.config_file);
-    // 	if (!config.thread_id) {
-    // 		console.log("You didn't configure your bot yet? Let's do that now!");
-    // 		this.changeConfig();
-    // 		return require('./index');
-    // 	}
-    // 	if (!fse.existsSync(this.app_State)) {
-    // 		console.log("You didn't configure your cookies yet? Let's do that now!");
-    // 		this.askFbCreds();
-    // 		return require('./index');
-    // 	}
-    // 	require('./bot');
-    // },
     sleep: async function (ms) {
         return new Promise((resolve) => setTimeout(resolve, ms));
     },
@@ -74,5 +58,3 @@ module.exports = {
         api.setMessageReaction('⏳', message_id);
     },
 };
-// this is shit code
-// TODO: fix this shit code
