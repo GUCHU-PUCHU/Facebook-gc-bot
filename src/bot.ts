@@ -51,6 +51,12 @@ login(credentials, (err: any, api: any) => {
 					return console.log('Ignoring message from ' + message.threadID);
 			}
 
+			if (config.response.length > 0) {
+				if (message.body.toLowerCase().includes('@' + config.bot_name.toLowerCase())) {
+					api.sendMessage(config.response, message.threadID);
+				}
+			}
+
 			if (!message.body.startsWith(config.prefix)) return;
 			const args = message.body.slice(config.prefix.length).trim().split(/ +/g);
 			let cmd = args.shift().toLowerCase();
