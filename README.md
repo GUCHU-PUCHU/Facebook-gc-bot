@@ -1,6 +1,6 @@
 <img alt="Facebook-gc-bot-banner" src="https://i.imgur.com/l25Mekd.png">
 
-<h1 align="center"> Hey, It actually works! </h1>
+<h2 align="center"> Hey, It actually works! </h1>
 
 <p align="center">
     <img alt="ViewCount" src="https://views.whatilearened.today/views/github/PedjPedj/Facebook-gc-bot-badge.svg">
@@ -24,25 +24,21 @@ JUST DON'T USE YOUR REAL FB ACCOUNT. OKAY?. GOOD.
 
 I'm a beginner and I'm still learning, so there might be some bugs... and I'm not sure if I'm doing everything right. anyways, have fun with this bot. If you're looking at the code right now, my apologies.. It might look messy but it works.
 
----
-
-### Dependencies
+## Dependencies
 
 [NodeJs](https://nodejs.org/en/download/) and [Git](https://git-scm.com/downloads)
 
----
-
-### Installation and Running
+## Installation and Running
 
 I Hope everything here is clear enough and understandable since english is not my first language.
 
-#### Step 0: Install the Dependecies
+### Step 0: Install the Dependecies
 
 You need to install these things.
 
 [NodeJs](https://nodejs.org/en/download/) and [Git](https://git-scm.com/downloads)
 
-#### Step 1: Clone or download the repository
+### Step 1: Clone or download the repository
 
 Either clone it through `git clone https://github.com/PedjPedj/Facebook-gc-bot.git`
 
@@ -56,11 +52,13 @@ Just open the folder where the files are located.
 
 ### Step 3: Run the script
 
-**Windows**
+#### Windows
 
 Just open the folder and run the `start.bat` file.
 
-**Linux**
+> **Notes:** I'm not sure if this works on windows.
+
+#### Linux
 
 Do `chmod +x start.sh` and then `./start.sh`
 
@@ -71,9 +69,7 @@ Make sure your credentials are **correct**! or else you'll most like to be block
 
 If that happened, just open your browser and verify your account.
 
----
-
-### Stuff you might want to know
+## Stuff you might want to know
 
 These stuff are all self explanatory but I'll still try to explain them anyway.
 
@@ -84,8 +80,8 @@ These stuff are all self explanatory but I'll still try to explain them anyway.
 **Response** - The response of the bot if @mentioned.
 
 **Thread Id** - The id of your group chat. This can be found in the url of the chat. This is used for locking the bot to a specific chat.
-
 <img src="https://i.imgur.com/BoPppJW.png">
+<br>
 
 **W api key** - This is simply an api key for the weather api. You can get one for free at [openweathermap.org](https://openweathermap.org/api). note that weather command is not implemented yet.
 
@@ -99,9 +95,7 @@ These stuff are all self explanatory but I'll still try to explain them anyway.
 
 **Password** - The password of the imgflip account.
 
----
-
-### Issues
+# Issues
 
 Sometimes you might get some random errors. Most of the time it's just Facebook blocking you...
 open browser then verify account.
@@ -110,8 +104,6 @@ Or the bot is not part of any group chat yet... make sure the account you're usi
 
 If you have any other issues, let me know! Please don't hesitate to [open an issue](https://github.com/PedjPedj/Facebook-gc-bot/issues). I'll try my best to help you.
 
----
-
-### Suggestions
+# Suggestions
 
 If you have any suggestions, please don't hesistate to [open a pull request](https://github.com/PedjPedj/Facebook-gc-bot/pulls). I would love to hear from you and learn.
