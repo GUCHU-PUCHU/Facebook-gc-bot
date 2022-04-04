@@ -1,6 +1,6 @@
 <img alt="Facebook-gc-bot-banner" src="https://i.imgur.com/l25Mekd.png">
 
-<h1 align="center"> A Simple Group Chat-bot For Facebook Messenger</h1>
+<h1 align="center"> Hey, It actually works! </h1>
 
 <p align="center">
     <img alt="ViewCount" src="https://views.whatilearened.today/views/github/PedjPedj/Facebook-gc-bot-badge.svg">
@@ -8,23 +8,21 @@
     <a href="https://github.com/PedjPedj/Facebook-gc-bot/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/PedjPedj/Facebook-gc-bot"></a> 
 </p>
 <p align="center">
-    <a href="https://github.com/prettier/prettier"><img alt="Code style: Prettier" src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat"></a>
-    <a href="https://github.com/PedjPedj/Facebook-gc-bot/blob/main/LICENSE"><img alt="GitHub license" src="https://img.shields.io/github/license/PedjPedj/Facebook-gc-bot"></a>
-    <img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/pedjpedj/Facebook-gc-bot">
-    <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/pedjpedj/Facebook-gc-bot">
+    <a href="https://github.com/prettier/prettier"><img alt="Code style: Prettier" src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=for-the-badge"></a>
+    <a href="https://github.com/PedjPedj/Facebook-gc-bot/blob/main/LICENSE"><img alt="GitHub license" src="https://img.shields.io/github/license/PedjPedj/Facebook-gc-bot?style=for-the-badge"></a>
+    <img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/pedjpedj/Facebook-gc-bot?style=for-the-badge">
+    <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/pedjpedj/Facebook-gc-bot?style=for-the-badge">
 </p>
-
-This bot uses [Unofficial facebook Chat API](https://github.com/Schmavery/facebook-chat-api).
 
 # NOTE
 
 PLEASE READ THIS. THIS IS IMPORTANT.
 
-You see... This `thing` uses an **Unofficial** Facebook API. This means you need a Burner Facebook account (an account you can easily throw to the bin. Kobe!) or you'll risk your account getting banned.
+You see... This `thing` uses an [**Unofficial** Facebook Chat API](https://github.com/Schmavery/facebook-chat-api). This means you need a Burner Facebook account (an account you can easily throw to the bin. Kobe!) or you'll risk your account getting banned.
 
 JUST DON'T USE YOUR REAL FB ACCOUNT. OKAY?. GOOD.
 
-> I'm a beginner and I'm still learning, so there might be some bugs... and I'm not sure if I'm doing everything right. anyways, have fun with this bot. If you're looking at the code right now, my apologies.. It might look messy but it works.
+I'm a beginner and I'm still learning, so there might be some bugs... and I'm not sure if I'm doing everything right. anyways, have fun with this bot. If you're looking at the code right now, my apologies.. It might look messy but it works.
 
 ---
 
@@ -34,55 +32,83 @@ JUST DON'T USE YOUR REAL FB ACCOUNT. OKAY?. GOOD.
 
 ---
 
-### Installation
+### Installation and Running
 
-> I Hope everything here is clear enough and understandable since english is not my first language.
+I Hope everything here is clear enough and understandable since english is not my first language.
 
-Clone the repo and run `npm install` in the root directory.
+#### Step 0: Install the Dependecies
 
-```bash
-git clone https://github.com/PedjPedj/Facebook-gc-bot.git
-cd Facebook-gc-bot
-npm i
-```
+You need to install these things.
 
-Then you need to set up the bot. just run npm start
+[NodeJs](https://nodejs.org/en/download/) and [Git](https://git-scm.com/downloads)
 
-```
-npm start
-```
+#### Step 1: Clone or download the repository
 
-Then you'll be asked what you want to setup.
-choose `Setup FB account`, then input your email and password.
+Either clone it through `git clone https://github.com/PedjPedj/Facebook-gc-bot.git`
 
-To setup the bot's settings, run `npm start` again.
-Then choose `change config`.
+or download the **.zip** file then extract it.
 
-You'll be asked what to change, Hit `[Enter]` to keep the current values.
+<img src="https://i.imgur.com/lSZWsbG.png">
 
-_honestly not sure how to loop the setup thing so i'll just leave it as is for now._
-_I'm still learning... if you have suggestions or any ideas that can help, please do tell._
+### Step 2: Open the directory
+
+Just open the folder where the files are located.
+
+### Step 3: Run the script
+
+**Windows**
+
+Just open the folder and run the `start.bat` file.
+
+**Linux**
+
+Do `chmod +x start.sh` and then `./start.sh`
+
+Choose 'start'.
+You'll be prompted to setup your bot and Fb account.
+
+Make sure your credentials are **correct**! or else you'll most like to be blocked by facebook.
+
+If that happened, just open your browser and verify your account.
 
 ---
 
-### Running the bot
+### Stuff you might want to know
 
-Now, pray to every god that you don't get banned and everything works as intended.
-_If you're an atheist.. then that sucks. R'amen, May his noodly goodness touch you!_ JKJKJK
+These stuff are all self explanatory but I'll still try to explain them anyway.
 
-Then run the bot.
+**Prefix** - The prefix for the bot. This will be used to trigger the bot.
 
-```bash
-npm start
-```
+**Bot name** - The name of the bot. This is optional. The only thing it does is... if you @mention the bot, it will respond with a message defined by the 'response' in the config.
 
-then choose start.
+**Response** - The response of the bot if @mentioned.
+
+**Thread Id** - The id of your group chat. This can be found in the url of the chat. This is used for locking the bot to a specific chat.
+
+<img src="https://i.imgur.com/BoPppJW.png">
+
+**W api key** - This is simply an api key for the weather api. You can get one for free at [openweathermap.org](https://openweathermap.org/api). note that weather command is not implemented yet.
+
+**Gc Lock** - This is a boolean value. If it's true, the bot will only respond to the group chat defined by thread id in the config.
+
+**Cooldown** - This is the cooldown time in seconds. The bot will not respond to the same command or sender within this time. ( x \* 1000) = seconds of cooldown.
+
+**Imgflip**
+
+**Username** - The username of the imgflip account.
+
+**Password** - The password of the imgflip account.
 
 ---
 
 ### Issues
 
-If you have any issues, please don't hesitate to [open an issue](https://github.com/PedjPedj/Facebook-gc-bot/issues). I'll try my best to help you.
+Sometimes you might get some random errors. Most of the time it's just Facebook blocking you...
+open browser then verify account.
+
+Or the bot is not part of any group chat yet... make sure the account you're using is part of a group chat.
+
+If you have any other issues, let me know! Please don't hesitate to [open an issue](https://github.com/PedjPedj/Facebook-gc-bot/issues). I'll try my best to help you.
 
 ---
 

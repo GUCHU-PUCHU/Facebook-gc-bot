@@ -23,11 +23,11 @@ inquirer
 	.then((answers: { action: any }) => {
 		switch (answers.action) {
 			case 'Start':
-				console.log('Checking config...');
+				console.log('Checking config...\n');
 				if (!config.thread_id) return require('./inquirer/setupConfig');
-				console.log('Checking if Appstate exist...');
+				console.log('Checking if Appstate exist...\n');
 				if (!fse.existsSync(utils.app_State)) return require('./inquirer/fbCreds');
-				console.log('Starting...\n' + 'You can always hit [Ctrl + C] to exit the bot.');
+				console.log('Starting...\n' + 'You can always hit [Ctrl + C] to exit the bot.\n');
 				require('./bot');
 				break;
 

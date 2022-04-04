@@ -24,7 +24,7 @@ fse.readdirSync(path.join(__dirname, 'cmd')).forEach((file: string) => {
 });
 
 console.log('Loaded ' + cmdMap.name.size + ' commands.');
-console.log('Commands:\n' + Array.from(cmdMap.name.keys()).join('\n'));
+console.log('Commands:\n' + Array.from(cmdMap.name.keys()).join(', '));
 
 // End of Command Handler
 
