@@ -24,7 +24,6 @@ module.exports = {
 		api: { sendMessage: (arg0: string, arg1: any) => void; setMessageReaction: (arg0: string, arg1: any) => void },
 		message: { threadID: any; messageID: any },
 		args: any[],
-		config: any,
 		utils: any
 	) {
 		let threadID = message.threadID;

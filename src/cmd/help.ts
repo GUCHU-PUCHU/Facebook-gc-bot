@@ -1,3 +1,4 @@
+var config = require('../data/config.json');
 module.exports = {
 	name: 'help',
 	alias: ['help', 'h'],
@@ -16,7 +17,6 @@ module.exports = {
 		api: { sendMessage: (arg0: string, arg1: any) => void },
 		message: { threadID: any; senderID: any },
 		args: string | any[],
-		config: { prefix: string },
 		utils: any,
 		cmdMap: {
 			name: {

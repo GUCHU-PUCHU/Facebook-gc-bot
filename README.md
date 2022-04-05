@@ -24,6 +24,30 @@ JUST DON'T USE YOUR REAL FB ACCOUNT. OKAY?. GOOD.
 
 I'm a beginner and I'm still learning, so there might be some bugs... and I'm not sure if I'm doing everything right. anyways, have fun with this bot. If you're looking at the code right now, my apologies.. It might look messy but it works.
 
+## About
+
+This is but a simple bot that can do stuff in your Facebook group chat.
+
+## Features
+
+-   Automate the following:
+
+    -   Listing or recording a lists of things.
+    -   Googling stuff. ik not much...
+
+-   Pinning a message.
+-   Meme generator
+-   Urban dictionary
+
+## TODO
+
+-   [x] Add a pin command.
+-   [x] Snipe command.
+-   [ ] Add fun stuff. (idk what fun stuff I'll add.)
+-   [ ] Give every thread a custom config.
+-   [ ] Clean up the code.
+-   [ ] I'm out of ideas, please suggest some.
+
 ## Dependencies
 
 [NodeJs](https://nodejs.org/en/download/) and [Git](https://git-scm.com/downloads)
@@ -62,38 +86,38 @@ Just open the folder and run the `start.bat` file.
 
 Do `chmod +x start.sh` and then `./start.sh`
 
-Choose 'start'.
+Choose '**start**'.
 You'll be prompted to setup your bot and Fb account.
 
-Make sure your credentials are **correct**! or else you'll most like to be blocked by facebook.
-
+Make sure your credentials are **correct**! or else you're most likely to get blocked by Facebook.
 If that happened, just open your browser and verify your account.
 
 ## Stuff you might want to know
 
 These stuff are all self explanatory but I'll still try to explain them anyway.
 
-**Prefix** - The prefix for the bot. This will be used to trigger the bot.
+-   **Prefix** - The prefix for the bot. This will be used to trigger the bot.
 
-**Bot name** - The name of the bot. This is optional. The only thing it does is... if you @mention the bot, it will respond with a message defined by the 'response' in the config.
+-   **Bot name** - The name of the bot. This is optional. The only thing it does is... if you @mention the bot, it will respond with a message defined by the 'response' in the config.
 
-**Response** - The response of the bot if @mentioned.
+-   **Response** - The response of the bot if @mentioned.
 
-**Thread Id** - The id of your group chat. This can be found in the url of the chat. This is used for locking the bot to a specific chat.
-<img src="https://i.imgur.com/BoPppJW.png">
-<br>
+-   **Thread Id** - The id of your group chat. This can be found in the url of the chat. This is used for locking the bot to a specific chat.
 
-**W api key** - This is simply an api key for the weather api. You can get one for free at [openweathermap.org](https://openweathermap.org/api). note that weather command is not implemented yet.
+    <img src="https://i.imgur.com/BoPppJW.png">
+    <br>
 
-**Gc Lock** - This is a boolean value. If it's true, the bot will only respond to the group chat defined by thread id in the config.
+-   **W api key** - This is simply an api key for the weather api. You can get one for free at [openweathermap.org](https://openweathermap.org/api). note that weather command is not implemented yet.
 
-**Cooldown** - This is the cooldown time in seconds. The bot will not respond to the same command or sender within this time. ( x \* 1000) = seconds of cooldown.
+-   **Gc Lock** - This is a boolean value. If it's true, the bot will only respond to the group chat defined by thread id in the config.
+
+-   **Cooldown** - This is the cooldown time in seconds. The bot will not respond to the same command or sender within this time. ( x \* 1000) = seconds of cooldown.
 
 **Imgflip**
 
-**Username** - The username of the imgflip account.
+-   **Username** - The username of the imgflip account.
 
-**Password** - The password of the imgflip account.
+-   **Password** - The password of the imgflip account.
 
 # Issues
 

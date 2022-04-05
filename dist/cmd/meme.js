@@ -1,5 +1,6 @@
 "use strict";
 var fse = require('fs-extra');
+var config = require('../data/config');
 module.exports = {
     name: 'meme',
     alias: ['me'],
@@ -19,7 +20,7 @@ module.exports = {
         '\t `meme <id> [text]` - Creates a meme with the given id and text. \n',
     info: 'Meme command.',
     cooldown: true,
-    execute: async function (api, message, args, config, utils) {
+    execute: async function (api, message, args, utils) {
         var fetch = require('node-fetch');
         const response = await fetch('https://api.imgflip.com/get_memes').then((res) => res.json());
         function sendMeme(meme) {

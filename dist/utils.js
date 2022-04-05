@@ -20,6 +20,7 @@ module.exports = {
     config_file: path.join('./dist/data', 'config.json'),
     log_file: path.join('./dist/data', 'log.json'),
     app_State: path.join('./dist/data', 'appState.json'),
+    pins: path.join('./dist/data', 'pins.json'),
     sleep: async function (ms) {
         return new Promise((resolve) => setTimeout(resolve, ms));
     },

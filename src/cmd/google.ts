@@ -14,7 +14,6 @@ module.exports = {
 		api: { sendMessage: (arg0: string, arg1: number) => void },
 		message: { threadID: any; senderID: any },
 		args: any[],
-		config: any,
 		utils: { sendMessage: (arg0: string, arg1: any, arg2: any, arg3: { limit: number }) => void }
 	) {
 		const query = args.join(' ');
@@ -26,8 +25,8 @@ module.exports = {
 			},
 		};
 		const response = await google.search(query, options);
-		fse.ensureDirSync('./dist/data/google');
-		fse.writeJsonSync('./dist/data/google/' + message.senderID + '.json', response, { spaces: 4 });
+		// fse.ensureDirSync('./dist/data/google');
+		// fse.writeJsonSync('./dist/data/google/' + message.senderID + '.json', response, { spaces: 4 });
 
 		let x: any[] = [];
 		if (response.dictionary) {

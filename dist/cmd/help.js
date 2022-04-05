@@ -1,4 +1,5 @@
 "use strict";
+var config = require('../data/config.json');
 module.exports = {
     name: 'help',
     alias: ['help', 'h'],
@@ -12,7 +13,7 @@ module.exports = {
         '\t `help <command>` - Shows help for the given command. \n',
     info: 'To display help.',
     cooldown: true,
-    execute: function (api, message, args, config, utils, cmdMap) {
+    execute: function (api, message, args, utils, cmdMap) {
         if (args.length === 0) {
             let reply = 'Available commands:';
             for (let key of cmdMap.name.keys()) {

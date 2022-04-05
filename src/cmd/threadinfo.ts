@@ -13,10 +13,7 @@ module.exports = {
 			getThreadInfo: (arg0: any, arg1: (err: any, info: any) => void) => void;
 			sendMessage: (arg0: string, arg1: any) => void;
 		},
-		message: { threadID: any },
-		args: any,
-		config: any,
-		utils: any
+		message: { threadID: any }
 	) {
 		let x: any[] = [];
 		api.getThreadInfo(

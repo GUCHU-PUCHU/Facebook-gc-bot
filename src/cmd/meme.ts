@@ -1,4 +1,5 @@
 var fse = require('fs-extra');
+var config = require('../data/config');
 module.exports = {
 	name: 'meme',
 	alias: ['me'],
@@ -23,7 +24,6 @@ module.exports = {
 		api: { sendMessage: (arg0: string, arg1: any) => void; setMessageReaction: (arg0: string, arg1: any) => void },
 		message: { threadID: any },
 		args: any[],
-		config: { imgflip: { username: any; password: any } },
 		utils: { sleep: (arg0: number) => Promise<void> }
 	) {
 		var fetch = require('node-fetch');

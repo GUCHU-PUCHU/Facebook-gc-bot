@@ -1,5 +1,7 @@
 "use strict";
 var fse = require('fs-extra');
+var path = require('path');
+var config = require('../data/config');
 module.exports = {
     name: 'set',
     alias: ['set', 'config', 'cfg'],
@@ -10,22 +12,14 @@ module.exports = {
     description: 'Set the value of a config option.\n' +
         'Usage: `!set [option] [value]`\n\n' +
         'Available options:\n' +
-        'prefix: The prefix for the bot.\n' +
-        '\tExample: `!set prefix !`\n' +
-        'botname: The name of the bot.\n' +
-        '\tExample: `!set botname MyBot`\n' +
-        'response: The response for the bot.\n' +
-        '\tExample: `!set response Hello World`\n' +
-        'apikey: The api key for the weather api.\n' +
-        '\tExample: `!set apikey 1234567890`\n' +
-        'cooldown: The cooldown multiplier. (x * 1000 ms)\n' +
-        '\tExample: `!set cooldown 2`\n' +
-        'gc_lock: Whether or not the bot should lock the group chat.\n' +
-        '\tExample: `!set gc_lock true`\n' +
-        '\tExample: `!set gc_lock false`',
+        ' - prefix: The prefix of the bot.\n' +
+        ' - botname: The name of the bot.\n' +
+        ' - response: The response of the bot.\n' +
+        ' - apikey: The api key of the bot.\n' +
+        ' - cooldown: The cooldown of the bot.',
     info: "Set bot's settings.",
     cooldown: true,
-    execute: function (api, message, args, config, utils) {
+    execute: function (api, message, args, utils) {
         let key = args[0];
         let value = args.slice(1).join(' ');
         if (key === 'prefix')
@@ -100,9 +94,12 @@ module.exports = {
         if (!value)
             return;
         config[key] = value;
-        utils.writeToConfig(config, () => {
+        fse.writeJson(path.join(__dirname, '../data/config.json'), config, { spaces: 2 }, (err) => {
+            if (err) {
+                api.sendMessage('Error writing to config file.', message.threadID);
+                return;
+            }
             utils.successReact(api, message.messageID);
-            api.sendMessage(`Setting \`${key}\` to ${value}`, message.threadID);
         });
     },
 };

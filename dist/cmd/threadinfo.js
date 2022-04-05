@@ -9,7 +9,7 @@ module.exports = {
     description: 'Get info about the current thread.',
     info: 'Get info about the current thread.',
     cooldown: false,
-    execute: async function (api, message, args, config, utils) {
+    execute: async function (api, message) {
         let x = [];
         api.getThreadInfo(message.threadID, (err, info) => {
             if (err)

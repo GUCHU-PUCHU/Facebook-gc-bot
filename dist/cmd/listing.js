@@ -18,7 +18,7 @@ module.exports = {
         '\t reset - Reset list.\n',
     info: 'For listing stuff.',
     cooldown: false,
-    execute: function (api, message, args, config, utils) {
+    execute: function (api, message, args, utils) {
         let threadID = message.threadID;
         let msgID = message.messageID;
         var txt = [];

@@ -21,6 +21,13 @@ module.exports = {
 	config_file: path.join('./dist/data', 'config.json'),
 	log_file: path.join('./dist/data', 'log.json'),
 	app_State: path.join('./dist/data', 'appState.json'),
+	pins: path.join('./dist/data', 'pins.json'),
+
+	// writeToConfig: function (key: string | number, value: any) {
+	// 	var config = fse.readJsonSync(this.config_file);
+	// 	config[key] = value;
+	// 	fse.writeJsonSync(this.config_file, config);
+	// },
 
 	sleep: async function (ms: any) {
 		return new Promise((resolve) => setTimeout(resolve, ms));
@@ -38,6 +45,7 @@ module.exports = {
 		}
 	},
 
+	// function for dealing with large amount of characters beyond the character limit
 	sendMessage: async function (
 		txt: string,
 		api: any,

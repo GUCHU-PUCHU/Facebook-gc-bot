@@ -2,6 +2,7 @@ var fse = require('fs-extra');
 var path = require('path');
 var login = require('facebook-chat-api');
 var config = require('./data/config.json');
+var log = require('./data/log.json');
 var utils = require('./utils');
 
 // Start of Command Handler
@@ -45,7 +46,33 @@ login(credentials, (err: any, api: any) => {
 		if (err) return console.error(err);
 		fse.writeFileSync(path.join(__dirname, 'data/appState.json'), JSON.stringify(api.getAppState(), null, 4));
 		if (message.type === 'message') {
+			//  This is for debugging
 			console.log(message);
+
+			if (!log[message.threadID]) {
+				log[message.threadID] = {
+					_author: message.senderID,
+					_lastMessage: message.body,
+					_lastMessageTime: message.timestamp,
+					[message.senderID]: {
+						author: '',
+						lastMessage: message.body,
+						lastMessageTime: message.timestamp,
+					},
+				};
+			}
+
+			// log messages... used for sniping
+			if (!message.body.startsWith(config.prefix)) {
+				log[message.threadID]._author = message.senderID;
+				log[message.threadID]._lastMessage = message.body;
+				log[message.threadID]._lastMessageTime = message.timestamp;
+			}
+			log[message.threadID][message.senderID].author = message.senderID;
+			log[message.threadID][message.senderID].lastMessage = message.body;
+			log[message.threadID][message.senderID].lastMessageTime = message.timestamp;
+			fse.writeFileSync(path.join(__dirname, 'data/log.json'), JSON.stringify(log, null, 4));
+
 			if (config.gc_lock) {
 				if (config.thread_id !== message.threadID)
 					return console.log('Ignoring message from ' + message.threadID);
@@ -97,8 +124,10 @@ login(credentials, (err: any, api: any) => {
 			api.setMessageReaction('👍', message.messageID);
 			// execute command
 			try {
-				cmdMap.name.get(cmd).execute(api, message, args, config, utils, cmdMap);
+				cmdMap.name.get(cmd).execute(api, message, args, utils, cmdMap);
 			} catch (error) {
+				utils.failReact(api, message.messageID);
+				api.sendMessage('Something went wrong!', message.threadID);
 				console.error(error);
 			}
 		}

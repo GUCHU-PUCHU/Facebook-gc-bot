@@ -11,7 +11,7 @@ module.exports = {
     description: 'Search for a term on Google.',
     info: 'Search for a term on Google.',
     cooldown: true,
-    execute: async function (api, message, args, config, utils) {
+    execute: async function (api, message, args, utils) {
         const query = args.join(' ');
         const options = {
             page: 0,
@@ -21,8 +21,6 @@ module.exports = {
             },
         };
         const response = await google.search(query, options);
-        fse.ensureDirSync('./dist/data/google');
-        fse.writeJsonSync('./dist/data/google/' + message.senderID + '.json', response, { spaces: 4 });
         let x = [];
         if (response.dictionary) {
             x.push('*' + response.dictionary.word + '*');
