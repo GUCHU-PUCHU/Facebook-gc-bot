@@ -1,7 +1,8 @@
 "use strict";
 var inquirer = require('inquirer');
 var fse = require('fs-extra');
-(async () => {
+var config = require('../data/config');
+module.exports = () => {
     inquirer
         .prompt([
         {
@@ -38,4 +39,4 @@ var fse = require('fs-extra');
         console.log(username, password);
         require(path.join(__dirname, '../index'));
     });
-})();
+};

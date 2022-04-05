@@ -27,7 +27,7 @@ module.exports = {
 		`${config.prefix}unpin [subject]\n\n`,
 	info: 'pin a message',
 	cooldown: true,
-	execute(
+	execute: function (
 		api: { sendMessage: (arg0: string, arg1: any) => any; setMessageReaction: (arg0: string, arg1: any) => void },
 		message: { threadID: any; senderID: any; messageID: any },
 		args: any[]

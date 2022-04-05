@@ -1,7 +1,7 @@
 var inquirer = require('inquirer');
 var path = require('path');
 
-(async () => {
+module.exports = async () => {
 	const answers = await inquirer.prompt([
 		{
 			type: 'input',
@@ -27,6 +27,5 @@ var path = require('path');
 	var email = answers.email;
 	var password = answers.password;
 
-	require('./fetchCookies')(email, password);
-	require(path.join(__dirname, '../index'));
-})();
+	await require('./fetchCookies')(email, password);
+};

@@ -1,9 +1,10 @@
 var inquirer = require('inquirer');
 var fse = require('fs-extra');
 var path = require('path');
+var utils = require('../utils');
 var config = require(path.join(__dirname, '..', 'data', 'config.json'));
 
-(async () => {
+module.exports = () => {
 	inquirer
 		.prompt([
 			{
@@ -87,5 +88,25 @@ var config = require(path.join(__dirname, '..', 'data', 'config.json'));
 				fse.writeFileSync(path.join(__dirname, '..', 'data', 'config.json'), JSON.stringify(config, null, 2));
 				console.log('Config updated!');
 			}
-		);
-})();
+		)
+		.then(() => {
+			if (!fse.existsSync(utils.app_State)) {
+				inquirer
+					.prompt([
+						{
+							type: 'confirm',
+							name: 'askFbCreds',
+							message: 'Do you want to setup facebook credentials?',
+							default: true,
+						},
+					])
+					.then((answers: { askFbCreds: boolean }) => {
+						if (answers.askFbCreds) require(path.join(__dirname, '..', 'inquirer', 'fbCreds'))();
+						else console.log('Setup complete!');
+					});
+			}
+		})
+		.catch((err: any) => {
+			console.log(err);
+		});
+};

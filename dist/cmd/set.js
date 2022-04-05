@@ -8,7 +8,7 @@ module.exports = {
     args: true,
     adminOnly: true,
     GcOnly: true,
-    usage: '[ prefix | botname | response | apikey | cooldown ] <value>',
+    usage: '[ prefix | botname | response | apikey | cooldown ] <value> | [stats]',
     description: 'Set the value of a config option.\n' +
         'Usage: `!set [option] [value]`\n\n' +
         'Available options:\n' +
@@ -16,7 +16,8 @@ module.exports = {
         ' - botname: The name of the bot.\n' +
         ' - response: The response of the bot.\n' +
         ' - apikey: The api key of the bot.\n' +
-        ' - cooldown: The cooldown of the bot.',
+        ' - cooldown: The cooldown of the bot.\n' +
+        ' - stats: The stats of the bot.\n',
     info: "Set bot's settings.",
     cooldown: true,
     execute: function (api, message, args, utils) {
@@ -66,7 +67,7 @@ module.exports = {
             }
             key = 'gc_lock';
         }
-        if (key === 'stats') {
+        if (key === 'stats' || key === 'stat' || key === 'status') {
             let msg = 'Config Stats:\n' +
                 '\tPrefix: ' +
                 config.prefix +

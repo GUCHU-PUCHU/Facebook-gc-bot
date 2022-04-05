@@ -2,6 +2,7 @@ var fse = require('fs-extra');
 var path = require('path');
 var inquirer = require('inquirer');
 var puppeteer = require('puppeteer');
+var _fetch = require('node-fetch');
 module.exports = {
 	// Paths and config
 	default_config: {
@@ -23,12 +24,6 @@ module.exports = {
 	app_State: path.join('./dist/data', 'appState.json'),
 	pins: path.join('./dist/data', 'pins.json'),
 	gInfo: path.join('./dist/data', 'gInfo.json'),
-
-	// writeToConfig: function (key: string | number, value: any) {
-	// 	var config = fse.readJsonSync(this.config_file);
-	// 	config[key] = value;
-	// 	fse.writeJsonSync(this.config_file, config);
-	// },
 
 	sleep: async function (ms: any) {
 		return new Promise((resolve) => setTimeout(resolve, ms));

@@ -28,7 +28,7 @@ fse.readdirSync(path.join(__dirname, 'cmd')).forEach((file: string) => {
 console.log('Loaded ' + cmdMap.name.size + ' commands.');
 console.log('Commands:\n' + Array.from(cmdMap.name.keys()).join(', '));
 
-// End of Command Handler
+// End of Command Files Handler
 
 const credentials = {
 	appState: JSON.parse(fse.readFileSync(path.join(__dirname, 'data/appState.json'), 'utf8')),
@@ -60,16 +60,12 @@ login(credentials, (err: any, api: any) => {
 			// End of thread info logging
 
 			// Command Handler (this is where the 'magic' happens)
-			if (config.gc_lock) {
-				if (config.thread_id !== message.threadID)
-					return console.log('Ignoring message from ' + message.threadID);
-			}
+			// check if Group-chat lock is enabled
+			if (config.gc_lock && config.thread_id !== message.threadID)
+				return console.log('Ignoring message from ' + message.threadID);
 
-			if (config.response.length > 0) {
-				if (message.body.toLowerCase().includes('@' + config.bot_name.toLowerCase())) {
-					api.sendMessage(config.response, message.threadID);
-				}
-			}
+			// if mentioned
+			require('./events/mentioned')(api, message);
 
 			if (!message.body.startsWith(config.prefix)) return;
 			const args = message.body.slice(config.prefix.length).trim().split(/ +/g);
@@ -82,10 +78,11 @@ login(credentials, (err: any, api: any) => {
 					return;
 				}
 			}
-			// check if commands is GcOnly
+
+			// check if commands is Group-chat only
 			if (cmdMap.name.get(cmd).GcOnly && !message.isGroup) return;
 
-			// check if cooldown is on
+			// check if command's cooldown is enabled
 			if (cmdMap.name.get(cmd).cooldown) {
 				if (!talkedRecently[message.threadID]) {
 					talkedRecently[message.threadID] = new Set();
@@ -99,7 +96,7 @@ login(credentials, (err: any, api: any) => {
 				}, config.cooldown * 1000);
 			}
 
-			// check if command needs args
+			// check if command needs arguments
 			if (cmdMap.name.get(cmd).args && args.length === 0) {
 				let reply = 'You need to provide arguments for this command.';
 				if (cmdMap.name.get(cmd).usage) {

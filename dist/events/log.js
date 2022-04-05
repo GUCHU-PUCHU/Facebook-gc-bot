@@ -3,14 +3,12 @@ var fse = require('fs-extra');
 var path = require('path');
 var log = require('../data/log');
 var config = require('../data/config');
-module.exports = async function (message) {
+module.exports = async (message) => {
     if (!message)
         return;
-    console.log(message);
     let thread_id = message.threadID;
     let author = message.senderID;
     let ctnt = message.body;
-    console.log(ctnt);
     let timestamp = message.timestamp;
     try {
         if (!log[thread_id]) {

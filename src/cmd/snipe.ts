@@ -16,7 +16,11 @@ module.exports = {
 	info: 'Snipe a message',
 	usage: '[id?]',
 	cooldown: true,
-	execute(api: { sendMessage: (arg0: string, arg1: any) => void }, message: { threadID: any }, args: any[]) {
+	execute: function (
+		api: { sendMessage: (arg0: string, arg1: any) => void },
+		message: { threadID: any },
+		args: any[]
+	) {
 		var log = fse.readJsonSync(path.join(__dirname, '../data/log.json'));
 		var iD = args[0];
 		var thread_id = message.threadID;

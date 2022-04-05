@@ -15,7 +15,7 @@ module.exports = {
     info: 'Unpin a message',
     usage: '[subject]',
     cooldown: true,
-    execute(api, message, args) {
+    execute: function (api, message, args) {
         var pins = fse.readJsonSync(path.join(__dirname, '../data/pins.json'));
         var thread_id = message.threadID;
         var subject = args[0];

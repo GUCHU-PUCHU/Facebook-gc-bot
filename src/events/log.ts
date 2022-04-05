@@ -2,7 +2,7 @@ var fse = require('fs-extra');
 var path = require('path');
 var log = require('../data/log');
 var config = require('../data/config');
-module.exports = async function (message: any) {
+module.exports = async (message: any) => {
 	if (!message) return;
 	let thread_id = message.threadID;
 	let author = message.senderID;

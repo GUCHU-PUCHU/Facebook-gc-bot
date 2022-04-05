@@ -9,57 +9,63 @@ if (!fse.existsSync(utils.config_file)) {
 if (!fse.existsSync(utils.log_file)) {
 	fse.outputJsonSync(utils.log_file, {}, { spaces: 4 });
 }
-
 if (!fse.existsSync(utils.pins)) {
 	fse.outputJsonSync(utils.pins, {}, { spaces: 4 });
 }
 if (!fse.existsSync(utils.gInfo)) {
 	fse.outputJsonSync(utils.gInfo, {}, { spaces: 4 });
 }
+fse.ensureDirSync(path.join(__dirname, '..', 'dist', 'data', 'img'));
+var config = require('./data/config.json');
 
-var config = fse.readJsonSync(utils.config_file);
+async function start() {
+	inquirer
+		.prompt([
+			{
+				type: 'list',
+				name: 'action',
+				message: 'What do you want to do?',
+				choices: ['Start', 'Setup FB account', 'Setup Imgflip account', 'Change config', 'exit'],
+			},
+		])
+		.then(async (answers: { action: any }) => {
+			switch (answers.action) {
+				case 'Start':
+					if (!config.thread_id) {
+						console.log('Please setup your bot configuration first!');
+						return start();
+					}
+					if (!fse.existsSync(utils.app_State)) {
+						console.log('Please setup your Facebook cookies first!');
+						return start();
+					}
+					require('./bot');
+					break;
 
-inquirer
-	.prompt([
-		{
-			type: 'list',
-			name: 'action',
-			message: 'What do you want to do?',
-			choices: ['Start', 'Setup FB account', 'Setup Imgflip account', 'Change config', 'exit'],
-		},
-	])
-	.then((answers: { action: any }) => {
-		switch (answers.action) {
-			case 'Start':
-				console.log('Checking config...\n');
-				if (!config.thread_id) return require('./inquirer/setupConfig');
-				console.log('Checking if Appstate exist...\n');
-				if (!fse.existsSync(utils.app_State)) return require('./inquirer/fbCreds');
-				console.log('Starting...\n' + 'You can always hit [Ctrl + C] to exit the bot.\n');
-				require('./bot');
-				break;
+				case 'Setup FB account':
+					require('./inquirer/fbCreds')();
+					break;
 
-			case 'Setup FB account':
-				require('./inquirer/fbCreds');
-				break;
+				case 'Setup Imgflip account':
+					require('./inquirer/imgflipCreds')();
+					break;
 
-			case 'Setup Imgflip account':
-				require('./inquirer/imgflipCreds');
-				break;
+				case 'Change config':
+					console.log('Hit [Enter] to keep the current value.');
+					require('./inquirer/setupConfig')();
+					break;
 
-			case 'Change config':
-				console.log('Hit [Enter] to keep the current value.');
-				require('./inquirer/setupConfig');
-				break;
+				case 'exit':
+					console.log('Bye!');
+					process.exit();
+					break;
 
-			case 'exit':
-				console.log('Bye!');
-				process.exit();
-				break;
+				default:
+					console.log('Bye!');
+					process.exit();
+					break;
+			}
+		});
+}
 
-			default:
-				console.log('Bye!');
-				process.exit();
-				break;
-		}
-	});
+start();

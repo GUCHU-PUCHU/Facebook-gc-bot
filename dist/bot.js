@@ -49,15 +49,9 @@ login(credentials, (err, api) => {
                 gInfo[message.threadID] = info;
                 fse.writeFileSync(path.join(__dirname, 'data/gInfo.json'), JSON.stringify(gInfo, null, 4));
             });
-            if (config.gc_lock) {
-                if (config.thread_id !== message.threadID)
-                    return console.log('Ignoring message from ' + message.threadID);
-            }
-            if (config.response.length > 0) {
-                if (message.body.toLowerCase().includes('@' + config.bot_name.toLowerCase())) {
-                    api.sendMessage(config.response, message.threadID);
-                }
-            }
+            if (config.gc_lock && config.thread_id !== message.threadID)
+                return console.log('Ignoring message from ' + message.threadID);
+            require('./events/mentioned')(api, message);
             if (!message.body.startsWith(config.prefix))
                 return;
             const args = message.body.slice(config.prefix.length).trim().split(/ +/g);

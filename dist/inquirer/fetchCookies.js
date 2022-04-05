@@ -30,11 +30,12 @@ module.exports = async (email, password) => {
             var { name: key } = _a, rest = __rest(_a, ["name"]);
             return (Object.assign({ key }, rest));
         });
-        fse.outputJson(path.join(__dirname, '..', 'data', 'app_state.json'), cookies, { spaces: 4 });
+        fse.outputJson(path.join(__dirname, '..', 'data', 'appState.json'), cookies, { spaces: 4 });
         browser.close();
         return console.log('done');
     }
     catch (error) {
         console.error(error);
     }
+    require(path.join(__dirname, '../index'));
 };
