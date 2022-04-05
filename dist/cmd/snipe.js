@@ -15,7 +15,7 @@ module.exports = {
         `\t - ${config.prefix}snipe 100017885543327`,
     info: 'Snipe a message',
     usage: '[id?]',
-    cooldown: 5,
+    cooldown: true,
     execute(api, message, args) {
         var log = fse.readJsonSync(path.join(__dirname, '../data/log.json'));
         var iD = args[0];

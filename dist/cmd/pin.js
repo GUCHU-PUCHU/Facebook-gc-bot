@@ -22,9 +22,11 @@ module.exports = {
         `To list all the pins, you can use the following format: \n` +
         `${config.prefix}pin list \n\n` +
         `To view the content of a pin: \n` +
-        `${config.prefix}pin [subject]`,
+        `${config.prefix}pin [subject]\n\n` +
+        `To remove a pin: \n` +
+        `${config.prefix}unpin [subject]\n\n`,
     info: 'pin a message',
-    cooldown: 5,
+    cooldown: true,
     execute(api, message, args) {
         var pins = fse.readJsonSync(path.join(__dirname, '../data/pins.json'));
         var thread_id = message.threadID;
@@ -62,6 +64,6 @@ module.exports = {
             timestamp: Date.now(),
         };
         fse.writeJsonSync(path.join(__dirname, '../data/pins.json'), pins, { spaces: 4 });
-        api.sendMessage('Pin added.', thread_id);
+        api.setMessageReaction('📌', message.messageID);
     },
 };
