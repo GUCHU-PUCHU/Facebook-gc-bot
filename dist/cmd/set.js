@@ -99,7 +99,7 @@ module.exports = {
                 api.sendMessage('Error writing to config file.', message.threadID);
                 return;
             }
-            utils.successReact(api, message.messageID);
+            api.setMessageReaction('⚙️', message.messageID);
         });
     },
 };

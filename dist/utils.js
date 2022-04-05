@@ -21,6 +21,7 @@ module.exports = {
     log_file: path.join('./dist/data', 'log.json'),
     app_State: path.join('./dist/data', 'appState.json'),
     pins: path.join('./dist/data', 'pins.json'),
+    gInfo: path.join('./dist/data', 'gInfo.json'),
     sleep: async function (ms) {
         return new Promise((resolve) => setTimeout(resolve, ms));
     },

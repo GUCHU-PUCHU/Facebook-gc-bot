@@ -22,6 +22,7 @@ module.exports = {
 	log_file: path.join('./dist/data', 'log.json'),
 	app_State: path.join('./dist/data', 'appState.json'),
 	pins: path.join('./dist/data', 'pins.json'),
+	gInfo: path.join('./dist/data', 'gInfo.json'),
 
 	// writeToConfig: function (key: string | number, value: any) {
 	// 	var config = fse.readJsonSync(this.config_file);

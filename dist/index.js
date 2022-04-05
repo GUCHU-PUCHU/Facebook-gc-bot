@@ -12,6 +12,9 @@ if (!fse.existsSync(utils.log_file)) {
 if (!fse.existsSync(utils.pins)) {
     fse.outputJsonSync(utils.pins, {}, { spaces: 4 });
 }
+if (!fse.existsSync(utils.gInfo)) {
+    fse.outputJsonSync(utils.gInfo, {}, { spaces: 4 });
+}
 var config = fse.readJsonSync(utils.config_file);
 inquirer
     .prompt([

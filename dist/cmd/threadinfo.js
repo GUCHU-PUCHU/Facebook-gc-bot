@@ -1,4 +1,7 @@
 "use strict";
+var fse = require('fs-extra');
+var path = require('path');
+var moment = require('moment');
 module.exports = {
     name: 'threadinfo',
     alias: ['ti'],
@@ -10,29 +13,28 @@ module.exports = {
     info: 'Get info about the current thread.',
     cooldown: false,
     execute: async function (api, message) {
-        let x = [];
-        api.getThreadInfo(message.threadID, (err, info) => {
-            if (err)
-                return console.error(err);
-            if (info.name)
-                x.push(`Name: ${info.name}`);
-            x.push('Thread ID: ' +
-                info.threadID +
-                '\n' +
-                'Participants: ' +
-                info.participantIDs.length +
-                '\n' +
-                'Message Count: ' +
-                info.messageCount +
-                '\n' +
-                'No. of Admins: ' +
-                info.adminIDs.length +
-                '\n');
-            if (info.emoji != null)
-                x.push('Emoji: ' + info.emoji);
-            if (info.imageSrc != null)
-                x.push('Image: ' + info.imageSrc);
-            api.sendMessage(x.join('\n'), message.threadID);
-        });
+        var fetch = require('node-fetch');
+        let thread_id = message.threadID;
+        let gInfo = JSON.parse(fse.readFileSync(path.join(__dirname, '..', 'data/gInfo.json'), 'utf8'));
+        if (!gInfo[thread_id]) {
+            api.getThreadInfo(thread_id, (err, info) => {
+                if (err)
+                    return console.error(err);
+                gInfo[thread_id] = info;
+                fse.writeFileSync(path.join(__dirname, 'data/gInfo.json'), JSON.stringify(gInfo, null, 4));
+            });
+        }
+        fse.ensureDirSync(path.join(__dirname, '..', 'data', 'img'));
+        let img = await fetch(gInfo[thread_id].imageSrc);
+        let imgPath = path.join(__dirname, '..', 'data', 'img', `${thread_id}_temp.jpg`);
+        await fse.writeFile(imgPath, await img.buffer());
+        let msg = {
+            body: `*${gInfo[thread_id].name}*\n` +
+                `The ID is *${gInfo[thread_id].threadID}*\n` +
+                `with *${gInfo[thread_id].participantIDs.length}* participants\n` +
+                `and *${gInfo[thread_id].messageCount}* messages sent.\n`,
+            attachment: fse.createReadStream(imgPath),
+        };
+        api.sendMessage(msg, thread_id);
     },
 };

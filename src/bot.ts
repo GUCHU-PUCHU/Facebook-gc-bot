@@ -3,9 +3,10 @@ var path = require('path');
 var login = require('facebook-chat-api');
 var config = require('./data/config.json');
 var log = require('./data/log.json');
+var gInfo = require('./data/gInfo.json');
 var utils = require('./utils');
 
-// Start of Command Handler
+// Start of Command Files Handler
 let cmdMap: any = new Map();
 cmdMap.name = new Map();
 cmdMap.alias = new Map();
@@ -45,34 +46,20 @@ login(credentials, (err: any, api: any) => {
 	api.listenMqtt((err: any, message: any) => {
 		if (err) return console.error(err);
 		fse.writeFileSync(path.join(__dirname, 'data/appState.json'), JSON.stringify(api.getAppState(), null, 4));
-		if (message.type === 'message') {
-			//  This is for debugging
-			console.log(message);
+		console.log(message);
+		if (message.type === 'message' || message.type === 'message_reply') {
+			// Message logging
+			require('./events/log')(message);
 
-			if (!log[message.threadID]) {
-				log[message.threadID] = {
-					_author: message.senderID,
-					_lastMessage: message.body,
-					_lastMessageTime: message.timestamp,
-					[message.senderID]: {
-						author: '',
-						lastMessage: message.body,
-						lastMessageTime: message.timestamp,
-					},
-				};
-			}
+			// Thread info logging
+			api.getThreadInfo(message.threadID, (err: any, info: any) => {
+				if (err) return console.error(err);
+				gInfo[message.threadID] = info;
+				fse.writeFileSync(path.join(__dirname, 'data/gInfo.json'), JSON.stringify(gInfo, null, 4));
+			});
+			// End of thread info logging
 
-			// log messages... used for sniping
-			if (!message.body.startsWith(config.prefix)) {
-				log[message.threadID]._author = message.senderID;
-				log[message.threadID]._lastMessage = message.body;
-				log[message.threadID]._lastMessageTime = message.timestamp;
-			}
-			log[message.threadID][message.senderID].author = message.senderID;
-			log[message.threadID][message.senderID].lastMessage = message.body;
-			log[message.threadID][message.senderID].lastMessageTime = message.timestamp;
-			fse.writeFileSync(path.join(__dirname, 'data/log.json'), JSON.stringify(log, null, 4));
-
+			// Command Handler (this is where the 'magic' happens)
 			if (config.gc_lock) {
 				if (config.thread_id !== message.threadID)
 					return console.log('Ignoring message from ' + message.threadID);
@@ -121,7 +108,7 @@ login(credentials, (err: any, api: any) => {
 				api.sendMessage(reply, message.threadID);
 				return;
 			}
-			api.setMessageReaction('👍', message.messageID);
+			api.setMessageReaction('👀', message.messageID);
 			// execute command
 			try {
 				cmdMap.name.get(cmd).execute(api, message, args, utils, cmdMap);
