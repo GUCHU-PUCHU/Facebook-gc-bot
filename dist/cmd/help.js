@@ -17,11 +17,12 @@ module.exports = {
         if (args.length === 0) {
             let reply = 'Available commands:';
             for (let key of cmdMap.name.keys()) {
-                reply += '\n' + config.prefix + key + '\n  ⌎| ' + cmdMap.name.get(key).info + '\n';
+                reply += '\n' + '*' + key.toUpperCase() + '*' + '\n  ⌎| ' + cmdMap.name.get(key).info + '\n';
             }
-            reply += '\n\nFor more info on a command, type `' + config.prefix + 'help [command]`';
-            if (message.senderID !== message.threadID)
-                api.sendMessage('List of commands were sent to your DMs! Please kindly check them out', message.threadID);
+            reply += '\n\nFor more info about a command, type `' + config.prefix + 'help [command]`';
+            if (message.senderID !== message.threadID) {
+                api.setMessageReaction('📨', message.messageID);
+            }
             utils.sendMessage(reply, api, message.senderID, { limit: 1000, delay: 1 });
             return;
         }
@@ -34,13 +35,17 @@ module.exports = {
                 return;
             }
         }
-        let reply = 'Command: ' + config.prefix + cmd;
+        let reply = '*' + cmd.toUpperCase() + '*';
         if (cmdMap.name.get(cmd).description) {
             reply += '\nDescription: ' + cmdMap.name.get(cmd).description;
         }
         if (cmdMap.name.get(cmd).usage) {
             reply += '\nUsage: ' + config.prefix + cmd + ' ' + cmdMap.name.get(cmd).usage;
         }
-        api.sendMessage(reply, message.senderID);
+        if (reply.length > 1000) {
+            api.setMessageReaction('📨', message.messageID);
+            return utils.sendMessage(reply, api, message.senderID, { limit: 2000, delay: 1 });
+        }
+        api.sendMessage(reply, message.threadID);
     },
 };
