@@ -11,21 +11,26 @@ module.exports = {
     description: 'Unpin the message that was pinned.\n' +
         `Example: \n` +
         `\t - ${config.prefix}unpin\n` +
-        `\t - ${config.prefix}unpin Fruits`,
+        `\t - ${config.prefix}unpin 1`,
     info: 'Unpin a message',
-    usage: '[subject]',
+    usage: '[index]',
     cooldown: true,
     execute: function (api, message, args) {
         var pins = fse.readJsonSync(path.join(__dirname, '../data/pins.json'));
         var thread_id = message.threadID;
-        var subject = args[0];
+        var index = args[0];
         if (pins[thread_id].length === 0)
             return api.sendMessage('No pins in this thread.', message.threadID);
-        if (!pins[thread_id][subject])
-            return api.sendMessage('No pins for that subject.', message.threadID);
-        pins[thread_id][subject] = undefined;
-        delete pins[thread_id][subject];
-        fse.writeJsonSync(path.join(__dirname, '../data/pins.json'), pins, { spaces: 2 });
-        api.sendMessage('Pin removed.', message.threadID);
+        if (isNaN(index))
+            return api.sendMessage('Must be an index from the list.', thread_id);
+        if (parseInt(index) > pins[thread_id].length)
+            return api.sendMessage('Index out of range.', thread_id);
+        let subs = Object.keys(pins[thread_id]).map((index) => {
+            return index;
+        });
+        pins[thread_id][subs[index]] = undefined;
+        delete pins[thread_id][subs[index - 1]];
+        fse.writeJsonSync(path.join(__dirname, '../data/pins.json'), pins, { spaces: 4 });
+        api.sendMessage('Pin removed.', thread_id);
     },
 };

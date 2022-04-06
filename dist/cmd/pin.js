@@ -10,7 +10,7 @@ module.exports = {
     args: true,
     adminOnly: true,
     GcOnly: true,
-    usage: '[list | subject | [subject] [content]] ',
+    usage: '[ list | subject | [subject] [content]] ',
     description: 'This command is used to pin a content\n' +
         'How do I use this command?\n' +
         `To pin a content, you need to use the following format: \n` +
@@ -31,16 +31,22 @@ module.exports = {
         var pins = fse.readJsonSync(path.join(__dirname, '../data/pins.json'));
         var thread_id = message.threadID;
         var author = message.senderID;
-        var subject = args[0];
-        var content = args.slice(1).join(' ');
-        if (subject === 'list') {
+        if (args[0] === 'list') {
             if (!pins[thread_id])
                 return api.sendMessage('No pins in this thread.', thread_id);
-            var list = Object.keys(pins[thread_id]).map((key) => {
+            var list = Object.keys(pins[thread_id]).map((key, index) => {
                 var time = moment(parseInt(pins[thread_id][key].timestamp)).format('MMMM Do YYYY, h:mm:ss a');
-                return `${key} \n\t- ${time}\n`;
+                return `${index + 1}. ${key} \n\t- ${time}\n`;
             });
-            utils.sendMessage(list.join('\n'), api, thread_id, { limit: 100 });
+            utils.sendMessage(list.join('\n'), api, thread_id, { limit: 100, delay: 2 });
+            return;
+        }
+        try {
+            var subject = args.join(' ').split('-')[0].trim();
+            var content = args.join(' ').split('-')[1].trim();
+        }
+        catch (error) {
+            utils.failReact(api, message.messageID);
             return;
         }
         if (pins[thread_id] && pins[thread_id][subject]) {

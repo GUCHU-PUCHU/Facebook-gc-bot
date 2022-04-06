@@ -106,6 +106,8 @@ login(credentials, (err: any, api: any) => {
 				return;
 			}
 			api.setMessageReaction('👀', message.messageID);
+			// buffer so it doesn't looks like its a bot
+			utils.sleep(1000);
 			// execute command
 			try {
 				cmdMap.name.get(cmd).execute(api, message, args, utils, cmdMap);

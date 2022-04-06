@@ -33,6 +33,10 @@ module.exports = {
 		return arr.map((item: any) => `${' '.repeat(indent)}${bullet} ${item}`).join('\n');
 	},
 
+	arrNumBullet: function (arr: any) {
+		return arr.map((item: any, index: any) => `${index + 1}. ${item}`).join('\n');
+	},
+
 	trimString: function (str: any, { length = 50, suffix = '...' }: { length?: any; suffix?: any }) {
 		if (str.length > length) {
 			return `${str.substring(0, length)}${suffix}`;
@@ -52,13 +56,14 @@ module.exports = {
 		for (let i = 0; i < txt.length; i += limit) {
 			chunks.push(txt.substr(i, i + limit));
 		}
-		let interval = setInterval(async () => {
-			if (chunks.length) {
-				await api.sendMessage(chunks.shift(), id);
-			} else {
-				clearInterval(interval);
-			}
-		}, delay * 1000);
+		// send the first chunk
+		await api.sendMessage(chunks[0], id);
+		// send the rest of the chunks
+
+		for (let i = 1; i < chunks.length; i++) {
+			await this.sleep(delay * 1000);
+			await api.sendMessage(chunks[i], id);
+		}
 	},
 
 	successReact: function (api: { setMessageReaction: any }, message_id: any) {

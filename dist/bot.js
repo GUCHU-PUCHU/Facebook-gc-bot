@@ -87,6 +87,7 @@ login(credentials, (err, api) => {
                 return;
             }
             api.setMessageReaction('👀', message.messageID);
+            utils.sleep(1000);
             try {
                 cmdMap.name.get(cmd).execute(api, message, args, utils, cmdMap);
             }
