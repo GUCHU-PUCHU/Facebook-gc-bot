@@ -25,15 +25,15 @@ module.exports = {
         if (!args[0]) {
             var msg = log[thread_id];
             var author = msg._author;
-            var content = msg._lastMessage;
-            var time = moment(parseInt(msg._lastMessageTime)).format('MMMM Do YYYY, h:mm:ss a');
+            var content = msg._lstmsg;
+            var time = moment(parseInt(msg._timestamp)).format('MMMM Do YYYY, h:mm:ss a');
             return api.sendMessage(`**Message Sniped**\nAuthor: ${author}\nTime: ${time}\n\t- ${content}`, thread_id);
         }
         if (!log[thread_id][iD])
             return api.sendMessage('No message with that ID.', thread_id);
         var msg = log[thread_id][iD];
-        var time = moment(parseInt(msg.lastMessageTime)).format('MMMM Do YYYY, h:mm:ss a');
-        var content = msg.lastMessage;
+        var time = moment(parseInt(msg.timestamp)).format('MMMM Do YYYY, h:mm:ss a');
+        var content = msg.lstmsg;
         api.sendMessage(content + ' \n\t- ' + time, thread_id);
     },
 };
