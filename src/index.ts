@@ -67,5 +67,4 @@ async function start() {
 			}
 		});
 }
-
 start();

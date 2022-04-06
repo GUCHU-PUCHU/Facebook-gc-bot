@@ -3,6 +3,7 @@ var fse = require('fs-extra');
 var path = require('path');
 var inquirer = require('inquirer');
 var puppeteer = require('puppeteer');
+var _fetch = require('node-fetch');
 module.exports = {
     default_config: {
         prefix: '!',
