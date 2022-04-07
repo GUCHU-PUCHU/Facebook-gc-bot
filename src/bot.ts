@@ -49,7 +49,7 @@ login(credentials, (err: any, api: any) => {
 		console.log(message);
 		if (message.type === 'message' || message.type === 'message_reply') {
 			// Message logging
-			require('./events/logger')(message);
+			require('./events/logger')(api, message);
 
 			// Thread info logging
 			api.getThreadInfo(message.threadID, (err: any, info: any) => {

@@ -1,10 +1,12 @@
+var fse = require('fs-extra');
+var path = require('path');
 var _fetch = require('node-fetch');
 module.exports = {
 	name: 'userinfo',
 	alias: ['userinfo', 'user', 'lookup', 'profile', 'info', 'whois'],
-	args: true,
+	args: false,
 	adminOnly: true,
-	GcOnly: true,
+	GcOnly: false,
 	usage: '[ userid | @user ]',
 	description: 'Get user info.',
 	info: 'Get user info.',
@@ -22,21 +24,43 @@ module.exports = {
 		} else {
 			id = query;
 		}
+		var uInfo = fse.readJsonSync(path.join(__dirname, '..', 'data', 'uInfo.json'));
+		if (!query) id = message.senderID;
 
-		api.getUserInfo(id, async (err: string, res: any) => {
-			if (err) {
-				utils.failReact(api, message.messageID);
-				console.log(err);
-				return api.sendMessage('Error! ' + err, thread_id);
-			}
-			let msg = {
-				body:
-					`*${res[id].name}*\n` +
-					`ID: ${id}\n` +
-					`First name: ${res[id].firstName}\n` +
-					`Profile Url: ${res[id].profileUrl}\n`,
-			};
-			api.sendMessage(msg, thread_id);
-		});
+		if (!uInfo[thread_id]) {
+			uInfo[thread_id] = {};
+		}
+		if (!uInfo[thread_id][id]) {
+			api.sendMessage('No user info found... Generating. \nPlease use the command again.', thread_id);
+			api.getUserInfo(id, (err: any, info: any) => {
+				if (err) return console.error(err);
+				uInfo[thread_id][id] = info[id];
+
+				fse.writeFileSync(path.join(__dirname, '..', 'data', 'uInfo.json'), JSON.stringify(uInfo, null, 4));
+			});
+			return;
+		}
+
+		let info = uInfo[thread_id][id];
+		try {
+			let reply =
+				'*' +
+				info.name +
+				'*\n' +
+				'First Name: ' +
+				info.firstName +
+				'\n' +
+				'Vanity: ' +
+				info.vanity +
+				'\n' +
+				'Profile Url: ' +
+				info.profileUrl +
+				'\n';
+
+			api.sendMessage(reply, thread_id);
+		} catch (error) {
+			console.log(error);
+			api.sendMessage('Something went wrong...', thread_id);
+		}
 	},
 };

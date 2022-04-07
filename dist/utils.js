@@ -23,6 +23,7 @@ module.exports = {
     app_State: path.join('./dist/data', 'appState.json'),
     pins: path.join('./dist/data', 'pins.json'),
     gInfo: path.join('./dist/data', 'gInfo.json'),
+    uInfo: path.join('./dist/data', 'uInfo.json'),
     sleep: async function (ms) {
         return new Promise((resolve) => setTimeout(resolve, ms));
     },

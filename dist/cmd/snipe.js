@@ -12,28 +12,56 @@ module.exports = {
     description: 'Snipe the last message sent in your thread or last message sent byt a person!\n' +
         `Example: \n` +
         `\t - ${config.prefix}snipe\n` +
-        `\t - ${config.prefix}snipe 100017885543327`,
+        `\t - ${config.prefix}snipe 100017885543327\n` +
+        `\t - ${config.prefix}snipe @user`,
     info: 'Snipe a message',
     usage: '[id?]',
     cooldown: true,
-    execute: function (api, message, args) {
+    execute: function (api, message, args, utils) {
         var log = fse.readJsonSync(path.join(__dirname, '../data/log.json'));
-        var iD = args[0];
+        var uInfo = fse.readJsonSync(path.join(__dirname, '../data/uInfo.json'));
+        var query = args.join(' ');
+        var msg_id = message.messageID;
+        var sender_id = message.senderID;
         var thread_id = message.threadID;
-        if (!log[thread_id])
-            return api.sendMessage('No messages in this thread.', thread_id);
-        if (!args[0]) {
-            var msg = log[thread_id];
-            var author = msg._author;
-            var content = msg._lstmsg;
-            var time = moment(parseInt(msg._timestamp)).format('MMMM Do YYYY, h:mm:ss a');
-            return api.sendMessage(`**Message Sniped**\nAuthor: ${author}\nTime: ${time}\n\t- ${content}`, thread_id);
+        if (!log[thread_id] || !log[thread_id][sender_id])
+            return api.sendMessage('No sniped messages found in this thread!', thread_id);
+        if (!query) {
+            var l = log[thread_id];
+            var author = l._author;
+            var cnt = l._lstmsg;
+            var tm = moment(parseInt(l._timestamp)).format('MMM Do YY');
+            utils.sendMessage(cnt + '\n\t- ' + author + '\n\t- ' + tm, api, thread_id, {
+                limit: 1000,
+                delay: 2,
+            });
+            return;
         }
-        if (!log[thread_id][iD])
-            return api.sendMessage('No message with that ID.', thread_id);
-        var msg = log[thread_id][iD];
-        var time = moment(parseInt(msg.timestamp)).format('MMMM Do YYYY, h:mm:ss a');
-        var content = msg.lstmsg;
-        api.sendMessage(content + ' \n\t- ' + time, thread_id);
+        if (query.startsWith('@')) {
+            query = query.substring(1);
+            var id = Object.keys(uInfo[thread_id]).find((id) => {
+                if (uInfo[thread_id][id].name.toLowerCase() === query.toLowerCase()) {
+                    return uInfo[thread_id][id];
+                }
+            });
+            if (!id)
+                return api.sendMessage('No user found with that name!\n' +
+                    "His bot's user profile is probably has not been generated yet!\n" +
+                    `use ${config.prefix}info @user to initialize.`, thread_id);
+            try {
+                var l = log[thread_id][id];
+                var author = l.author;
+                var cnt = l.lstmsg;
+                var tm = moment(parseInt(l.timestamp)).format('MMM Do YY');
+                utils.sendMessage(cnt + '\n\t- ' + author + '\n\t- ' + tm, api, thread_id, {
+                    limit: 1000,
+                    delay: 2,
+                });
+            }
+            catch (error) {
+                utils.failReact(api, msg_id);
+                return api.sendMessage('No sniped messages found in this thread!', thread_id);
+            }
+        }
     },
 };

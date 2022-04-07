@@ -15,6 +15,9 @@ if (!fse.existsSync(utils.pins)) {
 if (!fse.existsSync(utils.gInfo)) {
     fse.outputJsonSync(utils.gInfo, {}, { spaces: 4 });
 }
+if (!fse.existsSync(utils.uInfo)) {
+    fse.outputJsonSync(utils.uInfo, {}, { spaces: 4 });
+}
 fse.ensureDirSync(path.join(__dirname, '..', 'dist', 'data', 'img'));
 var config = require('./data/config.json');
 async function start() {
