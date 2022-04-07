@@ -11,6 +11,8 @@ module.exports = async (message) => {
     let ctnt = message.body;
     let timestamp = message.timestamp;
     try {
+        if (ctnt.startsWith(config.prefix + 'snipe'))
+            return;
         if (!log[thread_id]) {
             log[thread_id] = {
                 _author: author,
