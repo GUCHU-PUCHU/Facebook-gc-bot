@@ -42,7 +42,7 @@ login(credentials, (err, api) => {
         fse.writeFileSync(path.join(__dirname, 'data/appState.json'), JSON.stringify(api.getAppState(), null, 4));
         console.log(message);
         if (message.type === 'message' || message.type === 'message_reply') {
-            require('./events/log')(message);
+            require('./events/logger')(message);
             api.getThreadInfo(message.threadID, (err, info) => {
                 if (err)
                     return console.error(err);

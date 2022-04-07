@@ -27,17 +27,17 @@ module.exports = async (message: any) => {
 			log[thread_id]._lstmsg = ctnt;
 			log[thread_id]._timestamp = timestamp;
 		}
-
-		// if (ctnt) log[thread_id][author].lstmsg = ctnt;
-		// log[thread_id][author].timestamp = timestamp;
-
 		// add author to log
 		if (!log[thread_id][author]) {
 			log[thread_id][author] = {
 				lstmsg: ctnt,
 				timestamp: timestamp,
 			};
-		} else return;
+		}
+
+		// update author's last message
+		log[thread_id][author].lstmsg = ctnt;
+		log[thread_id][author].timestamp = timestamp;
 
 		fse.writeJsonSync(path.join(__dirname, '../data/log.json'), log, { spaces: 4 });
 	} catch (error) {

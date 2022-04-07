@@ -33,8 +33,8 @@ module.exports = async (message) => {
                 timestamp: timestamp,
             };
         }
-        else
-            return;
+        log[thread_id][author].lstmsg = ctnt;
+        log[thread_id][author].timestamp = timestamp;
         fse.writeJsonSync(path.join(__dirname, '../data/log.json'), log, { spaces: 4 });
     }
     catch (error) {
