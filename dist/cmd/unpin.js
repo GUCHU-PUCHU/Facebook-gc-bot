@@ -31,6 +31,10 @@ module.exports = {
         pins[thread_id][subs[index - 1]] = undefined;
         delete pins[thread_id][subs[index - 1]];
         fse.writeJsonSync(path.join(__dirname, '../data/pins.json'), pins, { spaces: 4 });
+        let newSubs = Object.keys(pins[thread_id]).map((subs, i) => {
+            return 1 + i + '. ' + subs;
+        });
+        api.sendMessage(`Current pins: \n` + `${newSubs.join('\n')}`, thread_id);
         utils.successReact(api, message.messageID);
     },
 };
