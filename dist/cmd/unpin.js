@@ -15,7 +15,7 @@ module.exports = {
     info: 'Unpin a message',
     usage: '[index]',
     cooldown: true,
-    execute: function (api, message, args) {
+    execute: function (api, message, args, utils) {
         var pins = fse.readJsonSync(path.join(__dirname, '../data/pins.json'));
         var thread_id = message.threadID;
         var index = args[0];
@@ -31,6 +31,6 @@ module.exports = {
         pins[thread_id][subs[index]] = undefined;
         delete pins[thread_id][subs[index - 1]];
         fse.writeJsonSync(path.join(__dirname, '../data/pins.json'), pins, { spaces: 4 });
-        api.sendMessage('Pin removed.', thread_id);
+        utils.successReact(api, message.messageID);
     },
 };

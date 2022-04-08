@@ -41,6 +41,21 @@ module.exports = {
             utils.sendMessage(list.join('\n'), api, thread_id, { limit: 100, delay: 2 });
             return;
         }
+        if (!isNaN(parseInt(args[0]))) {
+            if (!pins[thread_id])
+                return api.sendMessage('No pins in this thread.', thread_id);
+            var subs = Object.keys(pins[thread_id]).map((index) => {
+                return index;
+            });
+            if (parseInt(args[0]) > pins[thread_id].length)
+                return api.sendMessage('Index out of range.', thread_id);
+            var index = subs[parseInt(args[0]) - 1];
+            var tm = moment(parseInt(pins[thread_id][index].timestamp)).format('MMMM Do YYYY, h:mm:ss a');
+            var cnt = pins[thread_id][index].content;
+            var msgs = `${cnt} \n\t- ${tm}\n`;
+            utils.sendMessage(msgs, api, thread_id, { limit: 1000, delay: 2 });
+            return;
+        }
         try {
             var subject = args.join(' ').split('-')[0].trim();
             var content = args.join(' ').split('-')[1].trim();
