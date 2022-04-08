@@ -42,7 +42,8 @@ module.exports = {
 				var time = moment(parseInt(pins[thread_id][key].timestamp)).format('MMMM Do YYYY, h:mm:ss a');
 				return `${index + 1}. ${key} \n\t- ${time}\n`;
 			});
-			utils.sendMessage(list.join('\n'), api, thread_id, { limit: 100, delay: 2 });
+			utils.sendMessage(list.join('\n'), api, thread_id, { limit: 2000, delay: 2 });
+
 			return;
 		}
 		if (!isNaN(parseInt(args[0]))) {
@@ -56,7 +57,8 @@ module.exports = {
 			var cnt = pins[thread_id][index].content;
 			// var sub = pins[thread_id][index].subject;
 			var msgs = `${cnt} \n\t- ${tm}\n`;
-			utils.sendMessage(msgs, api, thread_id, { limit: 1000, delay: 2 });
+			utils.sendMessage(msgs, api, thread_id, { limit: 2000, delay: 2 });
+
 			return;
 		}
 
@@ -94,3 +96,5 @@ module.exports = {
 		api.setMessageReaction('📌', message.messageID);
 	},
 };
+
+// TODO: Make this better.
