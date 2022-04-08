@@ -58,7 +58,10 @@ module.exports = {
         }
         try {
             var subject = args.join(' ').split('-')[0].trim();
-            var content = args.join(' ').split('-')[1].trim();
+            var content = args
+                .join(' ')
+                .slice(subject.length + 1)
+                .trim();
         }
         catch (error) {
             utils.failReact(api, message.messageID);

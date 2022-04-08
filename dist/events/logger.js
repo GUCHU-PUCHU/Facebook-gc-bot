@@ -32,12 +32,21 @@ module.exports = async (api, message) => {
                 },
             };
         }
+        if (!log[thread_id][authorID]) {
+            log[thread_id][authorID] = {
+                author: author,
+                lstmsg: ctnt,
+                timestamp: timestamp,
+            };
+        }
         if (log[thread_id]) {
             log[thread_id]._author = author;
             log[thread_id]._lstmsg = ctnt;
             log[thread_id]._timestamp = timestamp;
         }
         if (log[thread_id][authorID]) {
+            if (ctnt.startsWith(config.prefix))
+                return;
             log[thread_id][authorID].author = author;
             log[thread_id][authorID].lstmsg = ctnt;
             log[thread_id][authorID].timestamp = timestamp;

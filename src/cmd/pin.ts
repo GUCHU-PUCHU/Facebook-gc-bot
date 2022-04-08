@@ -64,7 +64,11 @@ module.exports = {
 
 		try {
 			var subject = args.join(' ').split('-')[0].trim();
-			var content = args.join(' ').split('-')[1].trim();
+			// I want the content to be arguments after the first dash only
+			var content = args
+				.join(' ')
+				.slice(subject.length + 1)
+				.trim();
 		} catch (error) {
 			utils.failReact(api, message.messageID);
 			return;
