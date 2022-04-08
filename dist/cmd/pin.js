@@ -60,7 +60,7 @@ module.exports = {
             var subject = args.join(' ').split('-')[0].trim();
             var content = args
                 .join(' ')
-                .slice(subject.length + 1)
+                .slice(subject.length + 2)
                 .trim();
         }
         catch (error) {
