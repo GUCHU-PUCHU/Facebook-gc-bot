@@ -14,9 +14,10 @@ module.exports = {
     description: 'This command is used to pin a content\n' +
         'How do I use this command?\n' +
         `To pin a content, you need to use the following format: \n` +
-        `${config.prefix}pin [subject] [content] \n` +
+        `You must use a "-" as a seperator between content and subject.\n` +
+        `${config.prefix}pin [subject] - [content] \n` +
         `Example: \n` +
-        `${config.prefix}pin Fruits Apple Mango and Bananas! \n` +
+        `${config.prefix}pin Fruits - Apple Mango and Bananas! \n` +
         ` - subject: The subject of the content. \n` +
         ` - content: The content that you want to pin. \n\n` +
         `To list all the pins, you can use the following format: \n` +

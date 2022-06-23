@@ -78,16 +78,16 @@ Just open the folder where the files are located.
 
 #### Windows
 
-Just open the folder and run the `start.bat` file.
+Note: I am honestly not sure how to make a executable batch script for windows. So... you'll need to run it using VSCode.
 
-> **Notes:** I'm not sure if this works on windows.
+Open a terminal then run `node .` or `npm start`.
 
 #### Linux
 
 Do `chmod +x start.sh` and then `./start.sh`
 
 Choose '**start**'.
-You'll be prompted to setup your bot and Fb account.
+You'll be prompted to setup your bot and Fb account first.
 
 Make sure your credentials are **correct**! or else you're most likely to get blocked by Facebook.
 If that happened, just open your browser and verify your account.
