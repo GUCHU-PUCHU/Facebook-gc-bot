@@ -115,7 +115,7 @@ async function fbCreds() {
             var { name: key } = _a, rest = __rest(_a, ["name"]);
             return (Object.assign({ key }, rest));
         });
-        fse.outputJson(path.join(__dirname, '..', 'data', 'appState.json'), cookies, { spaces: 4 });
+        fse.writeFileSync(path.join(__dirname, 'data', 'appState.json'), JSON.stringify(cookies, null, 4));
         browser.close();
         console.log('done');
     }

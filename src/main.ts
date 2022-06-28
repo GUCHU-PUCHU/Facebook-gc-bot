@@ -113,7 +113,8 @@ async function fbCreds() {
 		await page.waitForNavigation();
 		let cookies = await page.cookies();
 		cookies = cookies.map(({ name: key, ...rest }: { name: any; [x: string]: any }) => ({ key, ...rest }));
-		fse.outputJson(path.join(__dirname, '..', 'data', 'appState.json'), cookies, { spaces: 4 });
+		// fse.outputJson(path.join(__dirname, 'data', 'appState.json'), cookies, { spaces: 4 });
+		fse.writeFileSync(path.join(__dirname, 'data', 'appState.json'), JSON.stringify(cookies, null, 4));
 		browser.close();
 		console.log('done');
 	} catch (error) {

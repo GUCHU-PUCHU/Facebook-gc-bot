@@ -1,8 +1,8 @@
 "use strict";
 var path = require('path');
-var fse = require('fs-extra');
 var moment = require('moment');
 var utils = require('../utils');
+var fse = require('fs-extra');
 var config = require('../data/config');
 module.exports = {
     name: 'pin',
@@ -71,8 +71,11 @@ module.exports = {
         if (pins[thread_id] && pins[thread_id][subject]) {
             var msg = pins[thread_id][subject];
             var time = moment(parseInt(pins[thread_id][subject].timestamp)).format('MMMM Do YYYY, h:mm:ss a');
+            var sub = subject;
             var cnt = msg.content;
-            utils.sendMessage(cnt + ' \n\t- ' + time, api, thread_id, { limit: 100 });
+            utils.sendMessage('Subject: ' + sub + '\nContents: \n\t' + cnt + ' \n\n\t- ' + time, api, thread_id, {
+                limit: 100,
+            });
             return;
         }
         if (!subject)

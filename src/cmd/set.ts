@@ -1,6 +1,6 @@
 var fse = require('fs-extra');
-var path = require('path');
 var config = require('../data/config');
+var path = require('path');
 module.exports = {
 	name: 'set',
 	alias: ['set', 'config', 'cfg'],
@@ -9,23 +9,19 @@ module.exports = {
 	GcOnly: true,
 	usage: '[ prefix | botname | response | apikey | cooldown ] <value> | [stats]',
 	description:
-		'Set the value of a config option.\n' +
-		'Usage: `!set [option] [value]`\n\n' +
-		'Available options:\n' +
-		' - prefix: The prefix of the bot.\n' +
-		' - botname: The name of the bot.\n' +
-		' - response: The response of the bot.\n' +
-		' - apikey: The api key of the bot.\n' +
-		' - cooldown: The cooldown of the bot.\n' +
-		' - stats: The stats of the bot.\n',
+		`Can be used to set the value of a config option. \n` +
+		`Usage: \n` +
+		`\t ${config.prefix}set [option] [value]\n\n` +
+		`Available options: \n` +
+		`\t prefix: The prefix of the bot. \n` +
+		`\t botname: The name of the bot. \n` +
+		`\t response: The response of the bot. \n` +
+		`\t apikey: The api key of the bot. \n` +
+		`\t cooldown: The cooldown of the bot. \n` +
+		`\t stats: The stats of the bot. \n`,
 	info: "Set bot's settings.",
 	cooldown: true,
-	execute: function (
-		api: { sendMessage: (arg0: string, arg1: any) => void; setMessageReaction: (arg0: string, arg1: any) => void },
-		message: { threadID: any; messageID: any },
-		args: any[],
-		utils: { successReact: (arg0: any, arg1: any) => void }
-	) {
+	execute: function (api: any, message: any, args: any[]) {
 		let key: string = args[0];
 		let value: any = args.slice(1).join(' ');
 

@@ -41,14 +41,17 @@ login(credentials, (err, api) => {
             return console.error(err);
         fse.writeFileSync(path.join(__dirname, 'data/appState.json'), JSON.stringify(api.getAppState(), null, 4));
         console.log(message);
-        if (message.type === 'message' || message.type === 'message_reply') {
-            require('./events/logger')(api, message);
+        if (message.type === 'typ') {
+            require('./events/onThreadJoin')(api, message);
             api.getThreadInfo(message.threadID, (err, info) => {
                 if (err)
                     return console.error(err);
                 gInfo[message.threadID] = info;
                 fse.writeFileSync(path.join(__dirname, 'data/gInfo.json'), JSON.stringify(gInfo, null, 4));
             });
+        }
+        if (message.type === 'message' || message.type === 'message_reply') {
+            require('./events/logger')(api, message);
             if (config.gc_lock && config.thread_id !== message.threadID)
                 return console.log('Ignoring message from ' + message.threadID);
             require('./events/mentioned')(api, message);
@@ -86,14 +89,15 @@ login(credentials, (err, api) => {
                 api.sendMessage(reply, message.threadID);
                 return;
             }
-            api.setMessageReaction('👀', message.messageID);
-            utils.sleep(1000);
+            utils.randomSleep(1000, 2000);
+            utils.seenReact(api, message.senderID);
             try {
                 cmdMap.name.get(cmd).execute(api, message, args, utils, cmdMap);
             }
             catch (error) {
                 utils.failReact(api, message.messageID);
                 api.sendMessage('Something went wrong!', message.threadID);
+                utils.errorReact(api, message.messageID);
                 console.error(error);
             }
         }

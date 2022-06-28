@@ -27,6 +27,9 @@ module.exports = {
     sleep: async function (ms) {
         return new Promise((resolve) => setTimeout(resolve, ms));
     },
+    randomSleep: async function (min, max) {
+        return new Promise((resolve) => setTimeout(resolve, Math.floor(Math.random() * (max - min + 1) + min)));
+    },
     arrBullet: function (arr, { bullet = '-', indent = 0 }) {
         return arr.map((item) => `${' '.repeat(indent)}${bullet} ${item}`).join('\n');
     },
@@ -60,5 +63,11 @@ module.exports = {
     },
     waitReact: function (api, message_id) {
         api.setMessageReaction('⏳', message_id);
+    },
+    errorReact: function (api, message_id) {
+        api.setMessageReaction('❗', message_id);
+    },
+    seenReact: function (api, message_id) {
+        api.setMessageReaction('👁', message_id);
     },
 };

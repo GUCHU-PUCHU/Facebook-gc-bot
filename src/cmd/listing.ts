@@ -1,7 +1,5 @@
-'use strict';
 var fse = require('fs-extra');
-var moment = require('moment');
-
+var config = require('../data/config');
 var cache: any[] = [];
 module.exports = {
 	name: 'listing',
@@ -20,12 +18,7 @@ module.exports = {
 		'\t reset - Reset list.\n',
 	info: 'For listing stuff.',
 	cooldown: false,
-	execute: function (
-		api: { sendMessage: (arg0: string, arg1: any) => void; setMessageReaction: (arg0: string, arg1: any) => void },
-		message: { threadID: any; messageID: any },
-		args: any[],
-		utils: any
-	) {
+	execute: function (api: any, message: any, args: any, utils: any) {
 		let threadID = message.threadID;
 		let msgID = message.messageID;
 		var txt = [];

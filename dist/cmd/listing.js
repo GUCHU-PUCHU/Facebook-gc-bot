@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 var fse = require('fs-extra');
-var moment = require('moment');
+var config = require('../data/config');
 var cache = [];
 module.exports = {
     name: 'listing',

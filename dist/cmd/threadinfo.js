@@ -1,7 +1,8 @@
 "use strict";
-var fse = require('fs-extra');
 var path = require('path');
 var moment = require('moment');
+var fse = require('fs-extra');
+var config = require('../data/config');
 module.exports = {
     name: 'threadinfo',
     alias: ['ti'],

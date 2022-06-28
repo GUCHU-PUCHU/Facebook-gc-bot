@@ -1,5 +1,6 @@
 "use strict";
-var config = require('../data/config.json');
+var fse = require('fs-extra');
+var config = require('../data/config');
 module.exports = {
     name: 'help',
     alias: ['help', 'h'],

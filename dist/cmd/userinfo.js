@@ -1,7 +1,8 @@
 "use strict";
-var fse = require('fs-extra');
 var path = require('path');
 var _fetch = require('node-fetch');
+var fse = require('fs-extra');
+var config = require('../data/config');
 module.exports = {
     name: 'userinfo',
     alias: ['userinfo', 'user', 'lookup', 'profile', 'info', 'whois'],
@@ -9,7 +10,7 @@ module.exports = {
     adminOnly: true,
     GcOnly: false,
     usage: '[ userid | @user ]',
-    description: 'Get user info.',
+    description: 'Get user info.\n' + 'Usage: \n' + '\t ' + config.prefix + 'userinfo [ userid | @user ]\n',
     info: 'Get user info.',
     cooldown: true,
     execute: async function (api, message, args, utils) {

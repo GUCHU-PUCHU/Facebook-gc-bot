@@ -1,6 +1,7 @@
 "use strict";
 var google = require('googlethis');
 var fse = require('fs-extra');
+var config = require('../data/config');
 module.exports = {
     name: 'google',
     alias: ['g', 'gsearch', 'search'],

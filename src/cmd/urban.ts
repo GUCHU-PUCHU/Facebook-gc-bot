@@ -1,3 +1,4 @@
+var config = require('../data/config');
 module.exports = {
 	name: 'urban',
 	alias: ['urban', 'urbandictionary', 'ud'],
@@ -5,14 +6,10 @@ module.exports = {
 	adminOnly: false,
 	GcOnly: true,
 	usage: '<term>',
-	description: 'Search for a term on Urban Dictionary.',
+	description: `Search for a term on Urban Dictionary.\n` + `Usage: \n` + `\t ${config.prefix}urban <term>\n`,
 	info: 'Search for a term on Urban Dictionary.',
 	cooldown: true,
-	execute: function (
-		api: { sendMessage: (arg0: string, arg1: any) => void },
-		message: { threadID: any },
-		args: any[]
-	) {
+	execute: function (api: any, message: any, args: any[]) {
 		var fetch = require('node-fetch');
 		let x: any[] = [];
 		let term = args.join(' ');
