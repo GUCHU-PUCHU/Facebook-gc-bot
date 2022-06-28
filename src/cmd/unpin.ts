@@ -1,5 +1,5 @@
-var fse = require('fs-extra');
 var path = require('path');
+var fse = require('fs-extra');
 var config = require('../data/config');
 module.exports = {
 	name: 'unpin',

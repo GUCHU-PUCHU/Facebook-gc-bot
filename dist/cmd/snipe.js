@@ -1,7 +1,7 @@
 "use strict";
-var fse = require('fs-extra');
 var moment = require('moment');
 var path = require('path');
+var fse = require('fs-extra');
 var config = require('../data/config');
 module.exports = {
     name: 'snipe',

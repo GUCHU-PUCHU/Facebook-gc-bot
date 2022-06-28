@@ -19,15 +19,18 @@ module.exports = {
 		},
 	},
 
-	config_file: path.join('./dist/data', 'config.json'),
-	log_file: path.join('./dist/data', 'log.json'),
-	app_State: path.join('./dist/data', 'appState.json'),
-	pins: path.join('./dist/data', 'pins.json'),
-	gInfo: path.join('./dist/data', 'gInfo.json'),
-	uInfo: path.join('./dist/data', 'uInfo.json'),
+	config_file: path.join('./dist/data', 'config.json'), // This is where config is stored
+	log_file: path.join('./dist/data', 'log.json'), // This is where logs are stored
+	app_State: path.join('./dist/data', 'appState.json'), // This is where app state is stored
+	pins: path.join('./dist/data', 'pins.json'), // This is where pins are stored
+	gInfo: path.join('./dist/data', 'gInfo.json'), // This is where group or threads info is stored
+	uInfo: path.join('./dist/data', 'uInfo.json'), // This is where user info is stored
 
 	sleep: async function (ms: any) {
 		return new Promise((resolve) => setTimeout(resolve, ms));
+	},
+	randomSleep: async function (min: any, max: any) {
+		return new Promise((resolve) => setTimeout(resolve, Math.floor(Math.random() * (max - min + 1) + min)));
 	},
 
 	arrBullet: function (arr: any, { bullet = '-', indent = 0 }: { bullet?: any; indent?: any }) {
@@ -67,14 +70,20 @@ module.exports = {
 		}
 	},
 
-	successReact: function (api: { setMessageReaction: any }, message_id: any) {
+	successReact: function (api: any, message_id: any) {
 		api.setMessageReaction('✅', message_id);
 	},
-	failReact: function (api: { setMessageReaction: any }, message_id: any) {
+	failReact: function (api: any, message_id: any) {
 		api.setMessageReaction('❌', message_id);
 	},
-	waitReact: function (api: { setMessageReaction: any }, message_id: any) {
+	waitReact: function (api: any, message_id: any) {
 		api.setMessageReaction('⏳', message_id);
+	},
+	errorReact: function (api: any, message_id: any) {
+		api.setMessageReaction('❗', message_id);
+	},
+	seenReact: function (api: any, message_id: any) {
+		api.setMessageReaction('👁', message_id);
 	},
 };
 

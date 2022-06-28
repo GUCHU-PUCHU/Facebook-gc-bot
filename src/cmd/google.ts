@@ -1,5 +1,6 @@
 var google = require('googlethis');
 var fse = require('fs-extra');
+var config = require('../data/config');
 module.exports = {
 	name: 'google',
 	alias: ['g', 'gsearch', 'search'],
@@ -10,12 +11,7 @@ module.exports = {
 	description: 'Search for a term on Google.',
 	info: 'Search for a term on Google.',
 	cooldown: true,
-	execute: async function (
-		api: { sendMessage: (arg0: string, arg1: number) => void },
-		message: { threadID: any; senderID: any },
-		args: any[],
-		utils: { sendMessage: (arg0: string, arg1: any, arg2: any, arg3: { limit: number }) => void }
-	) {
+	execute: async function (api: any, message: any, args: any, utils: any) {
 		const query = args.join(' ');
 		const options = {
 			page: 0,

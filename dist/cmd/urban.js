@@ -1,4 +1,5 @@
 "use strict";
+var config = require('../data/config');
 module.exports = {
     name: 'urban',
     alias: ['urban', 'urbandictionary', 'ud'],
@@ -6,7 +7,7 @@ module.exports = {
     adminOnly: false,
     GcOnly: true,
     usage: '<term>',
-    description: 'Search for a term on Urban Dictionary.',
+    description: `Search for a term on Urban Dictionary.\n` + `Usage: \n` + `\t ${config.prefix}urban <term>\n`,
     info: 'Search for a term on Urban Dictionary.',
     cooldown: true,
     execute: function (api, message, args) {

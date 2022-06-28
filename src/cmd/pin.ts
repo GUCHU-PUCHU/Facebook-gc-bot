@@ -1,7 +1,7 @@
 var path = require('path');
-var fse = require('fs-extra');
 var moment = require('moment');
 var utils = require('../utils');
+var fse = require('fs-extra');
 var config = require('../data/config');
 module.exports = {
 	name: 'pin',
@@ -28,11 +28,7 @@ module.exports = {
 		`${config.prefix}unpin [subject]\n\n`,
 	info: 'pin a message',
 	cooldown: true,
-	execute: function (
-		api: { sendMessage: (arg0: string, arg1: any) => any; setMessageReaction: (arg0: string, arg1: any) => void },
-		message: { threadID: any; senderID: any; messageID: any },
-		args: any[]
-	) {
+	execute: function (api: any, message: any, args: any) {
 		var pins = fse.readJsonSync(path.join(__dirname, '../data/pins.json'));
 		var thread_id = message.threadID;
 		var author = message.senderID;
@@ -79,8 +75,11 @@ module.exports = {
 		if (pins[thread_id] && pins[thread_id][subject]) {
 			var msg = pins[thread_id][subject];
 			var time = moment(parseInt(pins[thread_id][subject].timestamp)).format('MMMM Do YYYY, h:mm:ss a');
+			var sub = subject;
 			var cnt = msg.content;
-			utils.sendMessage(cnt + ' \n\t- ' + time, api, thread_id, { limit: 100 });
+			utils.sendMessage('Subject: ' + sub + '\nContents: \n\t' + cnt + ' \n\n\t- ' + time, api, thread_id, {
+				limit: 100,
+			});
 			return;
 		}
 

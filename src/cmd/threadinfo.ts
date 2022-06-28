@@ -1,6 +1,7 @@
-var fse = require('fs-extra');
 var path = require('path');
 var moment = require('moment');
+var fse = require('fs-extra');
+var config = require('../data/config');
 module.exports = {
 	name: 'threadinfo',
 	alias: ['ti'],
@@ -11,13 +12,7 @@ module.exports = {
 	description: 'Get info about the current thread.',
 	info: 'Get info about the current thread.',
 	cooldown: false,
-	execute: async function (
-		api: {
-			getThreadInfo: (arg0: any, arg1: (err: any, info: any) => void) => void;
-			sendMessage: (arg0: string, arg1: any) => void;
-		},
-		message: { threadID: any }
-	) {
+	execute: async function (api: any, message: any) {
 		var fetch = require('node-fetch');
 		let thread_id = message.threadID;
 		let gInfo = JSON.parse(fse.readFileSync(path.join(__dirname, '..', 'data/gInfo.json'), 'utf8'));

@@ -8,24 +8,24 @@ module.exports = {
 	GcOnly: true,
 	usage: '[ list | search < name | id > | < name | id > [text]]',
 	description:
-		'Can be used to list all available memes, search for a meme, or create a meme. \n' +
-		'If no arguments are given, the list of available memes will be shown. \n' +
-		'If a search is given, the first result will be used. \n' +
-		'If a search is given and no result is found, a new meme will be created. \n' +
-		'Usage: \n' +
-		'\t `meme list` - Lists all available memes. \n' +
-		'\t `meme search <name>` - Searches for a meme by name. \n' +
-		'\t `meme search <id>` - Searches for a meme by id. \n' +
-		'\t `meme <name> [text]` - Creates a meme with the given name and text. \n' +
-		'\t `meme <id> [text]` - Creates a meme with the given id and text. \n',
+		`Can be used to list all available memes, search for a meme, or create a meme. \n` +
+		`If no arguments are given, the list of available memes will be shown. \n` +
+		`If a search is given, the first result will be used. \n` +
+		`If a search is given and no result is found, a new meme will be created. \n` +
+		`Usage: \n` +
+		`\t ${config.prefix}meme list` +
+		` - Lists all available memes. \n` +
+		`\t ${config.prefix}meme search <name>` +
+		` - Searches for a meme by name. \n` +
+		`\t ${config.prefix}meme search <id>` +
+		` - Searches for a meme by id. \n` +
+		`\t ${config.prefix}meme <name> [text]` +
+		` - Creates a meme with the given name and text. \n` +
+		`\t ${config.prefix}meme <id> [text]` +
+		` - Creates a meme with the given id and text. \n`,
 	info: 'Meme command.',
 	cooldown: true,
-	execute: async function (
-		api: { sendMessage: (arg0: string, arg1: any) => void; setMessageReaction: (arg0: string, arg1: any) => void },
-		message: { threadID: any },
-		args: any[],
-		utils: { sleep: (arg0: number) => Promise<void> }
-	) {
+	execute: async function (api: any, message: any, args: any, utils: any) {
 		var fetch = require('node-fetch');
 		const response = await fetch('https://api.imgflip.com/get_memes').then((res: { json: () => any }) =>
 			res.json()

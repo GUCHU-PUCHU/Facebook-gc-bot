@@ -1,4 +1,5 @@
-var config = require('../data/config.json');
+var fse = require('fs-extra');
+var config = require('../data/config');
 module.exports = {
 	name: 'help',
 	alias: ['help', 'h'],
@@ -16,7 +17,7 @@ module.exports = {
 	execute: function (
 		api: any,
 		message: any,
-		args: string | any[],
+		args: any,
 		utils: any,
 		cmdMap: {
 			name: {

@@ -47,10 +47,8 @@ login(credentials, (err: any, api: any) => {
 		if (err) return console.error(err);
 		fse.writeFileSync(path.join(__dirname, 'data/appState.json'), JSON.stringify(api.getAppState(), null, 4));
 		console.log(message);
-		if (message.type === 'message' || message.type === 'message_reply') {
-			// Message logging
-			require('./events/logger')(api, message);
-
+		if (message.type === 'typ') {
+			require('./events/onThreadJoin')(api, message);
 			// Thread info logging
 			api.getThreadInfo(message.threadID, (err: any, info: any) => {
 				if (err) return console.error(err);
@@ -58,6 +56,10 @@ login(credentials, (err: any, api: any) => {
 				fse.writeFileSync(path.join(__dirname, 'data/gInfo.json'), JSON.stringify(gInfo, null, 4));
 			});
 			// End of thread info logging
+		}
+		if (message.type === 'message' || message.type === 'message_reply') {
+			// Message logging
+			require('./events/logger')(api, message);
 
 			// Command Handler (this is where the 'magic' happens)
 			// check if Group-chat lock is enabled
@@ -105,15 +107,17 @@ login(credentials, (err: any, api: any) => {
 				api.sendMessage(reply, message.threadID);
 				return;
 			}
-			api.setMessageReaction('👀', message.messageID);
-			// buffer so it doesn't looks like its a bot
-			utils.sleep(1000);
+
+			// random count buffer so it doesn't looks like its a bot
+			utils.randomSleep(1000, 2000);
+			utils.seenReact(api, message.senderID);
 			// execute command
 			try {
 				cmdMap.name.get(cmd).execute(api, message, args, utils, cmdMap);
 			} catch (error) {
 				utils.failReact(api, message.messageID);
 				api.sendMessage('Something went wrong!', message.threadID);
+				utils.errorReact(api, message.messageID);
 				console.error(error);
 			}
 		}
