@@ -47,6 +47,7 @@ module.exports = {
             api.setMessageReaction('📨', message.messageID);
             return utils.sendMessage(reply, api, message.senderID, { limit: 2000, delay: 1 });
         }
+        utils.successReact(api, message.messageID);
         api.sendMessage(reply, message.threadID);
     },
 };

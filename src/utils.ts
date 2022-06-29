@@ -10,7 +10,7 @@ module.exports = {
 		bot_name: '',
 		response: '',
 		thread_id: '',
-		w_api_key: '',
+		wolframAlphaAppID: '',
 		gc_lock: false,
 		cooldown: '5',
 		imgflip: {
@@ -86,6 +86,3 @@ module.exports = {
 		api.setMessageReaction('👁', message_id);
 	},
 };
-
-// this is shit code
-// TODO: fix this shit code

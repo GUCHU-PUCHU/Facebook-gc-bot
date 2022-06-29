@@ -107,7 +107,7 @@ These stuff are all self explanatory but I'll still try to explain them anyway.
     <img src="https://i.imgur.com/BoPppJW.png">
     <br>
 
--   **W api key** - This is simply an api key for the weather api. You can get one for free at [openweathermap.org](https://openweathermap.org/api). note that weather command is not implemented yet.
+-   **Wolfram App ID** - This is simply an app id for the Wolfram Alpha API. You can get one for free at [https://developer.wolframalpha.com/](https://developer.wolframalpha.com/)
 
 -   **Gc Lock** - This is a boolean value. If it's true, the bot will only respond to the group chat defined by thread id in the config.
 

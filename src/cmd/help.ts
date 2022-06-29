@@ -35,10 +35,6 @@ module.exports = {
 			}
 			reply += '\n\nFor more info about a command, type `' + config.prefix + 'help [command]`';
 			if (message.senderID !== message.threadID) {
-				// api.sendMessage(
-				// 	'List of commands were sent to your DMs! Please kindly check them out',
-				// 	message.threadID
-				// );
 				api.setMessageReaction('📨', message.messageID);
 			}
 
@@ -66,6 +62,7 @@ module.exports = {
 			api.setMessageReaction('📨', message.messageID);
 			return utils.sendMessage(reply, api, message.senderID, { limit: 2000, delay: 1 });
 		}
+		utils.successReact(api, message.messageID);
 		api.sendMessage(reply, message.threadID);
 	},
 };

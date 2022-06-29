@@ -3,5 +3,6 @@ package-lock.json
 */cmd/tst.*
 */cmd/sched.*
 */data/*
+data
 .env
 

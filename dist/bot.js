@@ -89,13 +89,12 @@ login(credentials, (err, api) => {
                 api.sendMessage(reply, message.threadID);
                 return;
             }
+            utils.seenReact(api, message.messageID);
             utils.randomSleep(1000, 2000);
-            utils.seenReact(api, message.senderID);
             try {
                 cmdMap.name.get(cmd).execute(api, message, args, utils, cmdMap);
             }
             catch (error) {
-                utils.failReact(api, message.messageID);
                 api.sendMessage('Something went wrong!', message.threadID);
                 utils.errorReact(api, message.messageID);
                 console.error(error);

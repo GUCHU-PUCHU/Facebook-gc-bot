@@ -196,9 +196,9 @@ async function setupConfig() {
 			},
 			{
 				type: 'input',
-				name: 'w_api_key',
-				message: 'What is your weather api key?',
-				default: config.w_api_key,
+				name: 'wolframAlphaAppID',
+				message: 'Wolfram Alpha App ID?',
+				default: config.wolframAlphaAppID,
 			},
 			{
 				type: 'input',
@@ -230,7 +230,7 @@ async function setupConfig() {
 				prefix: any;
 				thread_id: number;
 				bot_name: string;
-				w_api_key: string;
+				wolframAlphaAppID: string;
 				response: string;
 				gc_lock: boolean;
 				cooldown: number;
@@ -238,7 +238,7 @@ async function setupConfig() {
 				config.prefix = answers.prefix;
 				config.thread_id = answers.thread_id;
 				config.bot_name = answers.bot_name;
-				config.w_api_key = answers.w_api_key;
+				config.wolframAlphaAppID = answers.wolframAlphaAppID;
 				config.response = answers.response;
 				config.gc_lock = answers.gc_lock;
 				config.cooldown = answers.cooldown;
