@@ -5,7 +5,7 @@
 	"main": "./dist/main.js",
 	"scripts": {
 		"test": "jest",
-		"start": "node ./dist/index.js",
+		"start": "node ./dist/main.js",
 		"dev": "nodemon ./dist/bot.js -e js",
 		"build": "tsc",
 		"build:watch": "tsc --watch"
@@ -19,7 +19,8 @@
 		"inquirer": "^8.2.2",
 		"moment": "^2.29.1",
 		"node-fetch": "^2.6.7",
-		"puppeteer": "^13.5.1"
+		"puppeteer": "^13.5.1",
+		"wolfram-alpha-api": "https://products.wolframalpha.com/api/libraries/javascript/wolfram-alpha-api-1.0.0-rc.1.tgz"
 	},
 	"devDependencies": {
 		"@types/inquirer": "^8.2.0",

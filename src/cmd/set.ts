@@ -28,7 +28,7 @@ module.exports = {
 		if (key === 'prefix') key = 'prefix';
 		if (key === 'botname') key = 'bot_name';
 		if (key === 'response') key = 'response';
-		if (key === 'apikey') key = 'w_api_key';
+		if (key === 'apikey') key = 'wolframAlphaAppID';
 		if (key === 'cooldown') {
 			if (isNaN(value)) {
 				api.sendMessage('Cooldown must be a number.', message.threadID);
@@ -78,7 +78,7 @@ module.exports = {
 				config.response +
 				'\n' +
 				'\tAPI Key: ' +
-				config.w_api_key +
+				config.wolframAlphaAppID +
 				'\n' +
 				'\tCooldown: ' +
 				config.cooldown +

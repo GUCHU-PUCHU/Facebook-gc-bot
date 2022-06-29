@@ -107,15 +107,14 @@ login(credentials, (err: any, api: any) => {
 				api.sendMessage(reply, message.threadID);
 				return;
 			}
+			utils.seenReact(api, message.messageID);
 
 			// random count buffer so it doesn't looks like its a bot
 			utils.randomSleep(1000, 2000);
-			utils.seenReact(api, message.senderID);
 			// execute command
 			try {
 				cmdMap.name.get(cmd).execute(api, message, args, utils, cmdMap);
 			} catch (error) {
-				utils.failReact(api, message.messageID);
 				api.sendMessage('Something went wrong!', message.threadID);
 				utils.errorReact(api, message.messageID);
 				console.error(error);

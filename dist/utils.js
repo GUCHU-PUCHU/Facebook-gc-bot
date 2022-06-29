@@ -10,7 +10,7 @@ module.exports = {
         bot_name: '',
         response: '',
         thread_id: '',
-        w_api_key: '',
+        wolframAlphaAppID: '',
         gc_lock: false,
         cooldown: '5',
         imgflip: {
