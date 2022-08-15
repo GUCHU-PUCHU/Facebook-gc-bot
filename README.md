@@ -80,7 +80,11 @@ Just open the folder where the files are located.
 
 Note: I am honestly not sure how to make a executable batch script for windows. So... you'll need to run it using VSCode.
 
-Open a terminal then run `node .` or `npm start`.
+Open a terminal in vs code.
+
+You need to install the modules first using `npm install`.
+
+then run the script using `node .` or `npm start`.
 
 #### Linux
 
