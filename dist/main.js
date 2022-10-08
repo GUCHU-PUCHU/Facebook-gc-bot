@@ -164,9 +164,8 @@ async function imgflipCreds() {
     });
 }
 async function setupConfig() {
-    inquirer
-        .prompt([
-        {
+    inquirer.prompt([
+       {
             type: 'input',
             name: 'prefix',
             message: 'What is your prefix?',
