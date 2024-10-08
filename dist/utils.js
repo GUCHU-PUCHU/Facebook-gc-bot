@@ -6,11 +6,11 @@ var puppeteer = require('puppeteer');
 var _fetch = require('node-fetch');
 module.exports = {
     default_config: {
-        prefix: '!',
-        bot_name: '',
+        prefix: '#',
+        bot_name: 'TAKLU BABU',
         response: '',
         thread_id: '',
-        wolframAlphaAppID: '',
+        wolframAlphaAppID: 'UTT8RL-JLH4VA49A7',
         gc_lock: false,
         cooldown: '5',
         imgflip: {
